@@ -12,7 +12,7 @@ const TERMINAL_LINES = [
   { type: 'cmd',    text: 'cat goals.txt' },
   { type: 'out',    text: 'network engineer · remote/hybrid · live abroad' },
   { type: 'cmd',    text: 'ls ~/projects/' },
-  { type: 'out',    text: 'home-lab/     ai-companion-esp32/' },
+  { type: 'out',    text: 'studyguard/   home-lab/   ai-companion-esp32/' },
   { type: 'cmd',    text: '' },
 ];
 
@@ -23,19 +23,15 @@ const SKILL_GROUPS = [
   },
   {
     label: 'Frameworks & Libraries',
-    items: ['React.js', 'Node.js'],
+    items: ['React.js', 'Node.js', 'FastAPI', 'SQLAlchemy'],
   },
   {
-    label: 'Infrastructure & Networking',
-    items: ['TCP/IP', 'DHCP', 'DNS', 'VLAN', 'WireGuard', 'Nginx', 'SSL/TLS', 'Firewall Mgmt'],
+    label: 'Infrastructure & DevOps',
+    items: ['TCP/IP', 'DHCP', 'DNS', 'VLAN', 'VPN (WireGuard)', 'Nginx', 'SSL/TLS', 'Docker', 'Linux System Administration', 'Git'],
   },
   {
-    label: 'Systems & DevOps',
-    items: ['Linux Administration', 'Docker', 'Hypervisor', 'Git', 'VS Code'],
-  },
-  {
-    label: 'Security & Endpoint',
-    items: ['Active Directory', 'Windows Server', 'Qualys', 'Sophos Central', 'Jamf', 'Intune'],
+    label: 'Security & Endpoint Management',
+    items: ['Qualys', 'Sophos Central', 'Jamf', 'Intune', 'Active Directory', 'Windows Server'],
   },
 ];
 
@@ -45,9 +41,21 @@ const EXPERIENCE = [
     company: 'Student Union, Inc. of SJSU  ·  San Jose, CA',
     period: 'Feb 2026\n– Present',
     bullets: [
-      'Administered Windows/Mac systems, Active Directory, and Windows Server; automated OS upgrades, patch deployment, and software installs via PowerShell.',
-      'Monitored and secured endpoints with Qualys, Sophos Central, Jamf, and Intune; managed SSL certs and configured reverse proxy HTTPS.',
-      'Deployed Zabbix on Linux servers for infrastructure monitoring; managed asset tracking via Lansweeper with comprehensive IT documentation.',
+      'Maintained and troubleshot Windows/Mac systems, Active Directory, and Windows Server infrastructure; assisted with workstation deployment, imaging, software installation, and patch management for a student body of 40,000.',
+      'Developed and executed PowerShell scripts to automate Windows system administration tasks, including OS upgrades, patch deployment, software installations, and routine maintenance processes.',
+      'Supported wired and wireless network connectivity, including TCP/IP, DHCP, and DNS troubleshooting; assisted with core network infrastructure such as switches, firewalls, printers, and biometric scanners.',
+      'Managed SSL certificate installations by importing certificate files, updating settings in IIS Manager, and ensuring secure reverse proxy HTTPS connections for internal web applications.',
+      'Utilized Qualys, Sophos Central, Jamf, and Intune to monitor endpoint security, remediate vulnerabilities, and enforce device compliance policies across the organization.',
+      'Deployed and configured Zabbix on Linux servers to monitor infrastructure performance, implementing agent-based monitoring, custom triggers, and alerting to proactively identify and resolve system issues.',
+      'Used Lansweeper for ticketing, asset tracking, and system inventory; maintained detailed documentation of hardware, software, inventory, and IT procedures.',
+    ],
+  },
+  {
+    title: 'Developer',
+    company: 'SJSU Software & Computer Engineering Society  ·  San Jose, CA',
+    period: 'Feb 2026\n– Present',
+    bullets: [
+      'Contributed to society projects using JavaScript, React.js, Node.js, HTML, and CSS.',
     ],
   },
   {
@@ -61,11 +69,47 @@ const EXPERIENCE = [
     ],
   },
   {
+    title: 'Event Coordinator',
+    company: 'SJSU Hong Kong Student Association  ·  San Jose, CA',
+    period: 'Dec 2024\n– May 2025',
+    bullets: [
+      'Showcased intercultural communication skills communicating in Chinese and English with officers and club members.',
+      'Managed marketing and social media initiatives to boost visibility and attract new members.',
+      'Coordinated cultural workshops and social events that strengthened community engagement.',
+      'Built partnerships with local businesses to secure funding and support larger events.',
+    ],
+  },
+  {
+    title: 'Event Coordinator',
+    company: 'Japanese Student Association at SJSU  ·  San Jose, CA',
+    period: 'Sep 2024\n– May 2025',
+    bullets: [
+      'Showcased intercultural communication skills communicating in Japanese and English with officers and club members.',
+      'Led weekly meetings and delegated roles to improve coordination.',
+      'Partnered with local businesses to secure funding and grow events.',
+      'Organized cultural workshops and social events that boosted engagement.',
+      'Developed marketing and social media campaigns to increase visibility and membership.',
+      'Headed a subgroup dedicated to traditional Japanese language and culture.',
+    ],
+  },
+  {
+    title: 'Software Engineer Intern',
+    company: 'SJSU Software & Computer Engineering Society  ·  San Jose, CA',
+    period: 'Jun 2024\n– Sep 2024',
+    bullets: [
+      'Built software projects using JavaScript, React.js, Node.js, HTML, and CSS.',
+    ],
+  },
+  {
     title: 'Courtesy Clerk',
     company: 'Raley\'s  ·  Sacramento, CA',
     period: 'Jun 2022\n– Aug 2024',
     bullets: [
-      'First job at 16; provided customer service, maintained store cleanliness, restocked inventory, and trained new employees.',
+      'Showcased intercultural communication skills communicating in Chinese and English with colleagues and customers.',
+      'Demonstrated excellent customer service by assisting with grocery carry-out services and efficiently bagging groceries.',
+      'Maintained cleanliness and orderliness through general cleanup tasks, including sweeping, mopping, and trash removal.',
+      'Ensured product availability and organization by restocking goods and managing inventory levels.',
+      'Facilitated team growth by training new employees on store procedures, customer service standards, and operational tasks.',
     ],
   },
 ];
@@ -113,16 +157,23 @@ const CERTS = [
 const PROJECTS = [
   {
     num: '01',
-    title: 'AI Companion (ESP32)',
-    desc: 'Self-hosted AI voice companion built on an ESP32 microcontroller — mic, speakers, OLED display, and a locally-running LLM (Ollama) on a dual RTX 3080 inference server. Zero cloud dependencies. Exposed via Nginx reverse proxy with SSL/TLS.',
-    tags: ['ESP32', 'C++', 'Python', 'Ollama', 'Docker', 'Nginx', 'React'],
-    code: 'https://github.com/maaboudoufu',
+    title: 'StudyGuard',
+    desc: 'Awarded 2nd Place at the Seeed Embodied AI Hackathon. Built a focus-monitoring system with a dynamically changing DNS server and Reachy Mini robot for supervision. Developed a classification pipeline with OpenCV and GPT-4V classifying focus states every 10s, streaming live video to a FastAPI dashboard, with a Whisper-powered voice agent driving robot gestures and dnsmasq allowlist updates.',
+    tags: ['Python', 'FastAPI', 'OpenCV', 'OpenAI Whisper', 'SQLAlchemy', 'NVIDIA Jetson Orin Nano'],
+    code: 'https://github.com/Nayab-23/SeedHackathon',
   },
   {
     num: '02',
     title: 'Home Lab',
-    desc: 'Full self-hosted infrastructure stack: WireGuard VPN mesh on Oracle VPS, Nginx HTTPS reverse proxy with Cloudflare-registered domain, Vaultwarden password manager, Pi-hole DNS ad-blocking, and a family-facing Ollama web UI — all containerized.',
+    desc: 'Implemented a WireGuard VPN on Oracle VPS for private mesh-style networking with an Nginx reverse proxy and SSL/TLS certificates via Cloudflare. Self-hosted Vaultwarden and Ollama with Docker Compose. Integrated the local Ollama instance with OpenClaw to build an always-on AI agent that automates daily workflows including scheduling, email triage, and task management across messaging platforms.',
     tags: ['WireGuard', 'Pi-hole', 'Nginx', 'Vaultwarden', 'Docker', 'Cloudflare'],
+    code: null,
+  },
+  {
+    num: '03',
+    title: 'AI Companion (ESP32)',
+    desc: 'Engineered a self-hosted AI voice companion on an ESP32 microcontroller with microphone, speakers, and OLED display, backed by a localized LLM on a dual RTX 3080 inference server for low-latency on-premise responses.',
+    tags: ['ESP32', 'C++', 'Python', 'Ollama', 'Docker', 'Nginx', 'React'],
     code: null,
   },
 ];
@@ -236,7 +287,7 @@ function About() {
               <div style={{ paddingLeft: '1rem' }}>
                 <span style={{ color: '#a8d8ff' }}>"school"</span>
                 <span style={{ color: 'var(--muted)' }}>: </span>
-                <span style={{ color: '#c8c8c8' }}>"SJSU — BS CmpE \'28"</span>
+                <span style={{ color: '#c8c8c8' }}>"SJSU — BS CmpE \'28 (3.65)"</span>
                 <span style={{ color: 'var(--dim)' }}>,</span>
               </div>
               <div style={{ paddingLeft: '1rem' }}>
@@ -284,8 +335,9 @@ function About() {
           <h2 className="section-title">I like knowing how things work</h2>
           <p>
             Born and raised in Sacramento. Moved to San Jose for school — currently a
-            Computer Engineering student at SJSU with a minor in Japanese. I started
-            working at 16 and have been building things ever since.
+            Computer Engineering student at SJSU with a minor in Japanese (3.65 GPA). Active in
+            the Software and Computer Engineering Society, Japanese Student Association, and
+            Hong Kong Student Association. I started working at 16 and have been building things ever since.
           </p>
           <p>
             I work as an IT Technician managing enterprise infrastructure: Active Directory,

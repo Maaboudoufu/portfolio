@@ -60,10 +60,11 @@ const INFO = [
 
 const FS_DIRS = {
   '~':                        ['about.txt', 'contact.txt', 'skills.txt', 'projects/', 'experience/', 'certs/'],
-  '~/projects':               ['ai-companion/', 'home-lab/'],
-  '~/projects/ai-companion':  ['README.md'],
+  '~/projects':               ['studyguard/', 'home-lab/', 'ai-companion/'],
+  '~/projects/studyguard':    ['README.md'],
   '~/projects/home-lab':      ['README.md'],
-  '~/experience':             ['it-technician.txt', 'building-supervisor.txt', 'courtesy-clerk.txt'],
+  '~/projects/ai-companion':  ['README.md'],
+  '~/experience':             ['it-technician.txt', 'sce-developer.txt', 'building-supervisor.txt', 'hksa-coordinator.txt', 'jsa-coordinator.txt', 'sce-intern.txt', 'courtesy-clerk.txt'],
   '~/certs':                  ['google-it.txt', 'qualys-vmdr.txt', 'tsukuba-ttbj.txt', 'redcross-cpr.txt', 'osha-10.txt'],
 };
 
@@ -72,11 +73,11 @@ const FS_FILES = {
 `Name    : Jason Tsao
 From    : Sacramento, CA
 Based   : San Jose, CA
-School  : SJSU — BS Computer Engineering, Minor in Japanese
+School  : SJSU — BS Computer Engineering, Minor in Japanese (GPA 3.65)
 Grad    : June 2028
 Goal    : Network Engineer (remote/hybrid, open to living abroad)
-Spoken  : English (Native) · Japanese (Limited) · Chinese (Elementary)
-Orgs    : SCES · JSA · HKSA @ SJSU`,
+Spoken  : English (Native) · Japanese (Limited Working) · Chinese (Elementary)
+Orgs    : Software and Computer Engineering Society · JSA · HKSA @ SJSU`,
 
   '~/contact.txt':
 `Email   : jason.p.tsao@sjsu.edu
@@ -88,54 +89,77 @@ LinkedIn: linkedin.com/in/jtsaoo`,
   C/C++  Assembly  JavaScript  HTML/CSS  Bash/Zsh  PowerShell
 
 ── Frameworks & Libraries ─────────────────────
-  React.js  Node.js
+  React.js  Node.js  FastAPI  SQLAlchemy
 
-── Infrastructure & Networking ────────────────
-  TCP/IP  DHCP  DNS  VLAN  WireGuard  Nginx  SSL/TLS  Firewall Mgmt
+── Infrastructure & DevOps ────────────────────
+  TCP/IP  DHCP  DNS  VLAN  VPN (WireGuard)  Nginx  SSL/TLS  Docker  Linux System Administration  Git
 
-── Systems & DevOps ───────────────────────────
-  Linux Administration  Docker  Hypervisor  Git
+── Security & Endpoint Management ─────────────
+  Qualys  Sophos Central  Jamf  Intune  Active Directory  Windows Server`,
 
-── Security & Endpoint ────────────────────────
-  Active Directory  Windows Server  Qualys  Sophos Central  Jamf  Intune`,
+  '~/projects/studyguard/README.md':
+`# StudyGuard
+Awarded 2nd Place at the Seeed Embodied AI Hackathon
 
-  '~/projects/ai-companion/README.md':
-`# AI Companion (ESP32)
-Jan 2026 – Present
+Focus-monitoring system with a dynamically changing DNS server
+and Reachy Mini robot for supervision.
 
-Self-hosted AI voice companion on an ESP32 microcontroller.
-Integrates a microphone, speakers, and OLED display.
+Classification pipeline with OpenCV and GPT-4V classifying focus
+states every 10s, streaming live video to a FastAPI dashboard,
+with a Whisper-powered voice agent driving robot gestures and
+dnsmasq allowlist updates.
 
-LLM backend: Ollama running on a dual RTX 3080 inference server.
-Zero cloud dependencies. Exposed via Nginx reverse proxy + SSL/TLS.
-
-Stack: ESP32 · C++ · Python · Ollama · Docker · Nginx · React`,
+Stack: Python · FastAPI · OpenCV · OpenAI Whisper · SQLAlchemy · NVIDIA Jetson Orin Nano`,
 
   '~/projects/home-lab/README.md':
 `# Home Lab
-Nov 2025 – Present
 
-Full self-hosted infrastructure stack:
+WireGuard VPN on Oracle VPS for private mesh-style networking
+with an Nginx reverse proxy and SSL/TLS certificates via Cloudflare.
+Self-hosted Vaultwarden and Ollama with Docker Compose.
 
-  WireGuard  — UDP-based VPN mesh across all devices via Oracle VPS
-  Nginx      — HTTPS reverse proxy, Cloudflare domain, SSL/TLS
-  Vaultwarden— self-hosted password manager behind Nginx
-  Pi-hole    — DNS-level ad blocking
-  Ollama UI  — family-facing AI web UI via Docker Compose
+Integrated the local Ollama instance with OpenClaw to build an
+always-on AI agent that automates daily workflows including
+scheduling, email triage, and task management across messaging platforms.
 
-All services containerized. No paid cloud subscriptions.`,
+Stack: WireGuard · Pi-hole · Nginx · Vaultwarden · Docker · Cloudflare`,
+
+  '~/projects/ai-companion/README.md':
+`# AI Companion (ESP32)
+
+Engineered a self-hosted AI voice companion on an ESP32 microcontroller
+with microphone, speakers, and OLED display, backed by a localized LLM
+on a dual RTX 3080 inference server for low-latency on-premise responses.
+
+Stack: ESP32 · C++ · Python · Ollama · Docker · Nginx · React`,
 
   '~/experience/it-technician.txt':
 `IT Technician
 Student Union, Inc. of SJSU · San Jose, CA
 Feb 2026 – Present
 
-• Administered Windows/Mac systems, Active Directory, and Windows Server;
-  automated OS upgrades and patch deployment via PowerShell.
-• Monitored and secured endpoints with Qualys, Sophos Central, Jamf, Intune;
-  managed SSL certs and configured reverse proxy HTTPS.
-• Deployed Zabbix on Linux servers for infrastructure monitoring;
-  managed asset tracking via Lansweeper.`,
+• Maintained and troubleshot Windows/Mac systems, Active Directory, and
+  Windows Server infrastructure; assisted with workstation deployment,
+  imaging, software installation, and patch management for 40,000 students.
+• Developed PowerShell scripts to automate OS upgrades, patch deployment,
+  software installations, and routine maintenance processes.
+• Supported wired and wireless network connectivity (TCP/IP, DHCP, DNS);
+  assisted with switches, firewalls, printers, and biometric scanners.
+• Managed SSL certificate installations in IIS Manager; ensured secure
+  reverse proxy HTTPS connections for internal web applications.
+• Utilized Qualys, Sophos Central, Jamf, and Intune to monitor endpoint
+  security, remediate vulnerabilities, and enforce compliance policies.
+• Deployed Zabbix on Linux servers for infrastructure monitoring with
+  agent-based monitoring, custom triggers, and alerting.
+• Used Lansweeper for ticketing, asset tracking, and system inventory;
+  maintained detailed documentation of IT procedures.`,
+
+  '~/experience/sce-developer.txt':
+`Developer
+SJSU Software & Computer Engineering Society · San Jose, CA
+Feb 2026 – Present
+
+• Contributed to society projects using JavaScript, React.js, Node.js, HTML, and CSS.`,
 
   '~/experience/building-supervisor.txt':
 `Building Supervisor
@@ -146,12 +170,45 @@ Sep 2024 – Feb 2026
 • Managed emergency procedures: evacuations, fire panel checks.
 • Oversaw building operations, event setup, and permit compliance.`,
 
+  '~/experience/hksa-coordinator.txt':
+`Event Coordinator
+SJSU Hong Kong Student Association · San Jose, CA
+Dec 2024 – May 2025
+
+• Showcased intercultural communication skills in Chinese and English.
+• Managed marketing and social media to boost visibility and attract new members.
+• Coordinated cultural workshops and social events for community engagement.
+• Built partnerships with local businesses to secure funding.`,
+
+  '~/experience/jsa-coordinator.txt':
+`Event Coordinator
+Japanese Student Association at SJSU · San Jose, CA
+Sep 2024 – May 2025
+
+• Showcased intercultural communication skills in Japanese and English.
+• Led weekly meetings and delegated roles to improve coordination.
+• Partnered with local businesses to secure funding and grow events.
+• Organized cultural workshops and social events that boosted engagement.
+• Developed marketing and social media campaigns for visibility and membership.
+• Headed a subgroup dedicated to traditional Japanese language and culture.`,
+
+  '~/experience/sce-intern.txt':
+`Software Engineer Intern
+SJSU Software & Computer Engineering Society · San Jose, CA
+Jun 2024 – Sep 2024
+
+• Built software projects using JavaScript, React.js, Node.js, HTML, and CSS.`,
+
   '~/experience/courtesy-clerk.txt':
 `Courtesy Clerk
 Raley's · Sacramento, CA
 Jun 2022 – Aug 2024
 
-First job at 16. Customer service, inventory restocking, new employee training.`,
+• Showcased intercultural communication skills in Chinese and English.
+• Demonstrated excellent customer service with grocery carry-out and bagging.
+• Maintained cleanliness through sweeping, mopping, and trash removal.
+• Ensured product availability by restocking goods and managing inventory.
+• Trained new employees on store procedures and customer service standards.`,
 
   '~/certs/google-it.txt':
 `Google — Technical Support Fundamentals
