@@ -1,5 +1,7 @@
 # jason tsao — portfolio
 
+![Portfolio Preview](image.png)
+
 Personal portfolio site built with React. Terminal-themed design with sections for about, experience, skills, certifications, projects, and contact.
 
 ## Setup
