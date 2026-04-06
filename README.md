@@ -25,3 +25,12 @@ Outputs optimized production bundle to `build/`.
 
 - React 19
 - CSS (no framework)
+
+## Deployment
+
+Pushes to `main` automatically deploy via GitHub Actions (`.github/workflows/deploy.yml`). The workflow SSHs into an Oracle server, pulls the latest code, runs `npm install && npm run build`, and restarts the app with PM2.
+
+Required repository secrets:
+- `SSH_HOST` — server IP or hostname
+- `SSH_USER` — SSH username
+- `SSH_PRIVATE_KEY` — private key for authentication
