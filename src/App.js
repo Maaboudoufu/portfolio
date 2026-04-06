@@ -366,8 +366,8 @@ function Experience() {
         <h2 className="section-title">Where I've worked</h2>
         <p className="section-desc">Work history going back to my first job at 16.</p>
         <div className="timeline">
-          {EXPERIENCE.map((job) => (
-            <div className="timeline-item" key={job.title}>
+          {EXPERIENCE.map((job, index) => (
+            <div className="timeline-item" key={`${job.company}-${index}`}>
               <div className="timeline-period mono">{job.period}</div>
               <div className="timeline-card">
                 <div className="timeline-title">{job.title}</div>
