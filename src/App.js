@@ -336,8 +336,8 @@ function About() {
           <p>
             Born and raised in Sacramento. Moved to San Jose for school — currently a
             Computer Engineering student at SJSU with a minor in Japanese (3.65 GPA). Active in
-            the Software and Computer Engineering Society, Japanese Student Association, and
-            Hong Kong Student Association. I started working at 16 and have been building things ever since.
+            the Software and Computer Engineering Society and was an officer for Japanese Student Association and
+            Hong Kong Student Association during freshman year. I started working at 16 and have been building things ever since.
           </p>
           <p>
             I work as an IT Technician managing enterprise infrastructure: Active Directory,
@@ -346,7 +346,7 @@ function About() {
             and a locally-hosted AI on my own hardware.
           </p>
           <p>
-            Long-term I'm aiming for a network engineering role, ideally remote or hybrid,
+            Long-term I am trying to aim for a network engineering role, ideally remote or hybrid,
             with the flexibility to live and work from abroad.
           </p>
         </div>
