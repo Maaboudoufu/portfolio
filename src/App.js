@@ -176,6 +176,13 @@ const PROJECTS = [
     tags: ['ESP32', 'C++', 'Python', 'Ollama', 'Docker', 'Nginx', 'React'],
     code: null,
   },
+  {
+    num: '04',
+    title: 'Resume',
+    desc: 'Self-hosted LaTeX resume workflow replacing cloud editors like Overleaf. Uses latexmk for automatic PDF compilation on file changes, Zathura for live-reloading PDF preview, and Neovim with vimtex for a fully local, subscription-free editing environment.',
+    tags: ['LaTeX', 'Neovim', 'latexmk', 'TeX Live'],
+    code: 'https://github.com/Maaboudoufu/resume',
+  },
 ];
 
 // ── components ───────────────────────────────────────────────────────────────
