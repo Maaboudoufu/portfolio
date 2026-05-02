@@ -12,14 +12,14 @@ const TERMINAL_LINES = [
   { type: 'cmd',    text: 'cat goals.txt' },
   { type: 'out',    text: 'network engineer · remote/hybrid · live abroad' },
   { type: 'cmd',    text: 'ls ~/projects/' },
-  { type: 'out',    text: 'studyguard/   home-lab/   ai-companion-esp32/' },
+  { type: 'out',    text: 'studyguard/   home-lab/   resume/' },
   { type: 'cmd',    text: '' },
 ];
 
 const SKILL_GROUPS = [
   {
     label: 'Languages',
-    items: ['C / C++', 'Assembly', 'JavaScript', 'HTML / CSS', 'Bash / Zsh', 'PowerShell'],
+    items: ['C / C++', 'Assembly', 'JavaScript', 'HTML / CSS', 'Python', 'Bash / Zsh', 'PowerShell'],
   },
   {
     label: 'Frameworks & Libraries',
@@ -27,7 +27,7 @@ const SKILL_GROUPS = [
   },
   {
     label: 'Infrastructure & DevOps',
-    items: ['TCP/IP', 'DHCP', 'DNS', 'VLAN', 'VPN (WireGuard)', 'Nginx', 'SSL/TLS', 'Docker', 'Linux System Administration', 'Git'],
+    items: ['Docker', 'Proxmox', 'pfSense', 'Nginx', 'Prometheus', 'Grafana', 'Ollama', 'TCP/IP', 'DHCP', 'DNS', 'VLAN', 'WireGuard', 'SSL/TLS', 'Linux', 'Git', 'GitHub Actions', 'CI/CD'],
   },
   {
     label: 'Security & Endpoint Management',
@@ -37,35 +37,37 @@ const SKILL_GROUPS = [
 
 const EXPERIENCE = [
   {
-    title: 'Information Technology Technician',
+    title: 'IT Technician III',
     company: 'Student Union, Inc. of SJSU  ·  San Jose, CA',
     period: 'Feb 2026\n– Present',
     bullets: [
-      'Maintained and troubleshot Windows/Mac systems, Active Directory, and Windows Server infrastructure; assisted with workstation deployment, imaging, software installation, and patch management for a student body of 40,000.',
-      'Developed and executed PowerShell scripts to automate Windows system administration tasks, including OS upgrades, patch deployment, software installations, and routine maintenance processes.',
-      'Supported wired and wireless network connectivity, including TCP/IP, DHCP, and DNS troubleshooting; assisted with core network infrastructure such as switches, firewalls, printers, and biometric scanners.',
-      'Managed SSL certificate installations by importing certificate files, updating settings in IIS Manager, and ensuring secure reverse proxy HTTPS connections for internal web applications.',
-      'Utilized Qualys, Sophos Central, Jamf, and Intune to monitor endpoint security, remediate vulnerabilities, and enforce device compliance policies across the organization.',
-      'Deployed and configured Zabbix on Linux servers to monitor infrastructure performance, implementing agent-based monitoring, custom triggers, and alerting to proactively identify and resolve system issues.',
-      'Used Lansweeper for ticketing, asset tracking, and system inventory; maintained detailed documentation of hardware, software, inventory, and IT procedures.',
+      'Managed Proxmox VE, VM provisioning, backups, shutdown and high availability for reliable service continuity.',
+      'Implemented Kubernetes for containerized workloads, enabling scalable deployments and operations for 40k users.',
+      'Assisted with IDF infrastructure support, including drop ports, switches, patching, and ports.',
+      'Diagnosed connectivity issues spanning SSL certificates, TCP/IP, DHCP, DNS, VLANs, NAT rules, and firewalls.',
+      'Administered Windows and macOS endpoints, Windows Server, Active Directory, Microsoft Entra ID, and Intune.',
+      'Managed printers, workstation deployment, imaging, software installation, and patch management.',
+      'Secured endpoints with Qualys, Sophos, Jamf, and Intune and automated tasks with PowerShell scripts.',
     ],
   },
   {
-    title: 'Developer',
+    title: 'Software Engineer, Development Team',
     company: 'SJSU Software & Computer Engineering Society  ·  San Jose, CA',
-    period: 'Feb 2026\n– Present',
+    period: 'Jan 2026\n– Present',
     bullets: [
-      'Contributed to society projects using JavaScript, React.js, Node.js, HTML, and CSS.',
+      'Architected real-time YouTube control system with FastAPI WebSockets and JWT-based RBAC using SQLAlchemy, managing 3 permission tiers and eliminating unauthorized access attempts.',
+      'Built CI/CD pipelines with GitHub Actions integrating pytest, pylint, and Docker containerization, achieving 95% test coverage and reducing deployment time from 45 minutes to under 5 minutes.',
+      'Designed RESTful APIs with Flask-CORS and Redis session caching, improving response times by 60% and supporting 50+ concurrent users.',
     ],
   },
   {
-    title: 'Building Supervisor',
+    title: 'Operations Supervisor',
     company: 'Student Union, Inc. of SJSU  ·  San Jose, CA',
     period: 'Sep 2024\n– Feb 2026',
     bullets: [
-      'Supervised and mentored staff; trained new hires on protocols and workplace expectations.',
-      'Managed emergency procedures including evacuations and fire panel checks; enforced facility safety policies.',
-      'Oversaw building operations, event setup, and organizational permit compliance.',
+      'Supervised and developed staff by monitoring performance and providing hands-on coaching as needed.',
+      'Onboarded new hires, enforced permit compliance for organizations, and coordinated event logistics.',
+      'Directed emergency procedures including evacuations, fire panel checks, and resolution of security incidents.',
     ],
   },
   {
@@ -158,26 +160,19 @@ const PROJECTS = [
   {
     num: '01',
     title: 'StudyGuard',
-    desc: 'Awarded 2nd Place at the Seeed Embodied AI Hackathon. Built a focus-monitoring system with a dynamically changing DNS server and Reachy Mini robot for supervision. Developed a classification pipeline with OpenCV and GPT-4V classifying focus states every 10s, streaming live video to a FastAPI dashboard, with a Whisper-powered voice agent driving robot gestures and dnsmasq allowlist updates.',
-    tags: ['Python', 'FastAPI', 'OpenCV', 'OpenAI Whisper', 'SQLAlchemy', 'NVIDIA Jetson Orin Nano'],
+    desc: 'Won 2nd Place at the Seeed Embodied AI Hackathon for an AI-powered focus-monitoring system. Built an OpenCV and GPT-4V pipeline that classifies student focus states at 10-second intervals, streamed live camera feed to a FastAPI dashboard for real-time proctoring, and used a Whisper voice agent to control Reachy Mini robot gestures and update the dnsmasq allowlist.',
+    tags: ['Python', 'FastAPI', 'OpenCV', 'OpenAI Whisper', 'SQLAlchemy'],
     code: 'https://github.com/Nayab-23/SeedHackathon',
   },
   {
     num: '02',
     title: 'Home Lab',
-    desc: 'Implemented a WireGuard VPN on Oracle VPS for private mesh-style networking with an Nginx reverse proxy and SSL/TLS certificates via Cloudflare. Self-hosted Vaultwarden and Ollama with Docker Compose. Integrated the local Ollama instance with OpenClaw to build an always-on AI agent that automates daily workflows including scheduling, email triage, and task management across messaging platforms.',
-    tags: ['WireGuard', 'Pi-hole', 'Nginx', 'Vaultwarden', 'Docker', 'Cloudflare'],
+    desc: 'Configured pfSense as the primary router with VLANs, custom firewall rules, and NAT policies. Deployed Proxmox as a bare-metal hypervisor to host, isolate, and snapshot homelab VMs, with TrueNAS providing a virtual disk RAID pool for redundant network-attached storage. Wired up Prometheus and Grafana for real-time metrics, alerting, and dashboards, and self-hosted Ollama for local LLM inference behind Nginx with Cloudflare SSL over a WireGuard VPN.',
+    tags: ['Docker', 'Nginx', 'Prometheus', 'Grafana', 'Ollama', 'Proxmox', 'pfSense', 'TrueNAS', 'WireGuard'],
     code: null,
   },
   {
     num: '03',
-    title: 'AI Companion (ESP32)',
-    desc: 'Engineered a self-hosted AI voice companion on an ESP32 microcontroller with microphone, speakers, and OLED display, backed by a localized LLM on a dual RTX 3080 inference server for low-latency on-premise responses.',
-    tags: ['ESP32', 'C++', 'Python', 'Ollama', 'Docker', 'Nginx', 'React'],
-    code: null,
-  },
-  {
-    num: '04',
     title: 'Resume',
     desc: 'Self-hosted LaTeX resume workflow replacing cloud editors like Overleaf. Uses latexmk for automatic PDF compilation on file changes, Zathura for live-reloading PDF preview, and Neovim with vimtex for a fully local, subscription-free editing environment.',
     tags: ['LaTeX', 'Neovim', 'latexmk', 'TeX Live'],
