@@ -5,15 +5,15 @@ import TerminalSession from './TerminalSession';
 // ── data ────────────────────────────────────────────────────────────────────
 
 const TERMINAL_LINES = [
-  { type: 'cmd',    text: 'whoami' },
-  { type: 'out',    text: 'jason tsao' },
-  { type: 'cmd',    text: 'cat /etc/role' },
-  { type: 'out',    text: 'IT Technician  ·  CE Student @ SJSU \'28' },
-  { type: 'cmd',    text: 'cat goals.txt' },
-  { type: 'out',    text: 'network engineer · remote/hybrid · live abroad' },
-  { type: 'cmd',    text: 'ls ~/projects/' },
-  { type: 'out',    text: 'studyguard/   home-lab/   resume/' },
-  { type: 'cmd',    text: '' },
+  { type: 'cmd', text: 'whoami' },
+  { type: 'out', text: 'jason tsao' },
+  { type: 'cmd', text: 'cat /etc/role' },
+  { type: 'out', text: 'IT Technician  ·  CE Student @ SJSU \'28' },
+  { type: 'cmd', text: 'cat goals.txt' },
+  { type: 'out', text: 'network engineer · remote/hybrid · live abroad' },
+  { type: 'cmd', text: 'ls ~/projects/' },
+  { type: 'out', text: 'studyguard/   home-lab/   resume/' },
+  { type: 'cmd', text: '' },
 ];
 
 const SKILL_GROUPS = [
@@ -56,7 +56,7 @@ const EXPERIENCE = [
     period: 'Jan 2026\n– Present',
     bullets: [
       'Architected real-time YouTube control system with FastAPI WebSockets and JWT-based RBAC using SQLAlchemy, managing 3 permission tiers and eliminating unauthorized access attempts.',
-      'Built CI/CD pipelines with GitHub Actions integrating pytest, pylint, and Docker containerization, achieving 95% test coverage and reducing deployment time from 45 minutes to under 5 minutes.',
+      'Built CI/CD pipelines with GitHub Actions integrating pytest, pylint, and Docker containerization, achieving 95% test coverage and reducing deployment time from 10 minutes to under 2 minutes.',
       'Designed RESTful APIs with Flask-CORS and Redis session caching, improving response times by 60% and supporting 50+ concurrent users.',
     ],
   },
