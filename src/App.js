@@ -266,7 +266,7 @@ function Hero({ onOpenTerminal }) {
           <button className="btn-terminal" onClick={onOpenTerminal}>
             <span className="btn-terminal-prompt">❯_</span> Terminal
           </button>
-          <a href="/resume.pdf" target="_blank" rel="noopener noreferrer" className="btn-secondary">
+          <a href="/resume.html" target="_blank" rel="noopener noreferrer" className="btn-secondary">
             Resume ↗
           </a>
         </div>
