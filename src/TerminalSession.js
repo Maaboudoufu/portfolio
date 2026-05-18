@@ -60,10 +60,9 @@ const INFO = [
 
 const FS_DIRS = {
   '~':                        ['about.txt', 'contact.txt', 'skills.txt', 'projects/', 'experience/', 'certs/'],
-  '~/projects':               ['studyguard/', 'home-lab/', 'ai-companion/'],
+  '~/projects':               ['studyguard/', 'home-lab/'],
   '~/projects/studyguard':    ['README.md'],
   '~/projects/home-lab':      ['README.md'],
-  '~/projects/ai-companion':  ['README.md'],
   '~/experience':             ['it-technician.txt', 'sce-developer.txt', 'building-supervisor.txt', 'hksa-coordinator.txt', 'jsa-coordinator.txt', 'sce-intern.txt', 'courtesy-clerk.txt'],
   '~/certs':                  ['google-it.txt', 'qualys-vmdr.txt', 'tsukuba-ttbj.txt', 'redcross-cpr.txt', 'osha-10.txt'],
 };
@@ -86,13 +85,14 @@ LinkedIn: linkedin.com/in/jtsaoo`,
 
   '~/skills.txt':
 `── Languages ──────────────────────────────────
-  C/C++  Assembly  JavaScript  HTML/CSS  Bash/Zsh  PowerShell
+  C/C++  Assembly  JavaScript  TypeScript  HTML/CSS  Python  Bash/Zsh  PowerShell
 
 ── Frameworks & Libraries ─────────────────────
-  React.js  Node.js  FastAPI  SQLAlchemy
+  React.js  Vite  Node.js  Express  FastAPI  Prisma  SQLAlchemy  SQLite
 
 ── Infrastructure & DevOps ────────────────────
-  TCP/IP  DHCP  DNS  VLAN  VPN (WireGuard)  Nginx  SSL/TLS  Docker  Linux System Administration  Git
+  Docker  Proxmox  pfSense  Nginx  Prometheus  Grafana  Ollama  WebSockets
+  TCP/IP  DHCP  DNS  VLAN  WireGuard  SSL/TLS  Linux  Git  GitHub Actions  CI/CD
 
 ── Security & Endpoint Management ─────────────
   Qualys  Sophos Central  Jamf  Intune  Active Directory  Windows Server`,
@@ -114,61 +114,62 @@ Stack: Python · FastAPI · OpenCV · OpenAI Whisper · SQLAlchemy · NVIDIA Jet
   '~/projects/home-lab/README.md':
 `# Home Lab
 
-WireGuard VPN on Oracle VPS for private mesh-style networking
-with an Nginx reverse proxy and SSL/TLS certificates via Cloudflare.
-Self-hosted Vaultwarden and Ollama with Docker Compose.
+pfSense as the primary router with VLANs, custom firewall rules, and
+NAT policies. Proxmox running bare-metal to host, isolate, and snapshot
+homelab VMs, with OpenMediaVault providing a virtual-disk RAID 10 pool
+for fault-tolerant network-attached storage.
 
-Integrated the local Ollama instance with OpenClaw to build an
-always-on AI agent that automates daily workflows including
-scheduling, email triage, and task management across messaging platforms.
+Prometheus and Grafana wired up for real-time metrics, alerting, and
+custom dashboards. Self-hosted Ollama for local LLM inference behind
+Nginx with Cloudflare SSL over a WireGuard VPN.
 
-Stack: WireGuard · Pi-hole · Nginx · Vaultwarden · Docker · Cloudflare`,
-
-  '~/projects/ai-companion/README.md':
-`# AI Companion (ESP32)
-
-Engineered a self-hosted AI voice companion on an ESP32 microcontroller
-with microphone, speakers, and OLED display, backed by a localized LLM
-on a dual RTX 3080 inference server for low-latency on-premise responses.
-
-Stack: ESP32 · C++ · Python · Ollama · Docker · Nginx · React`,
+Stack: Docker · Nginx · Prometheus · Grafana · Ollama · Proxmox · pfSense · OpenMediaVault · WireGuard`,
 
   '~/experience/it-technician.txt':
-`IT Technician
+`IT Technician III
 Student Union, Inc. of SJSU · San Jose, CA
 Feb 2026 – Present
 
-• Maintained and troubleshot Windows/Mac systems, Active Directory, and
-  Windows Server infrastructure; assisted with workstation deployment,
-  imaging, software installation, and patch management for 40,000 students.
-• Developed PowerShell scripts to automate OS upgrades, patch deployment,
-  software installations, and routine maintenance processes.
-• Supported wired and wireless network connectivity (TCP/IP, DHCP, DNS);
-  assisted with switches, firewalls, printers, and biometric scanners.
-• Managed SSL certificate installations in IIS Manager; ensured secure
-  reverse proxy HTTPS connections for internal web applications.
-• Utilized Qualys, Sophos Central, Jamf, and Intune to monitor endpoint
-  security, remediate vulnerabilities, and enforce compliance policies.
-• Deployed Zabbix on Linux servers for infrastructure monitoring with
-  agent-based monitoring, custom triggers, and alerting.
-• Used Lansweeper for ticketing, asset tracking, and system inventory;
-  maintained detailed documentation of IT procedures.`,
+• Managed Proxmox VE, VM provisioning, backups, shutdown and high
+  availability for reliable service continuity.
+• Implemented Kubernetes for containerized workloads, enabling scalable
+  deployments and operations for 40k users.
+• Diagnosed connectivity issues spanning SSL certificates, TCP/IP, DHCP,
+  DNS, VLANs, NAT rules, and firewalls.
+• Configured SNMP server to monitor printer status, toner levels, and
+  supplies for asset management and ordering.
+• Assisted with MDF/IDF infrastructure support, including drop ports,
+  switches, patching, and punchdowns.
+• Administered Windows and macOS endpoints, Windows Server, Active
+  Directory, Microsoft Entra ID, and Intune.
+• Managed printers, workstation deployment, imaging, software installation,
+  and patch management.
+• Secured endpoints with Qualys, Sophos, Jamf, and Intune and automated
+  tasks with PowerShell scripts.`,
 
   '~/experience/sce-developer.txt':
-`Developer
+`Software Engineer, Development Team
 SJSU Software & Computer Engineering Society · San Jose, CA
-Feb 2026 – Present
+Jan 2026 – Present
 
-• Contributed to society projects using JavaScript, React.js, Node.js, HTML, and CSS.`,
+• Built a YouTube-to-Raspberry-Pi music streaming app in TypeScript with
+  React, Express, Prisma, and SQLite.
+• Designed an egress-only WebSocket bridge so the Pi dials out to the
+  backend, removing inbound firewall rules.
+• Containerized services with Docker Compose and ran the Pi daemon as a
+  systemd unit piping yt-dlp into mpv.`,
 
   '~/experience/building-supervisor.txt':
-`Building Supervisor
+`Operations Supervisor
 Student Union, Inc. of SJSU · San Jose, CA
 Sep 2024 – Feb 2026
 
-• Supervised and mentored staff; trained new hires on protocols.
-• Managed emergency procedures: evacuations, fire panel checks.
-• Oversaw building operations, event setup, and permit compliance.`,
+• Supervised and developed staff by monitoring performance and providing
+  hands-on coaching as needed.
+• Onboarded new hires, enforced permit compliance for organizations, and
+  coordinated event logistics.
+• Directed emergency procedures including evacuations, fire panel checks,
+  and resolution of security incidents.`,
 
   '~/experience/hksa-coordinator.txt':
 `Event Coordinator

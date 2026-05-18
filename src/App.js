@@ -19,15 +19,15 @@ const TERMINAL_LINES = [
 const SKILL_GROUPS = [
   {
     label: 'Languages',
-    items: ['C / C++', 'Assembly', 'JavaScript', 'HTML / CSS', 'Python', 'Bash / Zsh', 'PowerShell'],
+    items: ['C / C++', 'Assembly', 'JavaScript', 'TypeScript', 'HTML / CSS', 'Python', 'Bash / Zsh', 'PowerShell'],
   },
   {
     label: 'Frameworks & Libraries',
-    items: ['React.js', 'Node.js', 'FastAPI', 'SQLAlchemy'],
+    items: ['React.js', 'Vite', 'Node.js', 'Express', 'FastAPI', 'Prisma', 'SQLAlchemy', 'SQLite'],
   },
   {
     label: 'Infrastructure & DevOps',
-    items: ['Docker', 'Proxmox', 'pfSense', 'Nginx', 'Prometheus', 'Grafana', 'Ollama', 'TCP/IP', 'DHCP', 'DNS', 'VLAN', 'WireGuard', 'SSL/TLS', 'Linux', 'Git', 'GitHub Actions', 'CI/CD'],
+    items: ['Docker', 'Proxmox', 'pfSense', 'Nginx', 'Prometheus', 'Grafana', 'Ollama', 'WebSockets', 'TCP/IP', 'DHCP', 'DNS', 'VLAN', 'WireGuard', 'SSL/TLS', 'Linux', 'Git', 'GitHub Actions', 'CI/CD'],
   },
   {
     label: 'Security & Endpoint Management',
@@ -43,8 +43,9 @@ const EXPERIENCE = [
     bullets: [
       'Managed Proxmox VE, VM provisioning, backups, shutdown and high availability for reliable service continuity.',
       'Implemented Kubernetes for containerized workloads, enabling scalable deployments and operations for 40k users.',
-      'Assisted with IDF infrastructure support, including drop ports, switches, patching, and ports.',
       'Diagnosed connectivity issues spanning SSL certificates, TCP/IP, DHCP, DNS, VLANs, NAT rules, and firewalls.',
+      'Configured SNMP server to monitor printer status, toner levels, and supplies for asset management and ordering.',
+      'Assisted with MDF/IDF infrastructure support, including drop ports, switches, patching, and punchdowns.',
       'Administered Windows and macOS endpoints, Windows Server, Active Directory, Microsoft Entra ID, and Intune.',
       'Managed printers, workstation deployment, imaging, software installation, and patch management.',
       'Secured endpoints with Qualys, Sophos, Jamf, and Intune and automated tasks with PowerShell scripts.',
@@ -55,9 +56,9 @@ const EXPERIENCE = [
     company: 'SJSU Software & Computer Engineering Society  ·  San Jose, CA',
     period: 'Jan 2026\n– Present',
     bullets: [
-      'Architected real-time YouTube control system with FastAPI WebSockets and JWT-based RBAC using SQLAlchemy, managing 3 permission tiers and eliminating unauthorized access attempts.',
-      'Built CI/CD pipelines with GitHub Actions integrating pytest, pylint, and Docker containerization, achieving 95% test coverage and reducing deployment time from 10 minutes to under 2 minutes.',
-      'Designed RESTful APIs with Flask-CORS and Redis session caching, improving response times by 60% and supporting 50+ concurrent users.',
+      'Built a YouTube-to-Raspberry-Pi music streaming app in TypeScript with React, Express, Prisma, and SQLite.',
+      'Designed an egress-only WebSocket bridge so the Pi dials out to the backend, removing inbound firewall rules.',
+      'Containerized services with Docker Compose and ran the Pi daemon as a systemd unit piping yt-dlp into mpv.',
     ],
   },
   {
@@ -167,8 +168,8 @@ const PROJECTS = [
   {
     num: '02',
     title: 'Home Lab',
-    desc: 'Configured pfSense as the primary router with VLANs, custom firewall rules, and NAT policies. Deployed Proxmox as a bare-metal hypervisor to host, isolate, and snapshot homelab VMs, with TrueNAS providing a virtual disk RAID pool for redundant network-attached storage. Wired up Prometheus and Grafana for real-time metrics, alerting, and dashboards, and self-hosted Ollama for local LLM inference behind Nginx with Cloudflare SSL over a WireGuard VPN.',
-    tags: ['Docker', 'Nginx', 'Prometheus', 'Grafana', 'Ollama', 'Proxmox', 'pfSense', 'TrueNAS', 'WireGuard'],
+    desc: 'Configured pfSense as the primary router with VLANs, custom firewall rules, and NAT policies. Deployed Proxmox as a bare-metal hypervisor to host, isolate, and snapshot homelab VMs, with OpenMediaVault providing a virtual-disk RAID 10 storage pool for fault-tolerant network-attached storage. Wired up Prometheus and Grafana for real-time metrics, alerting, and dashboards, and self-hosted Ollama for local LLM inference behind Nginx with Cloudflare SSL over a WireGuard VPN.',
+    tags: ['Docker', 'Nginx', 'Prometheus', 'Grafana', 'Ollama', 'Proxmox', 'pfSense', 'OpenMediaVault', 'WireGuard'],
     code: null,
   },
   {
