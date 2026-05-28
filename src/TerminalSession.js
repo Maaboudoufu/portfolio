@@ -17,11 +17,11 @@ const BOOT = [
   { text: '[    1.893204] systemd[1]: Detected architecture x86-64.', ms: 50 },
   { text: '[    2.013948] systemd[1]: Reached target Basic System.', ms: 50 },
   { text: '[    2.234917] systemd[1]: Starting Network Manager...', ms: 60 },
-  { text: '[  OK  ] Started Network Manager.',                ok: true, ms: 80 },
-  { text: '[  OK  ] Started OpenSSH Daemon.',                 ok: true, ms: 60 },
-  { text: '[  OK  ] Started Zabbix Agent.',                   ok: true, ms: 50 },
-  { text: '[  OK  ] Started WireGuard VPN.',                  ok: true, ms: 60 },
-  { text: '[  OK  ] Reached target Multi-User System.',       ok: true, ms: 100 },
+  { text: '[  OK  ] Started Network Manager.', ok: true, ms: 80 },
+  { text: '[  OK  ] Started OpenSSH Daemon.', ok: true, ms: 60 },
+  { text: '[  OK  ] Started Zabbix Agent.', ok: true, ms: 50 },
+  { text: '[  OK  ] Started WireGuard VPN.', ok: true, ms: 60 },
+  { text: '[  OK  ] Reached target Multi-User System.', ok: true, ms: 100 },
   { text: '', ms: 150 },
   { text: 'Arch Linux 6.18.9-arch1-1 (tty1)', ms: 120 },
   { text: '', ms: 200 },
@@ -44,47 +44,47 @@ const ART = [
 ];
 
 const INFO = [
-  { label: null,       value: null, special: 'user' },
-  { label: null,       value: null, special: 'sep' },
-  { label: 'OS',       value: 'Arch Linux x86_64' },
-  { label: 'Kernel',   value: '6.18.9-arch1-1' },
-  { label: 'Shell',    value: 'zsh 5.9.0' },
-  { label: 'Role',     value: 'IT Technician @ SJSU' },
-  { label: 'School',   value: "SJSU — CE '28" },
-  { label: 'Goal',     value: 'Network Engineer' },
-  { label: 'Languages',value: 'EN · JP · ZH' },
-  { label: 'Email',    value: 'jason.p.tsao@sjsu.edu' },
+  { label: null, value: null, special: 'user' },
+  { label: null, value: null, special: 'sep' },
+  { label: 'OS', value: 'Arch Linux x86_64' },
+  { label: 'Kernel', value: '6.18.9-arch1-1' },
+  { label: 'Shell', value: 'zsh 5.9.0' },
+  { label: 'Role', value: 'IT Technician @ SJSU' },
+  { label: 'School', value: "SJSU — CE '28" },
+  { label: 'Goal', value: 'Network Engineer' },
+  { label: 'Languages', value: 'EN · JP · ZH' },
+  { label: 'Email', value: 'jason.p.tsao@sjsu.edu' },
 ];
 
 // ── virtual file system ──────────────────────────────────────────────────────
 
 const FS_DIRS = {
-  '~':                        ['about.txt', 'contact.txt', 'skills.txt', 'projects/', 'experience/', 'certs/'],
-  '~/projects':               ['studyguard/', 'home-lab/'],
-  '~/projects/studyguard':    ['README.md'],
-  '~/projects/home-lab':      ['README.md'],
-  '~/experience':             ['it-technician.txt', 'sce-developer.txt', 'building-supervisor.txt', 'hksa-coordinator.txt', 'jsa-coordinator.txt', 'sce-intern.txt', 'courtesy-clerk.txt'],
-  '~/certs':                  ['google-it.txt', 'qualys-vmdr.txt', 'tsukuba-ttbj.txt', 'redcross-cpr.txt', 'osha-10.txt'],
+  '~': ['about.txt', 'contact.txt', 'skills.txt', 'projects/', 'experience/', 'certs/'],
+  '~/projects': ['studyguard/', 'home-lab/'],
+  '~/projects/studyguard': ['README.md'],
+  '~/projects/home-lab': ['README.md'],
+  '~/experience': ['it-technician.txt', 'sce-developer.txt', 'building-supervisor.txt', 'hksa-coordinator.txt', 'jsa-coordinator.txt', 'sce-intern.txt', 'courtesy-clerk.txt'],
+  '~/certs': ['google-it.txt', 'qualys-vmdr.txt', 'tsukuba-ttbj.txt', 'redcross-cpr.txt', 'osha-10.txt'],
 };
 
 const FS_FILES = {
   '~/about.txt':
-`Name    : Jason Tsao
+    `Name    : Jason Tsao
 From    : Sacramento, CA
 Based   : San Jose, CA
-School  : SJSU — BS Computer Engineering, Minor in Japanese (GPA 3.65)
+School  : SJSU — BS Computer Engineering, Minor in Japanese (GPA 3.70)
 Grad    : June 2028
 Goal    : Network Engineer (remote/hybrid, open to living abroad)
 Spoken  : English (Native) · Japanese (Limited Working) · Chinese (Elementary)
 Orgs    : Software and Computer Engineering Society · JSA · HKSA @ SJSU`,
 
   '~/contact.txt':
-`Email   : jason.p.tsao@sjsu.edu
+    `Email   : jason.p.tsao@sjsu.edu
 GitHub  : github.com/maaboudoufu
 LinkedIn: linkedin.com/in/jtsaoo`,
 
   '~/skills.txt':
-`── Languages ──────────────────────────────────
+    `── Languages ──────────────────────────────────
   C/C++  Assembly  JavaScript  TypeScript  HTML/CSS  Python  Bash/Zsh  PowerShell
 
 ── Frameworks & Libraries ─────────────────────
@@ -98,7 +98,7 @@ LinkedIn: linkedin.com/in/jtsaoo`,
   Qualys  Sophos Central  Jamf  Intune  Active Directory  Windows Server`,
 
   '~/projects/studyguard/README.md':
-`# StudyGuard
+    `# StudyGuard
 Awarded 2nd Place at the Seeed Embodied AI Hackathon
 
 Focus-monitoring system with a dynamically changing DNS server
@@ -112,7 +112,7 @@ dnsmasq allowlist updates.
 Stack: Python · FastAPI · OpenCV · OpenAI Whisper · SQLAlchemy · NVIDIA Jetson Orin Nano`,
 
   '~/projects/home-lab/README.md':
-`# Home Lab
+    `# Home Lab
 
 pfSense as the primary router with VLANs, custom firewall rules, and
 NAT policies. Proxmox running bare-metal to host, isolate, and snapshot
@@ -126,7 +126,7 @@ Nginx with Cloudflare SSL over a WireGuard VPN.
 Stack: Docker · Nginx · Prometheus · Grafana · Ollama · Proxmox · pfSense · OpenMediaVault · WireGuard`,
 
   '~/experience/it-technician.txt':
-`IT Technician III
+    `IT Technician III
 Student Union, Inc. of SJSU · San Jose, CA
 Feb 2026 – Present
 
@@ -148,7 +148,7 @@ Feb 2026 – Present
   tasks with PowerShell scripts.`,
 
   '~/experience/sce-developer.txt':
-`Software Engineer, Development Team
+    `Software Engineer, Development Team
 SJSU Software & Computer Engineering Society · San Jose, CA
 Jan 2026 – Present
 
@@ -160,7 +160,7 @@ Jan 2026 – Present
   systemd unit piping yt-dlp into mpv.`,
 
   '~/experience/building-supervisor.txt':
-`Operations Supervisor
+    `Operations Supervisor
 Student Union, Inc. of SJSU · San Jose, CA
 Sep 2024 – Feb 2026
 
@@ -172,7 +172,7 @@ Sep 2024 – Feb 2026
   and resolution of security incidents.`,
 
   '~/experience/hksa-coordinator.txt':
-`Event Coordinator
+    `Event Coordinator
 SJSU Hong Kong Student Association · San Jose, CA
 Dec 2024 – May 2025
 
@@ -182,7 +182,7 @@ Dec 2024 – May 2025
 • Built partnerships with local businesses to secure funding.`,
 
   '~/experience/jsa-coordinator.txt':
-`Event Coordinator
+    `Event Coordinator
 Japanese Student Association at SJSU · San Jose, CA
 Sep 2024 – May 2025
 
@@ -194,14 +194,14 @@ Sep 2024 – May 2025
 • Headed a subgroup dedicated to traditional Japanese language and culture.`,
 
   '~/experience/sce-intern.txt':
-`Software Engineer Intern
+    `Software Engineer Intern
 SJSU Software & Computer Engineering Society · San Jose, CA
 Jun 2024 – Sep 2024
 
 • Built software projects using JavaScript, React.js, Node.js, HTML, and CSS.`,
 
   '~/experience/courtesy-clerk.txt':
-`Courtesy Clerk
+    `Courtesy Clerk
 Raley's · Sacramento, CA
 Jun 2022 – Aug 2024
 
@@ -212,28 +212,28 @@ Jun 2022 – Aug 2024
 • Trained new employees on store procedures and customer service standards.`,
 
   '~/certs/google-it.txt':
-`Google — Technical Support Fundamentals
+    `Google — Technical Support Fundamentals
 Issued : Feb 2026
 ID     : DBKG6T33HE1B
 Verify : coursera.org/verify/DBKG6T33HE1B`,
 
   '~/certs/qualys-vmdr.txt':
-`Qualys — Vulnerability Management Detection and Response
+    `Qualys — Vulnerability Management Detection and Response
 Issued : Nov 2025
 Expires: Nov 2027`,
 
   '~/certs/tsukuba-ttbj.txt':
-`University of Tsukuba — TTBJ 筑波日本語テスト集
+    `University of Tsukuba — TTBJ 筑波日本語テスト集
 Issued : Mar 2025`,
 
   '~/certs/redcross-cpr.txt':
-`American Red Cross — Adult and Pediatric First Aid/CPR/AED
+    `American Red Cross — Adult and Pediatric First Aid/CPR/AED
 Issued : May 2025
 Expires: May 2027
 ID     : 01UFEE1`,
 
   '~/certs/osha-10.txt':
-`CareerSafe — OSHA 10-Hour
+    `CareerSafe — OSHA 10-Hour
 Issued : Dec 2023`,
 };
 
@@ -308,7 +308,7 @@ function runCommand(raw, cwd) {
       return {
         type: 'output',
         text:
-`Commands:
+          `Commands:
   ls [dir]    list directory contents
   cd [dir]    change directory  (try: cd projects)
   cat [file]  show file contents
@@ -333,7 +333,7 @@ function Neofetch() {
   return (
     <div className="ts-fetch">
       {Array.from({ length: rows }, (_, i) => {
-        const art  = ART[i]  ?? '                 ';
+        const art = ART[i] ?? '                 ';
         const info = INFO[i] ?? null;
         return (
           <div key={i} className="ts-fetch-row">
@@ -488,10 +488,10 @@ function Shell({ onExit }) {
     <div className="ts-shell" onClick={() => inputRef.current?.focus()}>
       {entries.map((e, i) => {
         if (e.kind === 'neofetch') return <Neofetch key={i} />;
-        if (e.kind === 'prompt')   return <Prompt key={i} cwd={e.cwd} cmd={e.cmd} />;
-        if (e.kind === 'ls')       return <LsOutput key={i} entries={e.entries} />;
-        if (e.kind === 'output')   return <pre key={i} className="ts-line ts-output">{e.text}</pre>;
-        if (e.kind === 'error')    return <div key={i} className="ts-line ts-error">{e.text}</div>;
+        if (e.kind === 'prompt') return <Prompt key={i} cwd={e.cwd} cmd={e.cmd} />;
+        if (e.kind === 'ls') return <LsOutput key={i} entries={e.entries} />;
+        if (e.kind === 'output') return <pre key={i} className="ts-line ts-output">{e.text}</pre>;
+        if (e.kind === 'error') return <div key={i} className="ts-line ts-error">{e.text}</div>;
         return null;
       })}
 
@@ -565,9 +565,9 @@ export default function TerminalSession({ onClose }) {
     <div className="ts-overlay" onClick={e => e.target === e.currentTarget && onClose()}>
       <div className="ts-window">
         <div className="ts-bar">
-          <span className="ts-dot ts-dot-red"   onClick={onClose} title="close" />
+          <span className="ts-dot ts-dot-red" onClick={onClose} title="close" />
           <span className="ts-dot ts-dot-yellow" />
-          <span className="ts-dot ts-dot-green"  />
+          <span className="ts-dot ts-dot-green" />
           <span className="ts-bar-title">jason@maaboudoumei — zsh</span>
           <button className="ts-close" onClick={onClose}>✕</button>
         </div>

@@ -341,7 +341,7 @@ function About() {
           <h2 className="section-title">I like knowing how things work</h2>
           <p>
             Born and raised in Sacramento. Moved to San Jose for school — currently a
-            Computer Engineering student at SJSU with a minor in Japanese (3.65 GPA). Active in
+            Computer Engineering student at SJSU with a minor in Japanese (3.70 GPA). Active in
             the Software and Computer Engineering Society and was an officer for Japanese Student Association and
             Hong Kong Student Association during freshman year. I started working at 16 and have been building things ever since.
           </p>
