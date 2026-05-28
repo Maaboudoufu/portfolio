@@ -293,7 +293,7 @@ function About() {
               <div style={{ paddingLeft: '1rem' }}>
                 <span style={{ color: '#a8d8ff' }}>"school"</span>
                 <span style={{ color: 'var(--muted)' }}>: </span>
-                <span style={{ color: '#c8c8c8' }}>"SJSU — BS CmpE \'28 (3.65)"</span>
+                <span style={{ color: '#c8c8c8' }}>"SJSU — BS CmpE \'28 (3.70)"</span>
                 <span style={{ color: 'var(--dim)' }}>,</span>
               </div>
               <div style={{ paddingLeft: '1rem' }}>
