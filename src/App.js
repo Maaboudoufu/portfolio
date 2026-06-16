@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import './App.css';
 import TerminalSession from './TerminalSession';
 
@@ -10,7 +10,7 @@ const TERMINAL_LINES = [
   { type: 'cmd', text: 'cat /etc/role' },
   { type: 'out', text: 'IT Technician  ·  CE Student @ SJSU \'28' },
   { type: 'cmd', text: 'cat goals.txt' },
-  { type: 'out', text: 'network engineer · remote/hybrid · live abroad' },
+  { type: 'out', text: 'devsecops · remote/hybrid · live abroad' },
   { type: 'cmd', text: 'ls ~/projects/' },
   { type: 'out', text: 'studyguard/   home-lab/   resume/' },
   { type: 'cmd', text: '' },
@@ -72,8 +72,23 @@ const EXPERIENCE = [
     ],
   },
   {
+    title: 'Courtesy Clerk',
+    company: 'Raley\'s  ·  Sacramento, CA',
+    period: 'Jun 2022\n– Aug 2024',
+    bullets: [
+      'Showcased intercultural communication skills communicating in Chinese and English with colleagues and customers.',
+      'Demonstrated excellent customer service by assisting with grocery carry-out services and efficiently bagging groceries.',
+      'Maintained cleanliness and orderliness through general cleanup tasks, including sweeping, mopping, and trash removal.',
+      'Ensured product availability and organization by restocking goods and managing inventory levels.',
+      'Facilitated team growth by training new employees on store procedures, customer service standards, and operational tasks.',
+    ],
+  },
+];
+
+const ORGANIZATIONS = [
+  {
     title: 'Event Coordinator',
-    company: 'SJSU Hong Kong Student Association  ·  San Jose, CA',
+    org: 'SJSU Hong Kong Student Association  ·  San Jose, CA',
     period: 'Dec 2024\n– May 2025',
     bullets: [
       'Showcased intercultural communication skills communicating in Chinese and English with officers and club members.',
@@ -84,7 +99,7 @@ const EXPERIENCE = [
   },
   {
     title: 'Event Coordinator',
-    company: 'Japanese Student Association at SJSU  ·  San Jose, CA',
+    org: 'Japanese Student Association at SJSU  ·  San Jose, CA',
     period: 'Sep 2024\n– May 2025',
     bullets: [
       'Showcased intercultural communication skills communicating in Japanese and English with officers and club members.',
@@ -93,26 +108,6 @@ const EXPERIENCE = [
       'Organized cultural workshops and social events that boosted engagement.',
       'Developed marketing and social media campaigns to increase visibility and membership.',
       'Headed a subgroup dedicated to traditional Japanese language and culture.',
-    ],
-  },
-  {
-    title: 'Software Engineer Intern',
-    company: 'SJSU Software & Computer Engineering Society  ·  San Jose, CA',
-    period: 'Jun 2024\n– Sep 2024',
-    bullets: [
-      'Built software projects using JavaScript, React.js, Node.js, HTML, and CSS.',
-    ],
-  },
-  {
-    title: 'Courtesy Clerk',
-    company: 'Raley\'s  ·  Sacramento, CA',
-    period: 'Jun 2022\n– Aug 2024',
-    bullets: [
-      'Showcased intercultural communication skills communicating in Chinese and English with colleagues and customers.',
-      'Demonstrated excellent customer service by assisting with grocery carry-out services and efficiently bagging groceries.',
-      'Maintained cleanliness and orderliness through general cleanup tasks, including sweeping, mopping, and trash removal.',
-      'Ensured product availability and organization by restocking goods and managing inventory levels.',
-      'Facilitated team growth by training new employees on store procedures, customer service standards, and operational tasks.',
     ],
   },
 ];
@@ -155,6 +150,16 @@ const CERTS = [
     href: null,
     whiteBg: true,
   },
+];
+
+const IMMICH_URL = 'https://immich.maaboudoumei.org';
+const IMMICH_KEY = 'ZzeFhfMa6ndAljug4o6YM5eBOyt6qFYzoC1kKv6x5HM';
+const IMMICH_ALBUM = 'aa1e5338-ef21-4c71-9ee0-743d049db58e';
+const GALLERY_FALLBACK = [
+  { id: 'b11b6cc4-9934-4ffe-bd66-c5b853599b95', type: 'VIDEO' },
+  { id: 'fe85e889-ae76-4944-ade1-ba748c7f27a8', type: 'IMAGE' },
+  { id: '6792d9a2-3bba-456f-9384-407847503699', type: 'IMAGE' },
+  { id: '559c0c55-1022-4138-8349-20adf633c64d', type: 'IMAGE' },
 ];
 
 const PROJECTS = [
@@ -278,6 +283,106 @@ function Hero({ onOpenTerminal }) {
   );
 }
 
+function Gallery() {
+  const toPhoto = (id, type) => ({
+    id,
+    type,
+    src: type === 'VIDEO'
+      ? `${IMMICH_URL}/api/assets/${id}/video/playback?apiKey=${IMMICH_KEY}`
+      : `${IMMICH_URL}/api/assets/${id}/thumbnail?size=preview&apiKey=${IMMICH_KEY}`,
+  });
+
+  const [photos, setPhotos] = useState(GALLERY_FALLBACK.map(a => toPhoto(a.id, a.type)));
+  const [selectedIdx, setSelectedIdx] = useState(null);
+  const stripRef = useRef(null);
+
+  useEffect(() => {
+    fetch(`${IMMICH_URL}/api/albums/${IMMICH_ALBUM}?apiKey=${IMMICH_KEY}`)
+      .then(r => { if (!r.ok) throw new Error(); return r.json(); })
+      .then(album => {
+        if (album.assets?.length) setPhotos(album.assets.map(a => toPhoto(a.id, a.type)));
+      })
+      .catch(() => {});
+  }, []);
+
+  useEffect(() => {
+    if (selectedIdx === null) return;
+    document.body.style.overflow = 'hidden';
+    const handler = (e) => {
+      if (e.key === 'Escape') setSelectedIdx(null);
+      if (e.key === 'ArrowRight') setSelectedIdx(i => i === null ? null : Math.min(i + 1, photos.length - 1));
+      if (e.key === 'ArrowLeft') setSelectedIdx(i => i === null ? null : Math.max(i - 1, 0));
+    };
+    window.addEventListener('keydown', handler);
+    return () => {
+      document.body.style.overflow = '';
+      window.removeEventListener('keydown', handler);
+    };
+  }, [selectedIdx, photos.length]);
+
+  const scroll = (dir) => {
+    if (stripRef.current) {
+      stripRef.current.scrollBy({ left: dir * 320, behavior: 'smooth' });
+    }
+  };
+
+  if (photos.length === 0) return null;
+
+  return (
+    <div className="gallery-bg">
+      <div className="section-wrap">
+        <div className="section-label">gallery</div>
+        <div className="gallery-scroll-wrap">
+          <button className="gallery-arrow gallery-arrow-left" onClick={() => scroll(-1)} aria-label="Scroll left">{'\u2039'}</button>
+          <div className="gallery-strip" ref={stripRef}>
+            {photos.map((p, i) => (
+              <div className="gallery-item" key={p.id} onClick={() => setSelectedIdx(i)}>
+                {p.type === 'VIDEO' ? (
+                  <video src={p.src} autoPlay loop muted playsInline draggable="false" />
+                ) : (
+                  <img src={p.src} alt="" loading="lazy" draggable="false" />
+                )}
+              </div>
+            ))}
+          </div>
+          <button className="gallery-arrow gallery-arrow-right" onClick={() => scroll(1)} aria-label="Scroll right">{'\u203A'}</button>
+        </div>
+        <div className="gallery-attrib">
+          <img src="/logos/immich.svg" alt="Immich" className="immich-logo" />
+          <span>made possible with immich ╾━╤デ╦︻ (•_- )</span>
+        </div>
+      </div>
+
+      {selectedIdx !== null && (
+        <div className="gallery-lightbox" onClick={() => setSelectedIdx(null)}>
+          <button className="lightbox-close" onClick={() => setSelectedIdx(null)} aria-label="Close">{'\u00D7'}</button>
+          {selectedIdx > 0 && (
+            <button className="lightbox-nav lightbox-prev" onClick={(e) => { e.stopPropagation(); setSelectedIdx(selectedIdx - 1); }} aria-label="Previous">{'\u2039'}</button>
+          )}
+          {photos[selectedIdx].type === 'VIDEO' ? (
+            <video
+              src={photos[selectedIdx].src}
+              autoPlay loop controls
+              className="lightbox-img"
+              onClick={(e) => e.stopPropagation()}
+            />
+          ) : (
+            <img
+              src={photos[selectedIdx].src}
+              alt=""
+              className="lightbox-img"
+              onClick={(e) => e.stopPropagation()}
+            />
+          )}
+          {selectedIdx < photos.length - 1 && (
+            <button className="lightbox-nav lightbox-next" onClick={(e) => { e.stopPropagation(); setSelectedIdx(selectedIdx + 1); }} aria-label="Next">{'\u203A'}</button>
+          )}
+        </div>
+      )}
+    </div>
+  );
+}
+
 function About() {
   return (
     <section id="about">
@@ -317,7 +422,7 @@ function About() {
               <div style={{ paddingLeft: '1rem' }}>
                 <span style={{ color: '#a8d8ff' }}>"goal"</span>
                 <span style={{ color: 'var(--muted)' }}>: </span>
-                <span style={{ color: '#c8c8c8' }}>"network engineer · remote/hybrid"</span>
+                <span style={{ color: '#c8c8c8' }}>"devsecops · remote/hybrid"</span>
                 <span style={{ color: 'var(--dim)' }}>,</span>
               </div>
               <div style={{ paddingLeft: '1rem' }}>
@@ -338,7 +443,7 @@ function About() {
 
         <div className="about-text">
           <div className="section-label">about</div>
-          <h2 className="section-title">I like knowing how things work</h2>
+          <h2 className="section-title">About me</h2>
           <p>
             Born and raised in Sacramento. Moved to San Jose for school — currently a
             Computer Engineering student at SJSU with a minor in Japanese (3.70 GPA). Active in
@@ -352,7 +457,7 @@ function About() {
             and a locally-hosted AI on my own hardware.
           </p>
           <p>
-            Long-term I am trying to aim for a network engineering role, ideally remote or hybrid,
+            Long-term I am trying to aim for a DevSecOps role, ideally remote or hybrid,
             with the flexibility to live and work from abroad.
           </p>
         </div>
@@ -367,7 +472,6 @@ function Experience() {
       <div className="section-wrap" id="experience">
         <div className="section-label">experience</div>
         <h2 className="section-title">Where I've worked</h2>
-        <p className="section-desc">Work history going back to my first job at 16.</p>
         <div className="timeline">
           {EXPERIENCE.map((job, index) => (
             <div className="timeline-item" key={`${job.company}-${index}`}>
@@ -387,12 +491,34 @@ function Experience() {
   );
 }
 
+function Organizations() {
+  return (
+    <section id="organizations">
+      <div className="section-label">organizations</div>
+      <h2 className="section-title">Clubs & involvement</h2>
+      <div className="timeline">
+        {ORGANIZATIONS.map((role, index) => (
+          <div className="timeline-item" key={`${role.org}-${index}`}>
+            <div className="timeline-period mono">{role.period}</div>
+            <div className="timeline-card">
+              <div className="timeline-title">{role.title}</div>
+              <div className="timeline-company">{role.org}</div>
+              <ul className="timeline-bullets">
+                {role.bullets.map((b, i) => <li key={i}>{b}</li>)}
+              </ul>
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
 function Skills() {
   return (
     <section id="skills">
       <div className="section-label">skills</div>
       <h2 className="section-title">Tech stack</h2>
-      <p className="section-desc">From embedded C++ to enterprise endpoint management.</p>
       <div className="skills-groups">
         {SKILL_GROUPS.map((g) => (
           <div className="skill-group" key={g.label}>
@@ -447,7 +573,6 @@ function Projects() {
     <section id="projects">
       <div className="section-label">projects</div>
       <h2 className="section-title">Things I've built</h2>
-      <p className="section-desc">Running on my own hardware.</p>
       <div className="projects-grid">
         {PROJECTS.map((p) => (
           <div className="project-card" key={p.num}>
@@ -519,8 +644,10 @@ export default function App() {
       <Navbar />
       <Hero onOpenTerminal={() => setTermOpen(true)} />
       {termOpen && <TerminalSession onClose={() => setTermOpen(false)} />}
+      <Gallery />
       <About />
       <Experience />
+      <Organizations />
       <Skills />
       <Certs />
       <Projects />
