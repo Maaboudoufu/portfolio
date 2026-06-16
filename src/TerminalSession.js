@@ -4,30 +4,35 @@ import './TerminalSession.css';
 // ── boot sequence ────────────────────────────────────────────────────────────
 
 const BOOT = [
-  { text: '[    0.000000] Booting Linux 6.18.9-arch1-1 #1 SMP PREEMPT_DYNAMIC', ms: 30 },
-  { text: '[    0.000001] Command line: BOOT_IMAGE=/boot/vmlinuz-linux root=/dev/sda1 rw quiet', ms: 25 },
-  { text: '[    0.089234] BIOS-e820: [mem 0x0000000000000000-0x000000000009fbff] usable', ms: 25 },
-  { text: '[    0.203841] ACPI: RSDP 0x00000000000F0490 000024 (v02 BOCHS )', ms: 25 },
-  { text: '[    0.441928] PCI: Using configuration type 1 for base access', ms: 20 },
-  { text: '[    0.847203] pci 0000:00:02.0: [1234:1111] type 00 class 0x030000', ms: 20 },
-  { text: '[    1.102938] NET: Registered PF_INET protocol family', ms: 30 },
-  { text: '[    1.204813] NET: Registered PF_INET6 protocol family', ms: 30 },
-  { text: '[    1.589234] random: crng init done', ms: 25 },
-  { text: '[    1.782031] EXT4-fs (sda1): mounted filesystem', ms: 25 },
-  { text: '[    1.893204] systemd[1]: Detected architecture x86-64.', ms: 50 },
-  { text: '[    2.013948] systemd[1]: Reached target Basic System.', ms: 50 },
-  { text: '[    2.234917] systemd[1]: Starting Network Manager...', ms: 60 },
-  { text: '[  OK  ] Started Network Manager.', ok: true, ms: 80 },
-  { text: '[  OK  ] Started OpenSSH Daemon.', ok: true, ms: 60 },
-  { text: '[  OK  ] Started Zabbix Agent.', ok: true, ms: 50 },
-  { text: '[  OK  ] Started WireGuard VPN.', ok: true, ms: 60 },
-  { text: '[  OK  ] Reached target Multi-User System.', ok: true, ms: 100 },
+  { text: '[    0.000000] Linux version 7.0.11-arch1-1 (linux@archlinux) (gcc (GCC) 16.1.1 20260430) #1 SMP PREEMPT_DYNAMIC', ms: 30 },
+  { text: '[    0.000000] Command line: initrd=\\initramfs-linux.img root=PARTUUID=32f1d1bf-e2bc-4250-83c3-9077fd28f38f rw rootfstype=ext4', ms: 25 },
+  { text: '[    0.089234] efi: EFI v2.11 by American Megatrends', ms: 20 },
+  { text: '[    0.203841] SMBIOS 3.8.0 present.', ms: 15 },
+  { text: '[    0.203842] DMI: Micro-Star International Co., Ltd. MS-7E70/PRO X870E-P WIFI (MS-7E70), BIOS 2.A35 01/20/2026', ms: 20 },
+  { text: '[    0.752031] smpboot: CPU0: AMD Ryzen 7 9800X3D 8-Core Processor (family: 0x1a, model: 0x44, stepping: 0x0)', ms: 25 },
+  { text: '[    0.893204] smpboot: Total of 16 processors activated (150399.64 BogoMIPS)', ms: 20 },
+  { text: '[    1.102938] Memory: 31294868K/32380252K available (21869K kernel code, 3061K rwdata, 16824K rodata)', ms: 25 },
+  { text: '[    1.204813] NET: Registered PF_INET protocol family', ms: 20 },
+  { text: '[    1.589234] random: crng init done', ms: 15 },
+  { text: '[    1.782031] nvme nvme0: pci function 0000:02:00.0', ms: 20 },
+  { text: '[    1.893204] EXT4-fs (nvme0n1p2): mounted filesystem 88c92d1a r/w with ordered data mode.', ms: 25 },
+  { text: '[    2.013948] r8169 0000:0e:00.0 eth0: RTL8126A, 34:5a:60:d2:69:81, XID 64a, IRQ 166', ms: 25 },
+  { text: '[    2.234917] r8169 0000:0e:00.0 enp14s0: renamed from eth0', ms: 20 },
+  { text: '[    2.456000] systemd[1]: Detected architecture x86-64.', ms: 40 },
+  { text: '[  OK  ] Finished Remount Root and Kernel File Systems.', ok: true, ms: 50 },
+  { text: '[  OK  ] Finished Load Kernel Modules.', ok: true, ms: 40 },
+  { text: '[  OK  ] Started Journal Service.', ok: true, ms: 40 },
+  { text: '[  OK  ] Started Rule-based Manager for Device Events and Files.', ok: true, ms: 50 },
+  { text: '[  OK  ] Finished Coldplug All udev Devices.', ok: true, ms: 40 },
+  { text: '[  OK  ] Started Network Time Synchronization.', ok: true, ms: 50 },
+  { text: '[  OK  ] Started D-Bus System Message Bus.', ok: true, ms: 40 },
+  { text: '[  OK  ] Reached target Multi-User System.', ok: true, ms: 80 },
   { text: '', ms: 150 },
-  { text: 'Arch Linux 6.18.9-arch1-1 (tty1)', ms: 120 },
+  { text: 'Arch Linux 7.0.11-arch1-1 (tty1)', ms: 120 },
   { text: '', ms: 200 },
   { text: 'maaboudoumei login: jason', ms: 80, login: true },
   { text: 'Password: ········', ms: 500 },
-  { text: 'Last login: Fri Mar 21 00:00:00 2026 from 10.0.0.1', ms: 80 },
+  { text: 'Last login: Mon Jun 16 07:32:41 2026 from 10.24.8.1', ms: 80 },
   { text: '', ms: 120 },
 ];
 
@@ -51,7 +56,7 @@ const INFO = [
   { label: 'Shell', value: 'zsh 5.9.0' },
   { label: 'Role', value: 'IT Technician @ SJSU' },
   { label: 'School', value: "SJSU — CE '28" },
-  { label: 'Goal', value: 'Network Engineer' },
+  { label: 'Goal', value: 'DevSecOps' },
   { label: 'Languages', value: 'EN · JP · ZH' },
   { label: 'Email', value: 'jason.p.tsao@sjsu.edu' },
 ];
@@ -59,11 +64,12 @@ const INFO = [
 // ── virtual file system ──────────────────────────────────────────────────────
 
 const FS_DIRS = {
-  '~': ['about.txt', 'contact.txt', 'skills.txt', 'projects/', 'experience/', 'certs/'],
+  '~': ['about.txt', 'contact.txt', 'skills.txt', 'projects/', 'experience/', 'organizations/', 'certs/'],
   '~/projects': ['studyguard/', 'home-lab/'],
   '~/projects/studyguard': ['README.md'],
   '~/projects/home-lab': ['README.md'],
-  '~/experience': ['it-technician.txt', 'sce-developer.txt', 'building-supervisor.txt', 'hksa-coordinator.txt', 'jsa-coordinator.txt', 'sce-intern.txt', 'courtesy-clerk.txt'],
+  '~/experience': ['it-technician.txt', 'sce-developer.txt', 'building-supervisor.txt', 'courtesy-clerk.txt'],
+  '~/organizations': ['hksa.txt', 'jsa.txt'],
   '~/certs': ['google-it.txt', 'qualys-vmdr.txt', 'tsukuba-ttbj.txt', 'redcross-cpr.txt', 'osha-10.txt'],
 };
 
@@ -74,7 +80,7 @@ From    : Sacramento, CA
 Based   : San Jose, CA
 School  : SJSU — BS Computer Engineering, Minor in Japanese (GPA 3.70)
 Grad    : June 2028
-Goal    : Network Engineer (remote/hybrid, open to living abroad)
+Goal    : DevSecOps (remote/hybrid, open to living abroad)
 Spoken  : English (Native) · Japanese (Limited Working) · Chinese (Elementary)
 Orgs    : Software and Computer Engineering Society · JSA · HKSA @ SJSU`,
 
@@ -171,35 +177,6 @@ Sep 2024 – Feb 2026
 • Directed emergency procedures including evacuations, fire panel checks,
   and resolution of security incidents.`,
 
-  '~/experience/hksa-coordinator.txt':
-    `Event Coordinator
-SJSU Hong Kong Student Association · San Jose, CA
-Dec 2024 – May 2025
-
-• Showcased intercultural communication skills in Chinese and English.
-• Managed marketing and social media to boost visibility and attract new members.
-• Coordinated cultural workshops and social events for community engagement.
-• Built partnerships with local businesses to secure funding.`,
-
-  '~/experience/jsa-coordinator.txt':
-    `Event Coordinator
-Japanese Student Association at SJSU · San Jose, CA
-Sep 2024 – May 2025
-
-• Showcased intercultural communication skills in Japanese and English.
-• Led weekly meetings and delegated roles to improve coordination.
-• Partnered with local businesses to secure funding and grow events.
-• Organized cultural workshops and social events that boosted engagement.
-• Developed marketing and social media campaigns for visibility and membership.
-• Headed a subgroup dedicated to traditional Japanese language and culture.`,
-
-  '~/experience/sce-intern.txt':
-    `Software Engineer Intern
-SJSU Software & Computer Engineering Society · San Jose, CA
-Jun 2024 – Sep 2024
-
-• Built software projects using JavaScript, React.js, Node.js, HTML, and CSS.`,
-
   '~/experience/courtesy-clerk.txt':
     `Courtesy Clerk
 Raley's · Sacramento, CA
@@ -235,6 +212,28 @@ ID     : 01UFEE1`,
   '~/certs/osha-10.txt':
     `CareerSafe — OSHA 10-Hour
 Issued : Dec 2023`,
+
+  '~/organizations/hksa.txt':
+    `Event Coordinator
+SJSU Hong Kong Student Association · San Jose, CA
+Dec 2024 – May 2025
+
+• Showcased intercultural communication skills in Chinese and English.
+• Managed marketing and social media to boost visibility and attract new members.
+• Coordinated cultural workshops and social events for community engagement.
+• Built partnerships with local businesses to secure funding.`,
+
+  '~/organizations/jsa.txt':
+    `Event Coordinator
+Japanese Student Association at SJSU · San Jose, CA
+Sep 2024 – May 2025
+
+• Showcased intercultural communication skills in Japanese and English.
+• Led weekly meetings and delegated roles to improve coordination.
+• Partnered with local businesses to secure funding and grow events.
+• Organized cultural workshops and social events that boosted engagement.
+• Developed marketing and social media campaigns for visibility and membership.
+• Headed a subgroup dedicated to traditional Japanese language and culture.`,
 };
 
 // ── path helpers ─────────────────────────────────────────────────────────────
@@ -415,7 +414,7 @@ function Shell({ onExit }) {
     setInput('');
 
     if (result.type === 'exit') { onExit(); return; }
-    if (result.type === 'clear') { setEntries([{ kind: 'neofetch' }]); return; }
+    if (result.type === 'clear') { setEntries([]); return; }
 
     const promptEntry = { kind: 'prompt', cwd, cmd: raw };
 
@@ -464,7 +463,7 @@ function Shell({ onExit }) {
     }
     if (e.key === 'l' && e.ctrlKey) {
       e.preventDefault();
-      setEntries([{ kind: 'neofetch' }]);
+      setEntries([]);
     }
     if (e.key === 'c' && e.ctrlKey) {
       e.preventDefault();
