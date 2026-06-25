@@ -8,7 +8,7 @@ const TERMINAL_LINES = [
   { type: 'cmd', text: 'whoami' },
   { type: 'out', text: 'jason tsao' },
   { type: 'cmd', text: 'cat /etc/role' },
-  { type: 'out', text: 'IT Technician  ·  CE Student @ SJSU \'28' },
+  { type: 'out', text: 'Systems Administrator  ·  CE Student @ SJSU \'28' },
   { type: 'cmd', text: 'cat goals.txt' },
   { type: 'out', text: 'devsecops · remote/hybrid · live abroad' },
   { type: 'cmd', text: 'ls ~/projects/' },
@@ -37,7 +37,7 @@ const SKILL_GROUPS = [
 
 const EXPERIENCE = [
   {
-    title: 'IT Technician III',
+    title: 'Systems Administrator',
     company: 'Student Union, Inc. of SJSU  ·  San Jose, CA',
     period: 'Feb 2026\n– Present',
     bullets: [
@@ -49,6 +49,8 @@ const EXPERIENCE = [
       'Administered Windows and macOS endpoints, Windows Server, Active Directory, Microsoft Entra ID, and Intune.',
       'Managed printers, workstation deployment, imaging, software installation, and patch management.',
       'Secured endpoints with Qualys, Sophos, Jamf, and Intune and automated tasks with PowerShell scripts.',
+      'Conducted technical interviews to screen and evaluate candidates for IT support roles.',
+      'Coordinated with external vendors and SaaS providers to procure service plans and resolve technical issues.',
     ],
   },
   {
@@ -404,7 +406,7 @@ function About() {
               <div style={{ paddingLeft: '1rem' }}>
                 <span style={{ color: '#a8d8ff' }}>"role"</span>
                 <span style={{ color: 'var(--muted)' }}>: </span>
-                <span style={{ color: '#c8c8c8' }}>"IT Technician"</span>
+                <span style={{ color: '#c8c8c8' }}>"Systems Administrator"</span>
                 <span style={{ color: 'var(--dim)' }}>,</span>
               </div>
               <div style={{ paddingLeft: '1rem' }}>
@@ -451,7 +453,7 @@ function About() {
             Hong Kong Student Association during freshman year. I started working at 16 and have been building things ever since.
           </p>
           <p>
-            I work as an IT Technician managing enterprise infrastructure: Active Directory,
+            I work as a Systems Administrator managing enterprise infrastructure: Active Directory,
             Windows Server, endpoint security, and networking. Outside of work I run a
             home lab — WireGuard VPN, Nginx reverse proxy, containerized services,
             and a locally-hosted AI on my own hardware.
