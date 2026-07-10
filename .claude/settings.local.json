@@ -1,0 +1,37 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm install:*)",
+      "WebFetch(domain:github.com)",
+      "Bash(npx --yes eslint --no-eslintrc --parser-options=ecmaVersion:2022,sourceType:module,ecmaFeatures:{jsx:true} src/App.js)",
+      "Bash(node -e \"require\\('@babel/parser'\\).parse\\(require\\('fs'\\).readFileSync\\('src/App.js','utf8'\\),{sourceType:'module',plugins:['jsx']}\\); console.log\\('OK'\\);\")",
+      "Bash(gh run *)",
+      "Bash(curl -sI \"https://maaboudoumei.org/resume.pdf\")",
+      "WebSearch",
+      "WebFetch(domain:immich.app)",
+      "WebFetch(domain:docs.immich.app)",
+      "Bash(curl -s -H \"x-api-key: REDACTED\" \"https://immich.maaboudoumei.org/api/albums\")",
+      "Bash(python3 -m json.tool)",
+      "Bash(curl -s -H \"x-api-key: REDACTED\" \"https://immich.maaboudoumei.org/api/albums/aa1e5338-ef21-4c71-9ee0-743d049db58e\")",
+      "Bash(curl:*)",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "Bash(python3 -c \"import json,sys; [print\\(f['name']\\) for f in json.load\\(sys.stdin\\) if 'immich' in f['name'].lower\\(\\) and f['name'].endswith\\('.svg'\\)]\")",
+      "Bash(npm start:*)",
+      "Bash(npx react-scripts:*)",
+      "Bash(python3 -c ':*)",
+      "WebFetch(domain:bbs.archlinux.org)",
+      "WebFetch(domain:wiki.archlinux.org)",
+      "WebFetch(domain:www.man7.org)",
+      "WebFetch(domain:man.archlinux.org)",
+      "WebFetch(domain:linuxize.com)",
+      "WebFetch(domain:phoenixnap.com)",
+      "WebFetch(domain:blog.ycrash.io)",
+      "WebFetch(domain:www.binarytides.com)",
+      "WebFetch(domain:man7.org)",
+      "Bash(dmesg)",
+      "Bash(journalctl -b --no-pager -o short)",
+      "Read(//etc/**)",
+      "Bash(hostnamectl)"
+    ]
+  }
+}
