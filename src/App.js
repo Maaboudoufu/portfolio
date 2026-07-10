@@ -155,7 +155,10 @@ const CERTS = [
 ];
 
 const IMMICH_URL = 'https://immich.maaboudoumei.org';
-const IMMICH_KEY = 'REDACTED';
+// Public album shared-link slug (immich.maaboudoumei.org/s/<slug>). This is a
+// read-only, album-scoped, revocable share — NOT an account API key. Safe to ship
+// in the client bundle: it can only view this one album's previews, nothing else.
+const IMMICH_SLUG = 'portfolio';
 const IMMICH_ALBUM = 'aa1e5338-ef21-4c71-9ee0-743d049db58e';
 const GALLERY_FALLBACK = [
   { id: 'b11b6cc4-9934-4ffe-bd66-c5b853599b95', type: 'VIDEO' },
@@ -290,8 +293,8 @@ function Gallery() {
     id,
     type,
     src: type === 'VIDEO'
-      ? `${IMMICH_URL}/api/assets/${id}/video/playback?apiKey=${IMMICH_KEY}`
-      : `${IMMICH_URL}/api/assets/${id}/thumbnail?size=preview&apiKey=${IMMICH_KEY}`,
+      ? `${IMMICH_URL}/api/assets/${id}/video/playback?slug=${IMMICH_SLUG}`
+      : `${IMMICH_URL}/api/assets/${id}/thumbnail?size=preview&slug=${IMMICH_SLUG}`,
   });
 
   const [photos, setPhotos] = useState(GALLERY_FALLBACK.map(a => toPhoto(a.id, a.type)));
@@ -299,7 +302,7 @@ function Gallery() {
   const stripRef = useRef(null);
 
   useEffect(() => {
-    fetch(`${IMMICH_URL}/api/albums/${IMMICH_ALBUM}?apiKey=${IMMICH_KEY}`)
+    fetch(`${IMMICH_URL}/api/albums/${IMMICH_ALBUM}?slug=${IMMICH_SLUG}`)
       .then(r => { if (!r.ok) throw new Error(); return r.json(); })
       .then(album => {
         if (album.assets?.length) setPhotos(album.assets.map(a => toPhoto(a.id, a.type)));
