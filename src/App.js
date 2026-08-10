@@ -11,11 +11,11 @@ const TERMINAL_LINES = [
   { type: 'cmd', text: 'whoami' },
   { type: 'out', text: 'jason tsao' },
   { type: 'cmd', text: 'cat /etc/role' },
-  { type: 'out', text: 'Systems Administrator  ·  CE Student @ SJSU \'28' },
+  { type: 'out', text: 'IT Systems Administrator  ·  CE Student @ SJSU \'28' },
   { type: 'cmd', text: 'cat goals.txt' },
   { type: 'out', text: 'devsecops · remote/hybrid · live abroad' },
   { type: 'cmd', text: 'ls ~/projects/' },
-  { type: 'out', text: 'studyguard/   home-lab/   resume/' },
+  { type: 'out', text: 'studyguard/   home-lab/' },
   { type: 'cmd', text: '' },
 ];
 
@@ -26,39 +26,46 @@ const SKILL_GROUPS = [
   },
   {
     label: 'Frameworks & Libraries',
-    items: ['React.js', 'Vite', 'Node.js', 'Express', 'FastAPI', 'Prisma', 'SQLAlchemy', 'SQLite'],
+    items: ['React.js', 'Vite', 'Node.js', 'Express', 'FastAPI', 'Prisma', 'SQLAlchemy', 'SQLite', 'OpenCV', 'OpenAI Whisper', 'GPT-4V', 'MCP'],
   },
   {
     label: 'Infrastructure & DevOps',
-    items: ['Docker', 'Proxmox', 'pfSense', 'Nginx', 'Prometheus', 'Grafana', 'Ollama', 'WebSockets', 'TCP/IP', 'DHCP', 'DNS', 'VLAN', 'WireGuard', 'SSL/TLS', 'Linux', 'Git', 'GitHub Actions', 'CI/CD'],
+    items: ['Docker', 'Proxmox', 'pfSense', 'Nginx', 'Prometheus', 'Grafana', 'Ollama', 'WebSockets', 'TCP/IP', 'NAT', 'DHCP', 'DNS', 'VLAN', 'VPN', 'SSL/TLS', 'Linux', 'Git', 'GitHub Actions', 'CI/CD'],
   },
   {
     label: 'Security & Endpoint Management',
-    items: ['Qualys', 'Sophos Central', 'Jamf', 'Intune', 'Active Directory', 'Windows Server'],
+    items: ['Qualys', 'Sophos', 'Jamf', 'Intune', 'Active Directory', 'RBAC', 'Windows Server'],
   },
 ];
 
 const EXPERIENCE = [
   {
-    title: 'Systems Administrator',
+    title: 'IT Systems Administrator',
     company: 'Student Union, Inc. of SJSU  ·  San Jose, CA',
-    period: 'Feb 2026\n– Present',
+    period: 'May 2026\n– Present',
     bullets: [
-      'Managed Proxmox VE, VM provisioning, backups, shutdown and high availability for reliable service continuity.',
-      'Implemented Kubernetes for containerized workloads, enabling scalable deployments and operations for 40k users.',
+      'Managed Proxmox VE, VMware ESX, Veeam backups, UPS and high availability for hardware service continuity.',
+      'Implemented Kubernetes for containerized workloads, enabling continual scalable deployments for 40k students.',
+      'Developed and deployed a server-side AI agent to orchestrate MCP calls and integrate external tools and services.',
+      'Deployed and administered Bitbucket and Plane, configuring RBAC, branching, and CI/CD workflows.',
       'Diagnosed connectivity issues spanning SSL certificates, TCP/IP, DHCP, DNS, VLANs, NAT rules, and firewalls.',
-      'Configured SNMP server to monitor printer status, toner levels, and supplies for asset management and ordering.',
+      'Configured CUPS/SNMP for real-time printing/tracking, asset management, and automated supplies ordering.',
+    ],
+  },
+  {
+    title: 'IT Technician',
+    company: 'Student Union, Inc. of SJSU  ·  San Jose, CA',
+    period: 'Feb 2026\n– May 2026',
+    bullets: [
+      'Managed Windows print server, imaging, software installation, workstation deployment, and patch management.',
+      'Managed and secured Windows and macOS endpoints with Intune and Jamf, enforcing compliance policies.',
+      'Identified, prioritized, and remediated CVEs using Qualys, leveraging CVSS severity to reduce vulnerabilities.',
       'Assisted with MDF/IDF infrastructure support, including drop ports, switches, patching, and punchdowns.',
-      'Administered Windows and macOS endpoints, Windows Server, Active Directory, Microsoft Entra ID, and Intune.',
-      'Managed printers, workstation deployment, imaging, software installation, and patch management.',
-      'Secured endpoints with Qualys, Sophos, Jamf, and Intune and automated tasks with PowerShell scripts.',
-      'Conducted technical interviews to screen and evaluate candidates for IT support roles.',
-      'Coordinated with external vendors and SaaS providers to procure service plans and resolve technical issues.',
     ],
   },
   {
     title: 'Software Engineer, Development Team',
-    company: 'SJSU Software & Computer Engineering Society  ·  San Jose, CA',
+    company: 'Software and Computer Engineering Society  ·  San Jose, CA',
     period: 'Jan 2026\n– Present',
     bullets: [
       'Built a YouTube-to-Raspberry-Pi music streaming app in TypeScript with React, Express, Prisma, and SQLite.',
@@ -181,16 +188,9 @@ const PROJECTS = [
   {
     num: '02',
     title: 'Home Lab',
-    desc: 'Configured pfSense as the primary router with VLANs, custom firewall rules, and NAT policies. Deployed Proxmox as a bare-metal hypervisor to host, isolate, and snapshot homelab VMs, with OpenMediaVault providing a virtual-disk RAID 10 storage pool for fault-tolerant network-attached storage. Wired up Prometheus and Grafana for real-time metrics, alerting, and dashboards, and self-hosted Ollama for local LLM inference behind Nginx with Cloudflare SSL over a WireGuard VPN.',
-    tags: ['Docker', 'Nginx', 'Prometheus', 'Grafana', 'Ollama', 'Proxmox', 'pfSense', 'OpenMediaVault', 'WireGuard'],
+    desc: 'Configured pfSense as the primary router with segmented VLANs, custom firewall rules, and NAT policies. Deployed Proxmox as a bare-metal hypervisor to host, isolate, and snapshot multiple homelab VMs, automating host configuration and SSH key distribution with idempotent, agentless Ansible playbooks. Deployed OpenMediaVault with a virtual-disk RAID 10 storage pool for fault-tolerant network-attached storage, and wired up Prometheus/Grafana for real-time metrics collection, alerting, and custom dashboards. Secured a self-hosted Ollama LLM endpoint behind an Nginx reverse proxy with TLS, gated by WireGuard.',
+    tags: ['Docker', 'Ansible', 'Nginx', 'Prometheus', 'Grafana', 'Ollama', 'Proxmox', 'pfSense', 'OpenMediaVault', 'WireGuard'],
     code: null,
-  },
-  {
-    num: '03',
-    title: 'Resume',
-    desc: 'Self-hosted LaTeX resume workflow replacing cloud editors like Overleaf. Uses latexmk for automatic PDF compilation on file changes, Zathura for live-reloading PDF preview, and Neovim with vimtex for a fully local, subscription-free editing environment.',
-    tags: ['LaTeX', 'Neovim', 'latexmk', 'TeX Live'],
-    code: 'https://github.com/Maaboudoufu/resume',
   },
 ];
 
@@ -466,7 +466,7 @@ function About() {
               <div style={{ paddingLeft: '1rem' }}>
                 <span style={{ color: '#a8d8ff' }}>"role"</span>
                 <span style={{ color: 'var(--muted)' }}>: </span>
-                <span style={{ color: '#c8c8c8' }}>"Systems Administrator"</span>
+                <span style={{ color: '#c8c8c8' }}>"IT Systems Administrator"</span>
                 <span style={{ color: 'var(--dim)' }}>,</span>
               </div>
               <div style={{ paddingLeft: '1rem' }}>
@@ -513,7 +513,7 @@ function About() {
             Hong Kong Student Association during freshman year. I started working at 16 and have been building things ever since.
           </p>
           <p>
-            I work as a Systems Administrator managing enterprise infrastructure: Active Directory,
+            I work as an IT Systems Administrator managing enterprise infrastructure: Active Directory,
             Windows Server, endpoint security, and networking. Outside of work I run a
             home lab — WireGuard VPN, Nginx reverse proxy, containerized services,
             and a locally-hosted AI on my own hardware.
@@ -759,9 +759,9 @@ function Contact() {
   const links = [
     {
       kind: 'email',
-      href: 'mailto:jason.p.tsao@sjsu.edu',
+      href: 'mailto:jason.tsao@maaboudoumei.org',
       label: 'email',
-      value: 'jason.p.tsao@sjsu.edu',
+      value: 'jason.tsao@maaboudoumei.org',
       external: false,
     },
     {

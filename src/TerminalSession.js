@@ -56,11 +56,11 @@ const INFO = [
   { label: 'OS', value: 'Arch Linux x86_64' },
   { label: 'Kernel', value: '6.18.9-arch1-1' },
   { label: 'Shell', value: 'zsh 5.9.0' },
-  { label: 'Role', value: 'IT Technician @ SJSU' },
+  { label: 'Role', value: 'IT Systems Administrator @ SJSU' },
   { label: 'School', value: "SJSU — CE '28" },
   { label: 'Goal', value: 'DevSecOps' },
   { label: 'Languages', value: 'EN · JP · ZH' },
-  { label: 'Email', value: 'jason.p.tsao@sjsu.edu' },
+  { label: 'Email', value: 'jason.tsao@maaboudoumei.org' },
 ];
 
 // ── virtual file system ──────────────────────────────────────────────────────
@@ -70,7 +70,7 @@ const FS_DIRS = {
   '~/projects': ['studyguard/', 'home-lab/'],
   '~/projects/studyguard': ['README.md'],
   '~/projects/home-lab': ['README.md'],
-  '~/experience': ['it-technician.txt', 'sce-developer.txt', 'building-supervisor.txt', 'courtesy-clerk.txt'],
+  '~/experience': ['it-systems-administrator.txt', 'it-technician.txt', 'sce-developer.txt', 'building-supervisor.txt', 'courtesy-clerk.txt'],
   '~/organizations': ['hksa.txt', 'jsa.txt'],
   '~/certs': ['google-it.txt', 'qualys-vmdr.txt', 'tsukuba-ttbj.txt', 'redcross-cpr.txt', 'osha-10.txt'],
 };
@@ -81,13 +81,13 @@ const FS_FILES = {
 From    : Sacramento, CA
 Based   : San Jose, CA
 School  : SJSU — BS Computer Engineering, Minor in Japanese (GPA 3.70)
-Grad    : June 2028
+Grad    : Dec 2027
 Goal    : DevSecOps (remote/hybrid, open to living abroad)
 Spoken  : English (Native) · Japanese (Limited Working) · Chinese (Elementary)
 Orgs    : Software and Computer Engineering Society · JSA · HKSA @ SJSU`,
 
   '~/contact.txt':
-    `Email   : jason.p.tsao@sjsu.edu
+    `Email   : jason.tsao@maaboudoumei.org
 GitHub  : github.com/maaboudoufu
 LinkedIn: linkedin.com/in/jtsaoo`,
 
@@ -97,13 +97,14 @@ LinkedIn: linkedin.com/in/jtsaoo`,
 
 ── Frameworks & Libraries ─────────────────────
   React.js  Vite  Node.js  Express  FastAPI  Prisma  SQLAlchemy  SQLite
+  OpenCV  OpenAI Whisper  GPT-4V  MCP
 
 ── Infrastructure & DevOps ────────────────────
   Docker  Proxmox  pfSense  Nginx  Prometheus  Grafana  Ollama  WebSockets
-  TCP/IP  DHCP  DNS  VLAN  WireGuard  SSL/TLS  Linux  Git  GitHub Actions  CI/CD
+  TCP/IP  NAT  DHCP  DNS  VLAN  VPN  SSL/TLS  Linux  Git  GitHub Actions  CI/CD
 
 ── Security & Endpoint Management ─────────────
-  Qualys  Sophos Central  Jamf  Intune  Active Directory  Windows Server`,
+  Qualys  Sophos  Jamf  Intune  Active Directory  RBAC  Windows Server`,
 
   '~/projects/studyguard/README.md':
     `# StudyGuard
@@ -122,42 +123,53 @@ Stack: Python · FastAPI · OpenCV · OpenAI Whisper · SQLAlchemy · NVIDIA Jet
   '~/projects/home-lab/README.md':
     `# Home Lab
 
-pfSense as the primary router with VLANs, custom firewall rules, and
-NAT policies. Proxmox running bare-metal to host, isolate, and snapshot
-homelab VMs, with OpenMediaVault providing a virtual-disk RAID 10 pool
-for fault-tolerant network-attached storage.
+pfSense as the primary router with segmented VLANs, custom firewall rules,
+and NAT policies. Proxmox running bare-metal to host, isolate, and snapshot
+multiple homelab VMs, with host configuration and SSH key distribution
+automated via idempotent, agentless Ansible playbooks.
 
-Prometheus and Grafana wired up for real-time metrics, alerting, and
-custom dashboards. Self-hosted Ollama for local LLM inference behind
-Nginx with Cloudflare SSL over a WireGuard VPN.
+OpenMediaVault providing a virtual-disk RAID 10 pool for fault-tolerant
+network-attached storage. Prometheus and Grafana wired up for real-time
+metrics collection, alerting, and custom dashboards. Self-hosted Ollama LLM
+endpoint behind an Nginx reverse proxy with TLS, gated by WireGuard.
 
-Stack: Docker · Nginx · Prometheus · Grafana · Ollama · Proxmox · pfSense · OpenMediaVault · WireGuard`,
+Stack: Docker · Ansible · Nginx · Prometheus · Grafana · Ollama · Proxmox · pfSense · OpenMediaVault · WireGuard`,
 
-  '~/experience/it-technician.txt':
-    `IT Technician III
+  '~/experience/it-systems-administrator.txt':
+    `IT Systems Administrator
 Student Union, Inc. of SJSU · San Jose, CA
-Feb 2026 – Present
+May 2026 – Present
 
-• Managed Proxmox VE, VM provisioning, backups, shutdown and high
-  availability for reliable service continuity.
-• Implemented Kubernetes for containerized workloads, enabling scalable
-  deployments and operations for 40k users.
+• Managed Proxmox VE, VMware ESX, Veeam backups, UPS and high
+  availability for hardware service continuity.
+• Implemented Kubernetes for containerized workloads, enabling continual
+  scalable deployments for 40k students.
+• Developed and deployed a server-side AI agent to orchestrate MCP calls
+  and integrate external tools and services.
+• Deployed and administered Bitbucket and Plane, configuring RBAC,
+  branching, and CI/CD workflows.
 • Diagnosed connectivity issues spanning SSL certificates, TCP/IP, DHCP,
   DNS, VLANs, NAT rules, and firewalls.
-• Configured SNMP server to monitor printer status, toner levels, and
-  supplies for asset management and ordering.
+• Configured CUPS/SNMP for real-time printing/tracking, asset management,
+  and automated supplies ordering.`,
+
+  '~/experience/it-technician.txt':
+    `IT Technician
+Student Union, Inc. of SJSU · San Jose, CA
+Feb 2026 – May 2026
+
+• Managed Windows print server, imaging, software installation,
+  workstation deployment, and patch management.
+• Managed and secured Windows and macOS endpoints with Intune and Jamf,
+  enforcing compliance policies.
+• Identified, prioritized, and remediated CVEs using Qualys, leveraging
+  CVSS severity to reduce vulnerabilities.
 • Assisted with MDF/IDF infrastructure support, including drop ports,
-  switches, patching, and punchdowns.
-• Administered Windows and macOS endpoints, Windows Server, Active
-  Directory, Microsoft Entra ID, and Intune.
-• Managed printers, workstation deployment, imaging, software installation,
-  and patch management.
-• Secured endpoints with Qualys, Sophos, Jamf, and Intune and automated
-  tasks with PowerShell scripts.`,
+  switches, patching, and punchdowns.`,
 
   '~/experience/sce-developer.txt':
     `Software Engineer, Development Team
-SJSU Software & Computer Engineering Society · San Jose, CA
+Software and Computer Engineering Society · San Jose, CA
 Jan 2026 – Present
 
 • Built a YouTube-to-Raspberry-Pi music streaming app in TypeScript with
