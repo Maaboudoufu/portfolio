@@ -40,10 +40,12 @@
   border-radius: 50%;
   cursor: pointer;
   flex-shrink: 0;
+  transition: transform 0.1s ease-out;
 }
 .ts-dot-red    { background: #ff5f57; }
 .ts-dot-yellow { background: #febc2e; cursor: default; }
 .ts-dot-green  { background: #28c840; cursor: default; }
+.ts-dot-red:active { transform: scale(0.85); }
 
 .ts-bar-title {
   font-family: 'JetBrains Mono', monospace;
@@ -61,9 +63,10 @@
   cursor: pointer;
   padding: 0;
   line-height: 1;
-  transition: color 0.15s;
+  transition: color 0.15s, transform 0.1s ease-out;
 }
 .ts-close:hover { color: #aaa; }
+.ts-close:active { transform: scale(0.85); }
 
 /* ── body ── */
 .ts-body {

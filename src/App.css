@@ -66,7 +66,7 @@
   border: 1px solid var(--border2);
   padding: 0.4rem 1rem;
   border-radius: 6px;
-  transition: border-color 0.2s, background 0.2s !important;
+  transition: border-color 0.2s, background 0.2s, transform 0.1s ease-out !important;
 }
 
 .nav-cta:hover {
@@ -142,7 +142,7 @@
   font-weight: 600;
   cursor: pointer;
   text-decoration: none;
-  transition: opacity 0.2s;
+  transition: opacity 0.2s, transform 0.1s ease-out;
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
@@ -160,7 +160,7 @@
   font-weight: 600;
   cursor: pointer;
   text-decoration: none;
-  transition: border-color 0.2s, color 0.2s;
+  transition: border-color 0.2s, color 0.2s, transform 0.1s ease-out;
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
@@ -181,7 +181,7 @@
   font-weight: 600;
   font-family: 'JetBrains Mono', monospace;
   cursor: pointer;
-  transition: border-color 0.2s, background 0.2s;
+  transition: border-color 0.2s, background 0.2s, transform 0.1s ease-out;
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
@@ -364,6 +364,7 @@ section, .section-wrap {
   overflow: hidden;
   cursor: pointer;
   scroll-snap-align: start;
+  transition: transform 0.1s ease-out;
 }
 
 .gallery-item img,
@@ -397,7 +398,7 @@ section, .section-wrap {
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: background 0.2s, border-color 0.2s;
+  transition: background 0.2s, border-color 0.2s, transform 0.1s ease-out;
   backdrop-filter: blur(8px);
 }
 
@@ -461,7 +462,7 @@ section, .section-wrap {
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: background 0.2s;
+  transition: background 0.2s, transform 0.1s ease-out;
 }
 
 .lightbox-close:hover {
@@ -483,7 +484,7 @@ section, .section-wrap {
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: background 0.2s;
+  transition: background 0.2s, transform 0.1s ease-out;
 }
 
 .lightbox-nav:hover {
@@ -717,7 +718,7 @@ section, .section-wrap {
   display: flex;
   align-items: center;
   gap: 1rem;
-  transition: border-color 0.2s;
+  transition: border-color 0.2s, transform 0.1s ease-out;
   text-decoration: none;
   color: inherit;
 }
@@ -784,7 +785,7 @@ section, .section-wrap {
   border: 1px solid var(--border);
   border-radius: 10px;
   padding: 1.8rem;
-  transition: border-color 0.25s;
+  transition: border-color 0.25s, transform 0.1s ease-out;
 }
 
 .project-card:hover { border-color: var(--border2); }
@@ -1104,6 +1105,22 @@ section, .section-wrap {
   font-size: 0.75rem;
   color: var(--dim);
   border-top: 1px solid var(--border);
+}
+
+/* ===== PRESS FEEDBACK ===== */
+.btn-primary:active,
+.btn-secondary:active,
+.btn-terminal:active,
+.nav-cta:active,
+.gallery-arrow:active,
+.gallery-item:active,
+.gh-card:active,
+.cert-card:active,
+.project-card:active,
+.contact-link-item:active,
+.lightbox-close:active,
+.lightbox-nav:active {
+  transform: scale(0.97);
 }
 
 /* ===== RESPONSIVE ===== */
