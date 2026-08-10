@@ -8,12 +8,6 @@
   align-items: center;
   justify-content: center;
   backdrop-filter: blur(4px);
-  animation: ts-fade-in 0.15s ease;
-}
-
-@keyframes ts-fade-in {
-  from { opacity: 0; }
-  to   { opacity: 1; }
 }
 
 /* ── window ── */
@@ -27,12 +21,6 @@
   flex-direction: column;
   overflow: hidden;
   box-shadow: 0 40px 100px rgba(0, 0, 0, 0.8);
-  animation: ts-slide-in 0.2s ease;
-}
-
-@keyframes ts-slide-in {
-  from { transform: translateY(12px) scale(0.98); opacity: 0; }
-  to   { transform: translateY(0)    scale(1);    opacity: 1; }
 }
 
 /* ── title bar ── */
