@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
+import { motion, AnimatePresence, useScroll, useTransform, useReducedMotion } from 'motion/react';
 import './App.css';
 import TerminalSession from './TerminalSession';
 import Reveal from './Reveal';
@@ -132,6 +132,7 @@ const EXPERIENCE = [
   {
     title: 'Software Engineer, Development Team',
     company: 'Software and Computer Engineering Society  ·  San Jose, CA',
+    logo: '/logos/sce.png',
     period: 'Jan 2026\n– Present',
     bullets: [
       'Built a YouTube-to-Raspberry-Pi music streaming app in TypeScript with React, Express, Prisma, and SQLite.',
@@ -153,6 +154,7 @@ const EXPERIENCE = [
   {
     title: 'Courtesy Clerk',
     company: 'Raley\'s  ·  Sacramento, CA',
+    logo: '/logos/raleys.png',
     period: 'Jun 2022\n– Aug 2024',
     bullets: [
       'Showcased intercultural communication skills communicating in Chinese and English with colleagues and customers.',
@@ -168,6 +170,8 @@ const ORGANIZATIONS = [
   {
     title: 'Event Coordinator',
     org: 'SJSU Hong Kong Student Association  ·  San Jose, CA',
+    logo: '/logos/hksa.png',
+    whiteBg: true,
     period: 'Dec 2024\n– May 2025',
     bullets: [
       'Showcased intercultural communication skills communicating in Chinese and English with officers and club members.',
@@ -179,6 +183,7 @@ const ORGANIZATIONS = [
   {
     title: 'Event Coordinator',
     org: 'Japanese Student Association at SJSU  ·  San Jose, CA',
+    logo: '/logos/jsa.png',
     period: 'Sep 2024\n– May 2025',
     bullets: [
       'Showcased intercultural communication skills communicating in Japanese and English with officers and club members.',
@@ -358,6 +363,11 @@ function Terminal() {
 
 function Hero({ onOpenTerminal }) {
   const [resumeStage, setResumeStage] = useState('idle'); // idle | pending | done
+  const reduced = useReducedMotion();
+  const { scrollY } = useScroll();
+  // Figure lags the page as it scrolls — it sinks behind the fold instead of
+  // riding along with it. Positive y = moves *down* relative to the scroll.
+  const figureY = useTransform(scrollY, [0, 900], [0, 120]);
 
   const handleResumeClick = () => {
     if (resumeStage !== 'idle') return;
@@ -371,41 +381,64 @@ function Hero({ onOpenTerminal }) {
   };
 
   return (
-    <div className="hero">
-      <div className="hero-left">
-        <div className="hero-eyebrow">san jose, ca</div>
-        <h1 className="hero-title">Jason Tsao</h1>
-        <div className="hero-btns">
-          <a href="#contact" className="btn-secondary">Contact</a>
-          <button className="btn-terminal" onClick={onOpenTerminal}>
-            <span className="btn-terminal-prompt">❯_</span> Terminal
-          </button>
-          <div className="resume-btn-wrap">
-            <a
-              href="/resume.html"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn-secondary"
-              onClick={handleResumeClick}
-              aria-disabled={resumeStage !== 'idle'}
-            >
-              Resume ↗
-            </a>
-            {resumeStage !== 'idle' && (
-              <div className="resume-progress">
-                <ProgressBar
-                  value={resumeStage === 'pending' ? null : 100}
-                  label="resume.pdf"
-                  pendingLabel="Opening"
-                  completeLabel="Opened"
-                />
-              </div>
-            )}
+    <div className="hero-shell">
+      <div className="hero-aura" aria-hidden="true" />
+      <motion.div
+        className="hero-figure-wrap"
+        aria-hidden="true"
+        style={reduced ? undefined : { y: figureY }}
+      >
+        <img
+          className="hero-figure"
+          src="/hero-snowboard-1200.webp"
+          srcSet="/hero-snowboard-640.webp 630w, /hero-snowboard-1200.webp 1182w"
+          sizes="(max-width: 900px) 90vw, 60vw"
+          width={1182}
+          height={1200}
+          alt=""
+          decoding="async"
+          fetchPriority="high"
+          draggable="false"
+        />
+      </motion.div>
+      <div className="hero-veil" aria-hidden="true" />
+
+      <div className="hero">
+        <div className="hero-left">
+          <div className="hero-eyebrow">san jose, ca</div>
+          <h1 className="hero-title">Jason Tsao</h1>
+          <div className="hero-btns">
+            <a href="#contact" className="btn-secondary">Contact</a>
+            <button className="btn-terminal" onClick={onOpenTerminal}>
+              <span className="btn-terminal-prompt">❯_</span> Terminal
+            </button>
+            <div className="resume-btn-wrap">
+              <a
+                href="/resume.html"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-secondary"
+                onClick={handleResumeClick}
+                aria-disabled={resumeStage !== 'idle'}
+              >
+                Resume ↗
+              </a>
+              {resumeStage !== 'idle' && (
+                <div className="resume-progress">
+                  <ProgressBar
+                    value={resumeStage === 'pending' ? null : 100}
+                    label="resume.pdf"
+                    pendingLabel="Opening"
+                    completeLabel="Opened"
+                  />
+                </div>
+              )}
+            </div>
           </div>
         </div>
-      </div>
-      <div className="hero-right">
-        <Terminal />
+        <div className="hero-right">
+          <Terminal />
+        </div>
       </div>
     </div>
   );
@@ -636,10 +669,12 @@ function Experience() {
               <div className="timeline-item" key={`${job.company}-${index}`}>
                 <div className="timeline-period mono">{job.period}</div>
                 <div className="timeline-card">
-                  <div className="timeline-title">{job.title}</div>
-                  <div className="timeline-company">
-                    {job.logo && <img src={job.logo} alt="" className="timeline-logo" />}
-                    {job.company}
+                  <div className="timeline-card-head">
+                    {job.logo && <img src={job.logo} alt="" className={`timeline-logo${job.whiteBg ? ' white-bg' : ''}`} />}
+                    <div className="timeline-heading">
+                      <div className="timeline-title">{job.title}</div>
+                      <div className="timeline-company">{job.company}</div>
+                    </div>
                   </div>
                   <ul className="timeline-bullets">
                     {job.bullets.map((b, i) => <li key={i}>{b}</li>)}
@@ -665,8 +700,13 @@ function Organizations() {
             <div className="timeline-item" key={`${role.org}-${index}`}>
               <div className="timeline-period mono">{role.period}</div>
               <div className="timeline-card">
-                <div className="timeline-title">{role.title}</div>
-                <div className="timeline-company">{role.org}</div>
+                <div className="timeline-card-head">
+                  {role.logo && <img src={role.logo} alt="" className={`timeline-logo${role.whiteBg ? ' white-bg' : ''}`} />}
+                  <div className="timeline-heading">
+                    <div className="timeline-title">{role.title}</div>
+                    <div className="timeline-company">{role.org}</div>
+                  </div>
+                </div>
                 <ul className="timeline-bullets">
                   {role.bullets.map((b, i) => <li key={i}>{b}</li>)}
                 </ul>
