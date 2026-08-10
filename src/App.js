@@ -198,7 +198,7 @@ const PROJECTS = [
 
 function Navbar() {
   const [scrolled, setScrolled] = useState(false);
-  const [active, setActive] = useState('about');
+  const [active, setActive] = useState(null);
   const s = useSprings();
 
   useEffect(() => {
@@ -236,7 +236,7 @@ function Navbar() {
           <li key={l.id} className="nav-link-item">
             <a href={`#${l.id}`} className={active === l.id ? 'active' : ''}>{l.label}</a>
             {active === l.id && (
-              <motion.div className="nav-underline" layoutId="nav-underline" transition={s.ui} />
+              <motion.div className="nav-underline" layoutId={s.reduced ? undefined : 'nav-underline'} transition={s.ui} />
             )}
           </li>
         ))}
@@ -409,8 +409,9 @@ function Gallery() {
             {selectedIdx > 0 && (
               <button className="lightbox-nav lightbox-prev" onClick={(e) => { e.stopPropagation(); goTo(selectedIdx - 1); }} aria-label="Previous">{'\u2039'}</button>
             )}
-            <AnimatePresence mode="wait" initial={false}>
+            <AnimatePresence initial={false}>
               <motion.div
+                className="lightbox-frame"
                 key={selectedIdx}
                 initial={{ opacity: 0, x: s.reduced ? 0 : (direction > 0 ? 40 : -40) }}
                 animate={{ opacity: 1, x: 0 }}
