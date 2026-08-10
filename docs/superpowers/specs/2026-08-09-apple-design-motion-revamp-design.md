@@ -5,20 +5,23 @@
 
 ## Goal
 
-Apply Apple's fluid-interface principles (from the `apple-design` skill — instant response, interruptible springs, momentum, materials, optical typography) to the existing portfolio, without touching its established visual identity (amber phosphor / terminal chrome — see memory `portfolio-amber-design-system`).
+Apply Apple's fluid-interface principles (from the `apple-design` skill — instant response, interruptible springs, momentum, materials, optical typography) to the existing portfolio, without touching its current visual identity (colors, fonts, layout).
+
+**Correction (2026-08-09):** an earlier draft of this spec referenced an "amber phosphor" redesign from memory. That redesign was never actually committed to this repo (verified via git log/branches/stashes across `src/index.css` and `src/App.css` — no trace of it exists). The owner confirmed the site should keep its actual current visuals (see baseline below), not the memory's description. The stale memory has been corrected.
 
 ## Non-goals
 
-- No visual/color/layout redesign. Tokens, fonts, screen-surface rules stay exactly as they are.
+- No visual/color/layout redesign. Tokens, fonts, and current layout stay exactly as they are.
 - No new drag gestures (no swipe-to-dismiss, no swipe-between-photos). Interaction stays click/keyboard-driven; only the *transitions* become spring-based.
 - No section-replay-on-scroll-back gimmicks.
 
 ## Current state (baseline)
 
 - CRA app (react-scripts), no router, no animation dependency. Two components: `App.js` (page, 774 lines) and `TerminalSession.js` (interactive shell modal, 581 lines).
+- Visual identity today: dark theme (`--bg: #080808`), single green accent (`--green: #a8ff78`, terminal-prompt only), Inter body font + JetBrains Mono for terminal/mono text. `TerminalSession.js`'s modal uses macOS-style red/yellow/green traffic-light dots (`.ts-dot-red/yellow/green`). This is the actual, current, live visual identity — the spec preserves it as-is.
 - All motion today is CSS `transition`/`@keyframes`: simple hover fades, one one-way entrance keyframe on the terminal modal (`ts-slide-in`), **no exit animation** on the modal, **no transition at all** on the gallery lightbox (open, close, or prev/next).
 - Nav already has correct translucent-material behavior (`backdrop-filter` blur, `.navbar.scrolled` state) — this stays as-is.
-- Typography already applies tracking discipline in most places (hero `-2px` on large display text, uppercase labels `+1–2px`) — only gaps get fixed, not a rewrite.
+- Typography already applies some tracking discipline (hero `-2px` on large display text at `.hero-title`, App.css:100; uppercase `.section-label` at `+2px`, App.css:290) — only gaps get fixed, not a rewrite.
 
 ## Design
 
