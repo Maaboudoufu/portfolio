@@ -2,7 +2,7 @@ import { useReducedMotion } from 'motion/react';
 
 const REDUCED = { duration: 0.15 };
 
-export const springs = {
+const springs = {
   ui:     { type: 'spring', bounce: 0,   duration: 0.4 },
   drawer: { type: 'spring', bounce: 0.2, duration: 0.3 },
 };
