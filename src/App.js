@@ -294,19 +294,14 @@ function Terminal() {
 function Hero({ onOpenTerminal }) {
   const [resumeStage, setResumeStage] = useState('idle'); // idle | pending | done
 
-  const handleResumeClick = (e) => {
-    e.preventDefault();
+  const handleResumeClick = () => {
     if (resumeStage !== 'idle') return;
-    // Animate first, open second. window.open()'ing right away steals focus
-    // to the new tab before the bar ever paints, so nothing seemed to happen
-    // until that tab was closed. Browsers keep a short grace period after a
-    // click during which a deferred window.open() still counts as
-    // user-initiated, so this stays un-blocked as long as the delay is short.
+    // Let the <a target="_blank"> below navigate natively and immediately.
+    // A window.open() fired from inside setTimeout loses user-activation and
+    // gets silently popup-blocked (Safari especially) — this bar is cosmetic
+    // feedback only, it must never gate the actual navigation.
     setResumeStage('pending');
     setTimeout(() => setResumeStage('done'), 700);
-    setTimeout(() => {
-      window.open('/resume.html', '_blank', 'noopener,noreferrer');
-    }, 1600);
     setTimeout(() => setResumeStage('idle'), 2000);
   };
 
