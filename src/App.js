@@ -517,11 +517,11 @@ function About() {
           <p>
             I work as an IT Systems Administrator managing enterprise infrastructure: Active Directory,
             Windows Server, endpoint security, and networking. Outside of work I run a
-            home lab — WireGuard VPN, Nginx reverse proxy, containerized services,
+            home lab: WireGuard VPN, Nginx reverse proxy, containerized services,
             and a locally-hosted AI on my own hardware.
           </p>
           <p>
-            Long-term I am trying to aim for a DevSecOps role, ideally remote or hybrid,
+            Long-term, I'm aiming for a DevSecOps role, ideally remote or hybrid,
             with the flexibility to live and work from abroad.
           </p>
         </div>
