@@ -106,6 +106,7 @@ const EXPERIENCE = [
   {
     title: 'IT Systems Administrator',
     company: 'Student Union, Inc. of SJSU  ·  San Jose, CA',
+    logo: '/logos/student-union.png',
     period: 'May 2026\n– Present',
     bullets: [
       'Managed Proxmox VE, VMware ESX, Veeam backups, UPS and high availability for hardware service continuity.',
@@ -119,6 +120,7 @@ const EXPERIENCE = [
   {
     title: 'IT Technician',
     company: 'Student Union, Inc. of SJSU  ·  San Jose, CA',
+    logo: '/logos/student-union.png',
     period: 'Feb 2026\n– May 2026',
     bullets: [
       'Managed Windows print server, imaging, software installation, workstation deployment, and patch management.',
@@ -140,6 +142,7 @@ const EXPERIENCE = [
   {
     title: 'Operations Supervisor',
     company: 'Student Union, Inc. of SJSU  ·  San Jose, CA',
+    logo: '/logos/student-union.png',
     period: 'Sep 2024\n– Feb 2026',
     bullets: [
       'Supervised and developed staff by monitoring performance and providing hands-on coaching as needed.',
@@ -429,7 +432,7 @@ function Gallery() {
       .then(album => {
         if (album.assets?.length) setPhotos(album.assets.map(a => toPhoto(a.id, a.type)));
       })
-      .catch(() => {});
+      .catch(() => { });
   }, []);
 
   const goTo = useCallback((newIdx) => {
@@ -596,6 +599,7 @@ function About() {
         <div className="about-text">
           <div className="section-label">about</div>
           <h2 className="section-title">About me</h2>
+          <img src="/about-photo.png" alt="Jason Tsao" className="about-photo" loading="lazy" />
           <p>
             I was born and raised in Sacramento for most of my life and moved to San Jose
             for school. I am now a Computer Engineering student at SJSU with a minor in
@@ -605,9 +609,9 @@ function About() {
             real world instead of focusing solely on school.
           </p>
           <p>
-            I work as an IT Systems Administrator managing enterprise infrastructure: Active Directory,
+            I work as an IT Systems Administrator managing enterprise infrastructure such as Active Directory,
             Windows Server, endpoint security, and networking. Outside of work I run a
-            home lab: WireGuard VPN, Nginx reverse proxy, containerized services,
+            home lab that has a WireGuard VPN, Nginx reverse proxy, containerized services,
             and a locally-hosted AI on my own hardware.
           </p>
           <p>
@@ -633,7 +637,10 @@ function Experience() {
                 <div className="timeline-period mono">{job.period}</div>
                 <div className="timeline-card">
                   <div className="timeline-title">{job.title}</div>
-                  <div className="timeline-company">{job.company}</div>
+                  <div className="timeline-company">
+                    {job.logo && <img src={job.logo} alt="" className="timeline-logo" />}
+                    {job.company}
+                  </div>
                   <ul className="timeline-bullets">
                     {job.bullets.map((b, i) => <li key={i}>{b}</li>)}
                   </ul>
@@ -808,7 +815,7 @@ function GitHubCard() {
     fetch(`https://api.github.com/users/${GH_USER}`)
       .then(r => { if (!r.ok) throw new Error(); return r.json(); })
       .then(data => setUser(prev => ({ ...prev, ...data })))
-      .catch(() => {});
+      .catch(() => { });
   }, []);
 
   const joined = new Date(user.created_at).toLocaleDateString('en-US', { month: 'short', year: 'numeric' }).toLowerCase();
