@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
+import { AnimatePresence } from 'motion/react';
 import './App.css';
 import TerminalSession from './TerminalSession';
 
@@ -759,7 +760,9 @@ export default function App() {
     <>
       <Navbar />
       <Hero onOpenTerminal={() => setTermOpen(true)} />
-      {termOpen && <TerminalSession onClose={() => setTermOpen(false)} />}
+      <AnimatePresence>
+        {termOpen && <TerminalSession onClose={() => setTermOpen(false)} />}
+      </AnimatePresence>
       <Gallery />
       <About />
       <Experience />

@@ -1,5 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
+import { motion, AnimatePresence } from 'motion/react';
 import './TerminalSession.css';
+import { useSprings } from './motion-presets';
 
 // ── boot sequence ────────────────────────────────────────────────────────────
 
@@ -559,10 +561,34 @@ function Boot({ onDone }) {
 
 export default function TerminalSession({ onClose }) {
   const [phase, setPhase] = useState('boot');
+  const s = useSprings();
+
+  useEffect(() => {
+    const handler = (e) => { if (e.key === 'Escape') onClose(); };
+    window.addEventListener('keydown', handler);
+    return () => window.removeEventListener('keydown', handler);
+  }, [onClose]);
 
   return (
-    <div className="ts-overlay" onClick={e => e.target === e.currentTarget && onClose()}>
-      <div className="ts-window">
+    <motion.div
+      className="ts-overlay"
+      onClick={e => e.target === e.currentTarget && onClose()}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={s.ui}
+    >
+      <motion.div
+        className="ts-window"
+        // approximate origin toward the hero terminal button (upper-left of viewport);
+        // not measured live — the button doesn't move, and precise measurement would
+        // need recalculating on every resize for marginal visual gain
+        style={{ transformOrigin: '25% 45%' }}
+        initial={{ opacity: 0, scale: s.reduced ? 1 : 0.92, y: s.reduced ? 0 : 16 }}
+        animate={{ opacity: 1, scale: 1, y: 0 }}
+        exit={{ opacity: 0, scale: s.reduced ? 1 : 0.92, y: s.reduced ? 0 : 16 }}
+        transition={s.drawer}
+      >
         <div className="ts-bar">
           <span className="ts-dot ts-dot-red" onClick={onClose} title="close" />
           <span className="ts-dot ts-dot-yellow" />
@@ -575,7 +601,7 @@ export default function TerminalSession({ onClose }) {
           {phase === 'boot' && <Boot onDone={() => setPhase('shell')} />}
           {phase === 'shell' && <Shell onExit={onClose} />}
         </div>
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   );
 }
