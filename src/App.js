@@ -2,6 +2,7 @@ import { useState, useEffect, useRef, useCallback } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import './App.css';
 import TerminalSession from './TerminalSession';
+import Reveal from './Reveal';
 import { useSprings } from './motion-presets';
 
 // ── data ────────────────────────────────────────────────────────────────────
@@ -419,7 +420,7 @@ function Gallery() {
 function About() {
   return (
     <section id="about">
-      <div className="about-grid">
+      <Reveal className="about-grid">
         <div>
           <div className="about-card">
             <div className="about-card-header">
@@ -494,7 +495,7 @@ function About() {
             with the flexibility to live and work from abroad.
           </p>
         </div>
-      </div>
+      </Reveal>
     </section>
   );
 }
@@ -503,22 +504,24 @@ function Experience() {
   return (
     <div className="exp-bg">
       <div className="section-wrap" id="experience">
-        <div className="section-label">experience</div>
-        <h2 className="section-title">Where I've worked</h2>
-        <div className="timeline">
-          {EXPERIENCE.map((job, index) => (
-            <div className="timeline-item" key={`${job.company}-${index}`}>
-              <div className="timeline-period mono">{job.period}</div>
-              <div className="timeline-card">
-                <div className="timeline-title">{job.title}</div>
-                <div className="timeline-company">{job.company}</div>
-                <ul className="timeline-bullets">
-                  {job.bullets.map((b, i) => <li key={i}>{b}</li>)}
-                </ul>
+        <Reveal>
+          <div className="section-label">experience</div>
+          <h2 className="section-title">Where I've worked</h2>
+          <div className="timeline">
+            {EXPERIENCE.map((job, index) => (
+              <div className="timeline-item" key={`${job.company}-${index}`}>
+                <div className="timeline-period mono">{job.period}</div>
+                <div className="timeline-card">
+                  <div className="timeline-title">{job.title}</div>
+                  <div className="timeline-company">{job.company}</div>
+                  <ul className="timeline-bullets">
+                    {job.bullets.map((b, i) => <li key={i}>{b}</li>)}
+                  </ul>
+                </div>
               </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        </Reveal>
       </div>
     </div>
   );
@@ -527,22 +530,24 @@ function Experience() {
 function Organizations() {
   return (
     <section id="organizations">
-      <div className="section-label">organizations</div>
-      <h2 className="section-title">Clubs & involvement</h2>
-      <div className="timeline">
-        {ORGANIZATIONS.map((role, index) => (
-          <div className="timeline-item" key={`${role.org}-${index}`}>
-            <div className="timeline-period mono">{role.period}</div>
-            <div className="timeline-card">
-              <div className="timeline-title">{role.title}</div>
-              <div className="timeline-company">{role.org}</div>
-              <ul className="timeline-bullets">
-                {role.bullets.map((b, i) => <li key={i}>{b}</li>)}
-              </ul>
+      <Reveal>
+        <div className="section-label">organizations</div>
+        <h2 className="section-title">Clubs & involvement</h2>
+        <div className="timeline">
+          {ORGANIZATIONS.map((role, index) => (
+            <div className="timeline-item" key={`${role.org}-${index}`}>
+              <div className="timeline-period mono">{role.period}</div>
+              <div className="timeline-card">
+                <div className="timeline-title">{role.title}</div>
+                <div className="timeline-company">{role.org}</div>
+                <ul className="timeline-bullets">
+                  {role.bullets.map((b, i) => <li key={i}>{b}</li>)}
+                </ul>
+              </div>
             </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      </Reveal>
     </section>
   );
 }
@@ -550,18 +555,20 @@ function Organizations() {
 function Skills() {
   return (
     <section id="skills">
-      <div className="section-label">skills</div>
-      <h2 className="section-title">Tech stack</h2>
-      <div className="skills-groups">
-        {SKILL_GROUPS.map((g) => (
-          <div className="skill-group" key={g.label}>
-            <div className="skill-group-title">{g.label}</div>
-            <div className="skill-list">
-              {g.items.map((s) => <span className="skill-tag" key={s}>{s}</span>)}
+      <Reveal>
+        <div className="section-label">skills</div>
+        <h2 className="section-title">Tech stack</h2>
+        <div className="skills-groups">
+          {SKILL_GROUPS.map((g) => (
+            <div className="skill-group" key={g.label}>
+              <div className="skill-group-title">{g.label}</div>
+              <div className="skill-list">
+                {g.items.map((s) => <span className="skill-tag" key={s}>{s}</span>)}
+              </div>
             </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      </Reveal>
     </section>
   );
 }
@@ -570,32 +577,34 @@ function Certs() {
   return (
     <div className="exp-bg">
       <div className="section-wrap" id="certs">
-        <div className="section-label">certifications</div>
-        <h2 className="section-title">Licenses & Certs</h2>
-        <div className="certs-grid">
-          {CERTS.map((c) => {
-            const inner = (
-              <>
-                <div className="cert-logo-wrap">
-                  <img src={c.logo} alt={c.issuer} className={`cert-logo${c.whiteBg ? ' white-bg' : ''}`} />
-                </div>
-                <div className="cert-info">
-                  <div className="cert-name">{c.name}</div>
-                  <div className="cert-issuer">{c.issuer}</div>
-                  <div className="cert-date mono">{c.date}</div>
-                </div>
-                {c.href && <span className="cert-arrow">↗</span>}
-              </>
-            );
-            return c.href ? (
-              <a href={c.href} target="_blank" rel="noreferrer" className="cert-card" key={c.name}>
-                {inner}
-              </a>
-            ) : (
-              <div className="cert-card" key={c.name}>{inner}</div>
-            );
-          })}
-        </div>
+        <Reveal>
+          <div className="section-label">certifications</div>
+          <h2 className="section-title">Licenses & Certs</h2>
+          <div className="certs-grid">
+            {CERTS.map((c) => {
+              const inner = (
+                <>
+                  <div className="cert-logo-wrap">
+                    <img src={c.logo} alt={c.issuer} className={`cert-logo${c.whiteBg ? ' white-bg' : ''}`} />
+                  </div>
+                  <div className="cert-info">
+                    <div className="cert-name">{c.name}</div>
+                    <div className="cert-issuer">{c.issuer}</div>
+                    <div className="cert-date mono">{c.date}</div>
+                  </div>
+                  {c.href && <span className="cert-arrow">↗</span>}
+                </>
+              );
+              return c.href ? (
+                <a href={c.href} target="_blank" rel="noreferrer" className="cert-card" key={c.name}>
+                  {inner}
+                </a>
+              ) : (
+                <div className="cert-card" key={c.name}>{inner}</div>
+              );
+            })}
+          </div>
+        </Reveal>
       </div>
     </div>
   );
@@ -604,25 +613,27 @@ function Certs() {
 function Projects() {
   return (
     <section id="projects">
-      <div className="section-label">projects</div>
-      <h2 className="section-title">Things I've built</h2>
-      <div className="projects-grid">
-        {PROJECTS.map((p) => (
-          <div className="project-card" key={p.num}>
-            <div className="project-num mono">{p.num}</div>
-            <div className="project-title">{p.title}</div>
-            <p className="project-desc">{p.desc}</p>
-            <div className="project-tags">
-              {p.tags.map((t) => <span className="tag" key={t}>{t}</span>)}
-            </div>
-            {p.code && (
-              <div className="project-links">
-                <a href={p.code} target="_blank" rel="noreferrer" className="project-link">github →</a>
+      <Reveal>
+        <div className="section-label">projects</div>
+        <h2 className="section-title">Things I've built</h2>
+        <div className="projects-grid">
+          {PROJECTS.map((p) => (
+            <div className="project-card" key={p.num}>
+              <div className="project-num mono">{p.num}</div>
+              <div className="project-title">{p.title}</div>
+              <p className="project-desc">{p.desc}</p>
+              <div className="project-tags">
+                {p.tags.map((t) => <span className="tag" key={t}>{t}</span>)}
               </div>
-            )}
-          </div>
-        ))}
-      </div>
+              {p.code && (
+                <div className="project-links">
+                  <a href={p.code} target="_blank" rel="noreferrer" className="project-link">github →</a>
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+      </Reveal>
     </section>
   );
 }
@@ -744,30 +755,32 @@ function Contact() {
   return (
     <div className="contact-bg">
       <div className="section-wrap" id="contact">
-        <div className="section-label">contact</div>
-        <h2 className="section-title">Get in touch</h2>
-        <p className="section-desc">Open to opportunities, collabs, or just talking tech.</p>
-        <div className="contact-grid">
-          <GitHubCard />
-          <div className="contact-links">
-            {links.map((l) => (
-              <a
-                href={l.href}
-                target={l.external ? '_blank' : undefined}
-                rel={l.external ? 'noreferrer' : undefined}
-                className="contact-link-item"
-                key={l.kind}
-              >
-                <span className="contact-link-icon">{ICONS[l.kind]}</span>
-                <div className="contact-link-text">
-                  <span className="link-label">{l.label}</span>
-                  <span className="link-value">{l.value}</span>
-                </div>
-                <span className="contact-link-arrow" aria-hidden="true">↗</span>
-              </a>
-            ))}
+        <Reveal>
+          <div className="section-label">contact</div>
+          <h2 className="section-title">Get in touch</h2>
+          <p className="section-desc">Open to opportunities, collabs, or just talking tech.</p>
+          <div className="contact-grid">
+            <GitHubCard />
+            <div className="contact-links">
+              {links.map((l) => (
+                <a
+                  href={l.href}
+                  target={l.external ? '_blank' : undefined}
+                  rel={l.external ? 'noreferrer' : undefined}
+                  className="contact-link-item"
+                  key={l.kind}
+                >
+                  <span className="contact-link-icon">{ICONS[l.kind]}</span>
+                  <div className="contact-link-text">
+                    <span className="link-label">{l.label}</span>
+                    <span className="link-value">{l.value}</span>
+                  </div>
+                  <span className="contact-link-arrow" aria-hidden="true">↗</span>
+                </a>
+              ))}
+            </div>
           </div>
-        </div>
+        </Reveal>
       </div>
     </div>
   );
