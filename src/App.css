@@ -1136,3 +1136,38 @@ section, .section-wrap {
   .projects-grid { grid-template-columns: 1fr; }
   .nav-links { display: none; }
 }
+
+/* ===== ACCESSIBILITY: TRANSPARENCY & CONTRAST ===== */
+@media (prefers-reduced-transparency: reduce) {
+  .navbar {
+    background: #0a0a0a;
+    backdrop-filter: none;
+  }
+  .gallery-arrow {
+    background: #1a1a1a;
+    backdrop-filter: none;
+  }
+  .gallery-lightbox {
+    background: #000;
+    backdrop-filter: none;
+  }
+}
+
+@media (prefers-contrast: more) {
+  .navbar {
+    background: #000;
+    border-bottom: 1px solid var(--white);
+  }
+  .btn-secondary,
+  .btn-terminal,
+  .nav-cta {
+    border-width: 2px;
+  }
+  .gh-card,
+  .cert-card,
+  .project-card,
+  .contact-link-item {
+    border-width: 2px;
+    border-color: var(--white);
+  }
+}
