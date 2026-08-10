@@ -507,10 +507,12 @@ function About() {
           <div className="section-label">about</div>
           <h2 className="section-title">About me</h2>
           <p>
-            Born and raised in Sacramento. Moved to San Jose for school — currently a
-            Computer Engineering student at SJSU with a minor in Japanese (3.70 GPA). Active in
-            the Software and Computer Engineering Society and was an officer for Japanese Student Association and
-            Hong Kong Student Association during freshman year. I started working at 16 and have been building things ever since.
+            I was born and raised in Sacramento for most of my life and moved to San Jose
+            for school. I am now a Computer Engineering student at SJSU with a minor in
+            Japanese. I was active in many clubs such as my office role in Japanese Student
+            Association and Hong Kong Student Association during my first year. I started
+            working at 16 and I have always been adamant about applying my skills to the
+            real world instead of focusing solely on school.
           </p>
           <p>
             I work as an IT Systems Administrator managing enterprise infrastructure: Active Directory,
