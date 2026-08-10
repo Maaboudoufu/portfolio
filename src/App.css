@@ -34,6 +34,11 @@
   align-items: center;
 }
 
+.nav-link-item {
+  position: relative;
+  list-style: none;
+}
+
 .nav-links a {
   color: var(--muted);
   text-decoration: none;
@@ -43,7 +48,18 @@
   transition: color 0.2s;
 }
 
-.nav-links a:hover { color: var(--white); }
+.nav-links a:hover,
+.nav-links a.active { color: var(--white); }
+
+.nav-underline {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -6px;
+  height: 2px;
+  background: var(--white);
+  border-radius: 1px;
+}
 
 .nav-cta {
   color: var(--white) !important;

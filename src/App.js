@@ -198,6 +198,8 @@ const PROJECTS = [
 
 function Navbar() {
   const [scrolled, setScrolled] = useState(false);
+  const [active, setActive] = useState('about');
+  const s = useSprings();
 
   useEffect(() => {
     const fn = () => setScrolled(window.scrollY > 40);
@@ -205,14 +207,39 @@ function Navbar() {
     return () => window.removeEventListener('scroll', fn);
   }, []);
 
+  useEffect(() => {
+    const ids = ['about', 'experience', 'skills', 'projects', 'contact'];
+    const sections = ids.map(id => document.getElementById(id)).filter(Boolean);
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries.filter(e => e.isIntersecting);
+        if (visible.length > 0) setActive(visible[0].target.id);
+      },
+      { rootMargin: '-40% 0px -55% 0px' }
+    );
+    sections.forEach(sec => observer.observe(sec));
+    return () => observer.disconnect();
+  }, []);
+
+  const links = [
+    { id: 'about', label: 'about' },
+    { id: 'experience', label: 'experience' },
+    { id: 'skills', label: 'skills' },
+    { id: 'projects', label: 'projects' },
+  ];
+
   return (
     <nav className={`navbar${scrolled ? ' scrolled' : ''}`}>
       <div className="nav-logo mono">jason@tsao</div>
       <ul className="nav-links">
-        <li><a href="#about">about</a></li>
-        <li><a href="#experience">experience</a></li>
-        <li><a href="#skills">skills</a></li>
-        <li><a href="#projects">projects</a></li>
+        {links.map(l => (
+          <li key={l.id} className="nav-link-item">
+            <a href={`#${l.id}`} className={active === l.id ? 'active' : ''}>{l.label}</a>
+            {active === l.id && (
+              <motion.div className="nav-underline" layoutId="nav-underline" transition={s.ui} />
+            )}
+          </li>
+        ))}
         <li><a href="#contact" className="nav-cta">contact</a></li>
       </ul>
     </nav>
