@@ -6,6 +6,19 @@ import Reveal from './Reveal';
 import { useSprings } from './motion-presets';
 import { RuixenGradientFooter } from './components/ui/ruixen-gradient-footer';
 import { ProgressBar } from './components/ui/progress-bar';
+import {
+  SiCplusplus, SiJavascript, SiTypescript, SiHtml5, SiPython, SiGnubash,
+  SiReact, SiVite, SiNodedotjs, SiExpress, SiFastapi, SiPrisma, SiSqlalchemy,
+  SiSqlite, SiOpencv, SiDocker, SiProxmox, SiPfsense, SiNginx, SiPrometheus,
+  SiGrafana, SiOllama, SiLinux, SiGit, SiGithubactions, SiQualys,
+  SiModelcontextprotocol, SiApple,
+} from 'react-icons/si';
+import {
+  TbBinary, TbTerminal2, TbPlugConnected, TbNetwork, TbRouter, TbServerBolt,
+  TbWorldWww, TbSwitch, TbShieldLock, TbShieldCheck, TbCertificate, TbInfinity,
+  TbUsersGroup, TbUserShield, TbDeviceMobile,
+} from 'react-icons/tb';
+import { FaMicrophone, FaBrain, FaWindows } from 'react-icons/fa6';
 
 // ── data ────────────────────────────────────────────────────────────────────
 
@@ -39,6 +52,55 @@ const SKILL_GROUPS = [
     items: ['Qualys', 'Sophos', 'Jamf', 'Intune', 'Active Directory', 'RBAC', 'Windows Server'],
   },
 ];
+
+const SKILL_ICONS = {
+  'C / C++': SiCplusplus,
+  'Assembly': TbBinary,
+  'JavaScript': SiJavascript,
+  'TypeScript': SiTypescript,
+  'HTML / CSS': SiHtml5,
+  'Python': SiPython,
+  'Bash / Zsh': SiGnubash,
+  'PowerShell': TbTerminal2,
+  'React.js': SiReact,
+  'Vite': SiVite,
+  'Node.js': SiNodedotjs,
+  'Express': SiExpress,
+  'FastAPI': SiFastapi,
+  'Prisma': SiPrisma,
+  'SQLAlchemy': SiSqlalchemy,
+  'SQLite': SiSqlite,
+  'OpenCV': SiOpencv,
+  'OpenAI Whisper': FaMicrophone,
+  'GPT-4V': FaBrain,
+  'MCP': SiModelcontextprotocol,
+  'Docker': SiDocker,
+  'Proxmox': SiProxmox,
+  'pfSense': SiPfsense,
+  'Nginx': SiNginx,
+  'Prometheus': SiPrometheus,
+  'Grafana': SiGrafana,
+  'Ollama': SiOllama,
+  'WebSockets': TbPlugConnected,
+  'TCP/IP': TbNetwork,
+  'NAT': TbRouter,
+  'DHCP': TbServerBolt,
+  'DNS': TbWorldWww,
+  'VLAN': TbSwitch,
+  'VPN': TbShieldLock,
+  'SSL/TLS': TbCertificate,
+  'Linux': SiLinux,
+  'Git': SiGit,
+  'GitHub Actions': SiGithubactions,
+  'CI/CD': TbInfinity,
+  'Qualys': SiQualys,
+  'Sophos': TbShieldCheck,
+  'Jamf': SiApple,
+  'Intune': TbDeviceMobile,
+  'Active Directory': TbUsersGroup,
+  'RBAC': TbUserShield,
+  'Windows Server': FaWindows,
+};
 
 const EXPERIENCE = [
   {
@@ -621,7 +683,15 @@ function Skills() {
             <div className="skill-group" key={g.label}>
               <div className="skill-group-title">{g.label}</div>
               <div className="skill-list">
-                {g.items.map((s) => <span className="skill-tag" key={s}>{s}</span>)}
+                {g.items.map((s) => {
+                  const Icon = SKILL_ICONS[s];
+                  return (
+                    <span className="skill-tag" key={s}>
+                      {Icon && <Icon className="skill-icon" aria-hidden="true" />}
+                      {s}
+                    </span>
+                  );
+                })}
               </div>
             </div>
           ))}

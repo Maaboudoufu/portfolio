@@ -674,6 +674,9 @@ section, .section-wrap {
 }
 
 .skill-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.75rem;
   color: var(--text);
@@ -682,6 +685,12 @@ section, .section-wrap {
   border-radius: 4px;
   padding: 0.25rem 0.6rem;
   transition: border-color 0.2s, color 0.2s;
+}
+
+.skill-icon {
+  width: 1em;
+  height: 1em;
+  flex-shrink: 0;
 }
 
 .skill-tag:hover {
