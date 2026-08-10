@@ -58,8 +58,7 @@ const INFO = [
   { label: 'Shell', value: 'zsh 5.9.0' },
   { label: 'Role', value: 'IT Systems Administrator @ SJSU' },
   { label: 'School', value: "SJSU — CE '28" },
-  { label: 'Goal', value: 'DevSecOps' },
-  { label: 'Languages', value: 'EN · JP · ZH' },
+  { label: 'Languages', value: 'EN · JP' },
   { label: 'Email', value: 'jason.tsao@maaboudoumei.org' },
 ];
 
@@ -82,8 +81,8 @@ From    : Sacramento, CA
 Based   : San Jose, CA
 School  : SJSU — BS Computer Engineering, Minor in Japanese (GPA 3.70)
 Grad    : Dec 2027
-Goal    : DevSecOps (remote/hybrid, open to living abroad)
-Spoken  : English (Native) · Japanese (Limited Working) · Chinese (Elementary)
+Goal    : Remote/hybrid, open to living abroad
+Spoken  : English (Native) · Japanese (Limited Working)
 Orgs    : Software and Computer Engineering Society · JSA · HKSA @ SJSU`,
 
   '~/contact.txt':

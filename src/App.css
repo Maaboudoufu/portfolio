@@ -118,37 +118,11 @@
   margin-bottom: 1.2rem;
 }
 
-.hero-sub {
-  font-size: 1rem;
-  color: var(--muted);
-  max-width: 420px;
-  line-height: 1.75;
-  margin-bottom: 2.5rem;
-}
-
 .hero-btns {
   display: flex;
   gap: 0.75rem;
   flex-wrap: wrap;
 }
-
-.btn-primary {
-  padding: 0.7rem 1.5rem;
-  background: var(--white);
-  color: #000;
-  border: 1px solid var(--white);
-  border-radius: 6px;
-  font-size: 0.875rem;
-  font-weight: 600;
-  cursor: pointer;
-  text-decoration: none;
-  transition: opacity 0.2s, transform 0.1s ease-out;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
-}
-
-.btn-primary:hover { opacity: 0.85; }
 
 .btn-secondary {
   padding: 0.7rem 1.5rem;
@@ -195,6 +169,18 @@
 .btn-terminal-prompt {
   font-size: 0.8rem;
   opacity: 0.8;
+}
+
+.resume-btn-wrap {
+  position: relative;
+}
+
+.resume-progress {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 200px;
+  margin-top: 0.6rem;
 }
 
 
@@ -323,14 +309,6 @@ section, .section-wrap {
   letter-spacing: -1px;
   color: var(--white);
   margin-bottom: 0.75rem;
-}
-
-.section-desc {
-  color: var(--muted);
-  font-size: 0.9rem;
-  max-width: 480px;
-  margin-bottom: 3rem;
-  line-height: 1.75;
 }
 
 /* ===== GALLERY ===== */
@@ -1106,17 +1084,21 @@ section, .section-wrap {
 }
 
 /* ===== FOOTER ===== */
-.footer {
-  padding: 1.8rem 2.5rem;
+.footer-content {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 2.5rem;
+}
+
+.footer-bottom {
+  padding: 1.8rem 0;
   text-align: center;
-  font-family: 'JetBrains Mono', monospace;
   font-size: 0.75rem;
   color: var(--dim);
   border-top: 1px solid var(--border);
 }
 
 /* ===== PRESS FEEDBACK ===== */
-.btn-primary:active,
 .btn-secondary:active,
 .btn-terminal:active,
 .nav-cta:active,

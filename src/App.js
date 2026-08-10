@@ -4,6 +4,8 @@ import './App.css';
 import TerminalSession from './TerminalSession';
 import Reveal from './Reveal';
 import { useSprings } from './motion-presets';
+import { RuixenGradientFooter } from './components/ui/ruixen-gradient-footer';
+import { ProgressBar } from './components/ui/progress-bar';
 
 // ── data ────────────────────────────────────────────────────────────────────
 
@@ -13,7 +15,7 @@ const TERMINAL_LINES = [
   { type: 'cmd', text: 'cat /etc/role' },
   { type: 'out', text: 'IT Systems Administrator  ·  CE Student @ SJSU \'28' },
   { type: 'cmd', text: 'cat goals.txt' },
-  { type: 'out', text: 'devsecops · remote/hybrid · live abroad' },
+  { type: 'out', text: 'remote/hybrid · live abroad' },
   { type: 'cmd', text: 'ls ~/projects/' },
   { type: 'out', text: 'studyguard/   home-lab/' },
   { type: 'cmd', text: '' },
@@ -290,25 +292,56 @@ function Terminal() {
 }
 
 function Hero({ onOpenTerminal }) {
+  const [resumeStage, setResumeStage] = useState('idle'); // idle | pending | done
+
+  const handleResumeClick = (e) => {
+    e.preventDefault();
+    if (resumeStage !== 'idle') return;
+    // Animate first, open second. window.open()'ing right away steals focus
+    // to the new tab before the bar ever paints, so nothing seemed to happen
+    // until that tab was closed. Browsers keep a short grace period after a
+    // click during which a deferred window.open() still counts as
+    // user-initiated, so this stays un-blocked as long as the delay is short.
+    setResumeStage('pending');
+    setTimeout(() => setResumeStage('done'), 700);
+    setTimeout(() => {
+      window.open('/resume.html', '_blank', 'noopener,noreferrer');
+    }, 1600);
+    setTimeout(() => setResumeStage('idle'), 2000);
+  };
+
   return (
     <div className="hero">
       <div className="hero-left">
         <div className="hero-eyebrow">san jose, ca</div>
         <h1 className="hero-title">Jason Tsao</h1>
-        <p className="hero-sub">
-          Computer Engineering student at SJSU and IT professional.
-          I self-host everything, tinker with embedded hardware,
-          and keep systems running.
-        </p>
         <div className="hero-btns">
-          <a href="#projects" className="btn-primary">Projects →</a>
           <a href="#contact" className="btn-secondary">Contact</a>
           <button className="btn-terminal" onClick={onOpenTerminal}>
             <span className="btn-terminal-prompt">❯_</span> Terminal
           </button>
-          <a href="/resume.html" target="_blank" rel="noopener noreferrer" className="btn-secondary">
-            Resume ↗
-          </a>
+          <div className="resume-btn-wrap">
+            <a
+              href="/resume.html"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-secondary"
+              onClick={handleResumeClick}
+              aria-disabled={resumeStage !== 'idle'}
+            >
+              Resume ↗
+            </a>
+            {resumeStage !== 'idle' && (
+              <div className="resume-progress">
+                <ProgressBar
+                  value={resumeStage === 'pending' ? null : 100}
+                  label="resume.pdf"
+                  pendingLabel="Opening"
+                  completeLabel="Opened"
+                />
+              </div>
+            )}
+          </div>
         </div>
       </div>
       <div className="hero-right">
@@ -484,13 +517,13 @@ function About() {
               <div style={{ paddingLeft: '1rem' }}>
                 <span style={{ color: '#a8d8ff' }}>"goal"</span>
                 <span style={{ color: 'var(--muted)' }}>: </span>
-                <span style={{ color: '#c8c8c8' }}>"devsecops · remote/hybrid"</span>
+                <span style={{ color: '#c8c8c8' }}>"remote/hybrid"</span>
                 <span style={{ color: 'var(--dim)' }}>,</span>
               </div>
               <div style={{ paddingLeft: '1rem' }}>
                 <span style={{ color: '#a8d8ff' }}>"spoken"</span>
                 <span style={{ color: 'var(--muted)' }}>: </span>
-                <span style={{ color: '#c8c8c8' }}>"EN · JP · ZH"</span>
+                <span style={{ color: '#c8c8c8' }}>"EN · JP"</span>
                 <span style={{ color: 'var(--dim)' }}>,</span>
               </div>
               <div style={{ paddingLeft: '1rem' }}>
@@ -521,7 +554,7 @@ function About() {
             and a locally-hosted AI on my own hardware.
           </p>
           <p>
-            Long-term, I'm aiming for a DevSecOps role, ideally remote or hybrid,
+            Long-term, I'm aiming for a role that's remote or hybrid,
             with the flexibility to live and work from abroad.
           </p>
         </div>
@@ -788,7 +821,6 @@ function Contact() {
         <Reveal>
           <div className="section-label">contact</div>
           <h2 className="section-title">Get in touch</h2>
-          <p className="section-desc">Open to opportunities, collabs, or just talking tech.</p>
           <div className="contact-grid">
             <GitHubCard />
             <div className="contact-links">
@@ -818,9 +850,13 @@ function Contact() {
 
 function Footer() {
   return (
-    <footer className="footer">
-      jason tsao · {new Date().getFullYear()} · built with react
-    </footer>
+    <RuixenGradientFooter gradientHeight="40vh">
+      <div className="footer-content">
+        <div className="footer-bottom mono">
+          © jason tsao · {new Date().getFullYear()}
+        </div>
+      </div>
+    </RuixenGradientFooter>
   );
 }
 

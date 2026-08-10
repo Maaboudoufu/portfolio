@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 * {
   margin: 0;
   padding: 0;
@@ -15,12 +19,23 @@
   --dim:     #3a3a3a;
   --white:   #ffffff;
   --green:   #a8ff78;   /* terminal prompt only */
+
+  /* shadcn/Tailwind tokens — same palette above, restated as raw HSL
+     triplets (hsl(var(--x)) needs the bare "H S% L%" form). Keep in sync
+     with the hex values above if the palette changes. */
+  --background: 0 0% 3%;         /* --bg */
+  --foreground: 0 0% 93%;        /* --text */
+  --border-hsl: 0 0% 13%;        /* --border */
+  --muted: 0 0% 8%;              /* --card */
+  --muted-foreground: 0 0% 44%;  /* --muted */
+  --primary: 99 100% 74%;        /* --green */
+  --primary-foreground: 0 0% 3%; /* --bg */
 }
 
 html { scroll-behavior: smooth; }
 
 body {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
   background: var(--bg);
   color: var(--text);
   line-height: 1.6;
