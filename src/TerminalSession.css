@@ -180,3 +180,17 @@
   color: #c8c8c8;
   white-space: nowrap;
 }
+
+/* ===== ACCESSIBILITY: TRANSPARENCY & CONTRAST ===== */
+@media (prefers-reduced-transparency: reduce) {
+  .ts-overlay {
+    background: #000;
+    backdrop-filter: none;
+  }
+}
+
+@media (prefers-contrast: more) {
+  .ts-window {
+    border: 2px solid #fff;
+  }
+}
