@@ -563,6 +563,13 @@ section, .section-wrap {
   margin-bottom: 1rem;
 }
 
+.about-photo {
+  float: right;
+  width: 50%;
+  max-width: 270px;
+  margin: 0 -1rem 1.25rem 1.5rem;
+}
+
 /* ===== EXPERIENCE ===== */
 .exp-bg {
   background: var(--bg2);
@@ -610,9 +617,20 @@ section, .section-wrap {
 }
 
 .timeline-company {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
   font-size: 0.8rem;
   color: var(--muted);
   margin-bottom: 1rem;
+}
+
+.timeline-logo {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+  border-radius: 5px;
+  flex-shrink: 0;
 }
 
 .timeline-bullets {
@@ -1133,6 +1151,7 @@ section, .section-wrap {
   .gallery-item { height: 240px; }
   .gallery-arrow { display: none; }
   .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+  .about-photo { float: none; display: block; width: 100%; max-width: 280px; margin: 0 auto 1.5rem; }
   .contact-grid { grid-template-columns: 1fr; gap: 1.2rem; }
   .timeline-item { grid-template-columns: 1fr; gap: 0.3rem; }
   .timeline-period { text-align: left; padding-top: 0; }
