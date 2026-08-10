@@ -1,7 +1,8 @@
-import { useState, useEffect, useRef } from 'react';
-import { AnimatePresence } from 'motion/react';
+import { useState, useEffect, useRef, useCallback } from 'react';
+import { motion, AnimatePresence } from 'motion/react';
 import './App.css';
 import TerminalSession from './TerminalSession';
+import { useSprings } from './motion-presets';
 
 // ── data ────────────────────────────────────────────────────────────────────
 
@@ -300,7 +301,9 @@ function Gallery() {
 
   const [photos, setPhotos] = useState(GALLERY_FALLBACK.map(a => toPhoto(a.id, a.type)));
   const [selectedIdx, setSelectedIdx] = useState(null);
+  const [direction, setDirection] = useState(0);
   const stripRef = useRef(null);
+  const s = useSprings();
 
   useEffect(() => {
     fetch(`${IMMICH_URL}/api/albums/${IMMICH_ALBUM}?slug=${IMMICH_SLUG}`)
@@ -311,20 +314,25 @@ function Gallery() {
       .catch(() => {});
   }, []);
 
+  const goTo = useCallback((newIdx) => {
+    setDirection(newIdx > selectedIdx ? 1 : -1);
+    setSelectedIdx(newIdx);
+  }, [selectedIdx]);
+
   useEffect(() => {
     if (selectedIdx === null) return;
     document.body.style.overflow = 'hidden';
     const handler = (e) => {
       if (e.key === 'Escape') setSelectedIdx(null);
-      if (e.key === 'ArrowRight') setSelectedIdx(i => i === null ? null : Math.min(i + 1, photos.length - 1));
-      if (e.key === 'ArrowLeft') setSelectedIdx(i => i === null ? null : Math.max(i - 1, 0));
+      if (e.key === 'ArrowRight' && selectedIdx < photos.length - 1) goTo(selectedIdx + 1);
+      if (e.key === 'ArrowLeft' && selectedIdx > 0) goTo(selectedIdx - 1);
     };
     window.addEventListener('keydown', handler);
     return () => {
       document.body.style.overflow = '';
       window.removeEventListener('keydown', handler);
     };
-  }, [selectedIdx, photos.length]);
+  }, [selectedIdx, photos.length, goTo]);
 
   const scroll = (dir) => {
     if (stripRef.current) {
@@ -359,32 +367,51 @@ function Gallery() {
         </div>
       </div>
 
-      {selectedIdx !== null && (
-        <div className="gallery-lightbox" onClick={() => setSelectedIdx(null)}>
-          <button className="lightbox-close" onClick={() => setSelectedIdx(null)} aria-label="Close">{'\u00D7'}</button>
-          {selectedIdx > 0 && (
-            <button className="lightbox-nav lightbox-prev" onClick={(e) => { e.stopPropagation(); setSelectedIdx(selectedIdx - 1); }} aria-label="Previous">{'\u2039'}</button>
-          )}
-          {photos[selectedIdx].type === 'VIDEO' ? (
-            <video
-              src={photos[selectedIdx].src}
-              autoPlay loop controls
-              className="lightbox-img"
-              onClick={(e) => e.stopPropagation()}
-            />
-          ) : (
-            <img
-              src={photos[selectedIdx].src}
-              alt=""
-              className="lightbox-img"
-              onClick={(e) => e.stopPropagation()}
-            />
-          )}
-          {selectedIdx < photos.length - 1 && (
-            <button className="lightbox-nav lightbox-next" onClick={(e) => { e.stopPropagation(); setSelectedIdx(selectedIdx + 1); }} aria-label="Next">{'\u203A'}</button>
-          )}
-        </div>
-      )}
+      <AnimatePresence>
+        {selectedIdx !== null && (
+          <motion.div
+            className="gallery-lightbox"
+            onClick={() => setSelectedIdx(null)}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={s.ui}
+          >
+            <button className="lightbox-close" onClick={() => setSelectedIdx(null)} aria-label="Close">{'\u00D7'}</button>
+            {selectedIdx > 0 && (
+              <button className="lightbox-nav lightbox-prev" onClick={(e) => { e.stopPropagation(); goTo(selectedIdx - 1); }} aria-label="Previous">{'\u2039'}</button>
+            )}
+            <AnimatePresence mode="wait" initial={false}>
+              <motion.div
+                key={selectedIdx}
+                initial={{ opacity: 0, x: s.reduced ? 0 : (direction > 0 ? 40 : -40) }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: s.reduced ? 0 : (direction > 0 ? -40 : 40) }}
+                transition={s.ui}
+              >
+                {photos[selectedIdx].type === 'VIDEO' ? (
+                  <video
+                    src={photos[selectedIdx].src}
+                    autoPlay loop controls
+                    className="lightbox-img"
+                    onClick={(e) => e.stopPropagation()}
+                  />
+                ) : (
+                  <img
+                    src={photos[selectedIdx].src}
+                    alt=""
+                    className="lightbox-img"
+                    onClick={(e) => e.stopPropagation()}
+                  />
+                )}
+              </motion.div>
+            </AnimatePresence>
+            {selectedIdx < photos.length - 1 && (
+              <button className="lightbox-nav lightbox-next" onClick={(e) => { e.stopPropagation(); goTo(selectedIdx + 1); }} aria-label="Next">{'\u203A'}</button>
+            )}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
