@@ -75,7 +75,91 @@
 }
 
 /* ===== HERO ===== */
+/* Three stacked layers inside .hero-shell: aura (snow light) → figure →
+   veil (protects the text column + dissolves the cut-out into the page),
+   with .hero content on top. */
+.hero-shell {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+/* Cold snow light behind the head — without it the black jacket dissolves
+   straight into --bg and the cut-out reads as a floating beanie. */
+.hero-aura {
+  position: absolute;
+  z-index: 0;
+  top: -14%;
+  right: 4%;
+  width: min(860px, 68vw);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  pointer-events: none;
+  background: radial-gradient(circle at 50% 50%,
+    rgba(168, 216, 255, 0.16) 0%,
+    rgba(120, 162, 212, 0.07) 36%,
+    rgba(8, 8, 8, 0) 68%);
+}
+
+.hero-figure-wrap {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.hero-figure {
+  /* Routed through a variable because the entrance animation below has
+     fill-mode: both — a literal `opacity: 1` in its `to` frame outranks any
+     media-query override and silently pins the figure to full strength. */
+  --figure-opacity: 1;
+  position: absolute;
+  right: -6%;
+  bottom: -4%;
+  height: min(104vh, 1040px);
+  width: auto;
+  opacity: var(--figure-opacity);
+  user-select: none;
+  -webkit-user-drag: none;
+  /* Fade the left and bottom edges so the cut-out never ends on a hard line. */
+  -webkit-mask-image:
+    linear-gradient(to bottom, #000 58%, rgba(0, 0, 0, 0) 97%),
+    linear-gradient(to right, rgba(0, 0, 0, 0) 0%, #000 28%);
+  mask-image:
+    linear-gradient(to bottom, #000 58%, rgba(0, 0, 0, 0) 97%),
+    linear-gradient(to right, rgba(0, 0, 0, 0) 0%, #000 28%);
+  -webkit-mask-composite: source-in;
+  mask-composite: intersect;
+  animation: hero-figure-in 900ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes hero-figure-in {
+  from { opacity: 0; transform: translate3d(26px, 14px, 0) scale(1.03); }
+  to   { opacity: var(--figure-opacity); transform: none; }
+}
+
+.hero-veil {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(102deg,
+      var(--bg) 0%,
+      rgba(8, 8, 8, 0.94) 24%,
+      rgba(8, 8, 8, 0.5) 44%,
+      rgba(8, 8, 8, 0) 62%),
+    /* Must reach solid --bg before the shell's overflow clip, or the figure
+       ends on a hard horizontal line once parallax has pushed it down. */
+    linear-gradient(to bottom,
+      rgba(8, 8, 8, 0) 64%,
+      rgba(8, 8, 8, 0.5) 83%,
+      var(--bg) 97%);
+}
+
 .hero {
+  position: relative;
+  z-index: 1;
   min-height: 100vh;
   display: flex;
   align-items: center;
@@ -198,6 +282,17 @@
   box-shadow: 0 25px 60px rgba(0,0,0,0.6);
   font-family: 'JetBrains Mono', 'Fira Code', monospace;
   font-size: 0.82rem;
+}
+
+/* Sits over the hero figure — a lit top edge and a deeper cast shadow read as
+   a solid object floating above the image. Kept opaque on purpose: the muted
+   terminal output is already only ~3.6:1, translucency would sink it further. */
+.hero-right .terminal {
+  box-shadow:
+    0 34px 90px rgba(0, 0, 0, 0.72),
+    0 2px 10px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.07);
+  border-color: rgba(255, 255, 255, 0.13);
 }
 
 .terminal-bar {
@@ -609,6 +704,15 @@ section, .section-wrap {
 
 .timeline-card:hover { border-color: var(--border2); }
 
+.timeline-card-head {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  margin-bottom: 1rem;
+}
+
+.timeline-heading { min-width: 0; }
+
 .timeline-title {
   font-size: 0.95rem;
   font-weight: 700;
@@ -617,20 +721,21 @@ section, .section-wrap {
 }
 
 .timeline-company {
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
   font-size: 0.8rem;
   color: var(--muted);
-  margin-bottom: 1rem;
 }
 
 .timeline-logo {
-  width: 28px;
-  height: 28px;
+  width: 40px;
+  height: 40px;
   object-fit: contain;
-  border-radius: 5px;
+  border-radius: 8px;
   flex-shrink: 0;
+}
+
+.timeline-logo.white-bg {
+  background: white;
+  padding: 3px;
 }
 
 .timeline-bullets {
@@ -1148,6 +1253,22 @@ section, .section-wrap {
 @media (max-width: 900px) {
   .hero { flex-direction: column; padding-top: 7rem; }
   .hero-right { width: 100%; }
+  /* Stacked layout leaves no column to hide behind — the figure drops to an
+     ambient texture in the top-right instead of competing with the headline. */
+  .hero-figure {
+    right: -12%;
+    bottom: auto;
+    top: 3.5rem;
+    height: min(46vh, 380px);
+    --figure-opacity: 0.7;
+    -webkit-mask-image: linear-gradient(to bottom, #000 46%, rgba(0, 0, 0, 0) 96%);
+    mask-image: linear-gradient(to bottom, #000 46%, rgba(0, 0, 0, 0) 96%);
+  }
+  .hero-aura { top: 0; right: -14%; width: 92vw; }
+  .hero-veil {
+    background:
+      linear-gradient(to bottom, rgba(8, 8, 8, 0.5) 0%, rgba(8, 8, 8, 0.92) 40%, var(--bg) 62%);
+  }
   .gallery-item { height: 240px; }
   .gallery-arrow { display: none; }
   .about-grid { grid-template-columns: 1fr; gap: 2rem; }
@@ -1159,7 +1280,17 @@ section, .section-wrap {
   .nav-links { display: none; }
 }
 
-/* ===== ACCESSIBILITY: TRANSPARENCY & CONTRAST ===== */
+/* Phones: no width left to share, so slide the figure right until the face
+   clears the headline — only the raised arm and brush strokes sit behind it. */
+@media (max-width: 560px) {
+  .hero-figure { right: -30%; --figure-opacity: 0.85; }
+}
+
+/* ===== ACCESSIBILITY: MOTION, TRANSPARENCY & CONTRAST ===== */
+@media (prefers-reduced-motion: reduce) {
+  .hero-figure { animation: none; }
+}
+
 @media (prefers-reduced-transparency: reduce) {
   .navbar {
     background: #0a0a0a;
@@ -1180,6 +1311,8 @@ section, .section-wrap {
 }
 
 @media (prefers-contrast: more) {
+  .hero-figure { --figure-opacity: 0.35; }
+  .hero-aura { display: none; }
   .navbar {
     background: #000;
     border-bottom: 1px solid var(--white);
