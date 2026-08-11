@@ -388,6 +388,7 @@ export function GradientShimmer({
     let pauseTimer: ReturnType<typeof setTimeout> | undefined;
     let active = true;
     let unmounted = false;
+    let reducedMotionActive = false;
 
     const runSweep = () => {
       if (unmounted) return;
@@ -415,7 +416,7 @@ export function GradientShimmer({
       { pauseOnScroll, pauseWhenOffscreen },
       (next) => {
         active = next;
-        if (anim) {
+        if (anim && !reducedMotionActive) {
           if (active) anim.play();
           else anim.pause();
         }
@@ -425,16 +426,19 @@ export function GradientShimmer({
     // Live-subscribed, not just checked once at mount — toggling the OS
     // setting mid-session now starts/stops the sweep like every other
     // reduced-motion check on the site.
-    const mq = respectReducedMotion
-      ? window.matchMedia("(prefers-reduced-motion: reduce)")
-      : null;
+    const mq =
+      respectReducedMotion && typeof window.matchMedia === "function"
+        ? window.matchMedia("(prefers-reduced-motion: reduce)")
+        : null;
 
     const applyMotionPreference = () => {
-      if (mq?.matches) {
-        anim?.cancel();
-        anim = null;
+      reducedMotionActive = !!mq?.matches;
+      if (reducedMotionActive) {
+        anim?.pause();
         clearTimeout(pauseTimer);
-      } else if (!anim) {
+      } else if (anim) {
+        anim.play();
+      } else {
         runSweep();
       }
     };
