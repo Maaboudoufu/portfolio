@@ -70,14 +70,20 @@ export function ThemeToggle({ className = "" }: ThemeToggleProps) {
         >
           <motion.span
             className="theme-toggle-icon"
-            animate={{ opacity: isLight ? 0 : 1, rotate: isLight ? 80 : 0, scale: isLight ? 0.4 : 1 }}
+            animate={{
+              opacity: isLight ? 0 : 1,
+              ...(s.reduced ? {} : { rotate: isLight ? 80 : 0, scale: isLight ? 0.4 : 1 }),
+            }}
             transition={iconFade}
           >
             <Moon />
           </motion.span>
           <motion.span
             className="theme-toggle-icon"
-            animate={{ opacity: isLight ? 1 : 0, rotate: isLight ? 0 : -80, scale: isLight ? 1 : 0.4 }}
+            animate={{
+              opacity: isLight ? 1 : 0,
+              ...(s.reduced ? {} : { rotate: isLight ? 0 : -80, scale: isLight ? 1 : 0.4 }),
+            }}
             transition={iconFade}
           >
             <Sun />

@@ -5,7 +5,9 @@
 // tagged with `lang` so the browser picks a Japanese face for 日本語 even while
 // the surrounding page is English.
 
+import { AnimatePresence, motion, type Transition } from "motion/react";
 import { setLang, useLang } from "../../i18n";
+import { useSprings } from "../../motion-presets";
 
 // Tabler `world`, inlined for the same reason as the theme toggle's icons.
 const Globe = () => (
@@ -33,6 +35,9 @@ export function LangToggle({ className = "" }: LangToggleProps) {
   const next = isJa ? "en" : "ja";
   const label = isJa ? "English" : "日本語";
   const hint = isJa ? "Switch to English" : "日本語に切り替える";
+  const s = useSprings();
+  // useSprings is untyped JS; its presets are Motion transitions by contract.
+  const fade = s.ui as Transition;
 
   return (
     <button
@@ -44,7 +49,17 @@ export function LangToggle({ className = "" }: LangToggleProps) {
       onClick={() => setLang(next)}
     >
       <span className="lang-toggle-icon"><Globe /></span>
-      {label}
+      <AnimatePresence mode="wait" initial={false}>
+        <motion.span
+          key={label}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={fade}
+        >
+          {label}
+        </motion.span>
+      </AnimatePresence>
     </button>
   );
 }

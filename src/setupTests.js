@@ -14,3 +14,11 @@ global.IntersectionObserver = class IntersectionObserver {
   }
   unobserve() {}
 };
+
+// Mock ResizeObserver for the footer's content-height tracking
+global.ResizeObserver = class ResizeObserver {
+  constructor() {}
+  disconnect() {}
+  observe() {}
+  unobserve() {}
+};
