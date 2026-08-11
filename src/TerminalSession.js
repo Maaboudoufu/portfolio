@@ -353,7 +353,7 @@ function Neofetch() {
             {info && (
               <span className="ts-fetch-info">
                 {info.special === 'user' && (
-                  <><span className="ts-green">jason</span><span className="ts-dim">@</span><span className="ts-blue">maaboudoumei</span></>
+                  <><span className="ts-green">jason.tsao</span><span className="ts-dim">@</span><span className="ts-blue">maaboudoumei</span></>
                 )}
                 {info.special === 'sep' && (
                   <span className="ts-dim">{'─'.repeat(30)}</span>
@@ -375,7 +375,7 @@ function Neofetch() {
 function Prompt({ cwd, cmd }) {
   return (
     <div className="ts-line">
-      <span className="ts-green">jason</span>
+      <span className="ts-green">jason.tsao</span>
       <span className="ts-dim">@</span>
       <span className="ts-blue">maaboudoumei</span>
       <span className="ts-dim"> </span>
@@ -509,7 +509,7 @@ function Shell({ onExit }) {
 
       {/* active prompt */}
       <div className="ts-line ts-active-prompt">
-        <span className="ts-green">jason</span>
+        <span className="ts-green">jason.tsao</span>
         <span className="ts-dim">@</span>
         <span className="ts-blue">maaboudoumei</span>
         <span className="ts-dim"> </span>
@@ -605,7 +605,7 @@ export default function TerminalSession({ onClose }) {
           <span className="ts-dot ts-dot-red" onClick={onClose} title="close" />
           <span className="ts-dot ts-dot-yellow" />
           <span className="ts-dot ts-dot-green" />
-          <span className="ts-bar-title">jason@maaboudoumei — zsh</span>
+          <span className="ts-bar-title">jason.tsao@maaboudoumei — zsh</span>
           <button className="ts-close" onClick={onClose}>✕</button>
         </div>
 

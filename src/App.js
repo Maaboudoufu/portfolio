@@ -5,7 +5,9 @@ import TerminalSession from './TerminalSession';
 import Reveal from './Reveal';
 import { useSprings } from './motion-presets';
 import { RuixenGradientFooter } from './components/ui/ruixen-gradient-footer';
-import { ProgressBar } from './components/ui/progress-bar';
+import { GradientShimmer } from './components/ui/gradient-shimmer';
+import { ThemeToggle } from './components/ui/theme-toggle';
+import { useTheme } from './theme';
 import {
   SiCplusplus, SiJavascript, SiTypescript, SiHtml5, SiPython, SiGnubash,
   SiReact, SiVite, SiNodedotjs, SiExpress, SiFastapi, SiPrisma, SiSqlalchemy,
@@ -24,7 +26,7 @@ import { FaMicrophone, FaBrain, FaWindows } from 'react-icons/fa6';
 
 const TERMINAL_LINES = [
   { type: 'cmd', text: 'whoami' },
-  { type: 'out', text: 'jason tsao' },
+  { type: 'out', text: 'jason.tsao' },
   { type: 'cmd', text: 'cat /etc/role' },
   { type: 'out', text: 'IT Systems Administrator  ·  CE Student @ SJSU \'28' },
   { type: 'cmd', text: 'cat goals.txt' },
@@ -302,18 +304,21 @@ function Navbar() {
 
   return (
     <nav className={`navbar${scrolled ? ' scrolled' : ''}`}>
-      <div className="nav-logo mono">jason@tsao</div>
-      <ul className="nav-links">
-        {links.map(l => (
-          <li key={l.id} className="nav-link-item">
-            <a href={`#${l.id}`} className={active === l.id ? 'active' : ''}>{l.label}</a>
-            {active === l.id && (
-              <motion.div className="nav-underline" layoutId={s.reduced ? undefined : 'nav-underline'} transition={s.ui} />
-            )}
-          </li>
-        ))}
-        <li><a href="#contact" className="nav-cta">contact</a></li>
-      </ul>
+      <div className="nav-logo mono">jason.tsao@maaboudoumei</div>
+      <div className="nav-right">
+        <ul className="nav-links">
+          {links.map(l => (
+            <li key={l.id} className="nav-link-item">
+              <a href={`#${l.id}`} className={active === l.id ? 'active' : ''}>{l.label}</a>
+              {active === l.id && (
+                <motion.div className="nav-underline" layoutId={s.reduced ? undefined : 'nav-underline'} transition={s.ui} />
+              )}
+            </li>
+          ))}
+          <li><a href="#contact" className="nav-cta">contact</a></li>
+        </ul>
+        <ThemeToggle />
+      </div>
     </nav>
   );
 }
@@ -334,7 +339,7 @@ function Terminal() {
         <span className="t-dot red" />
         <span className="t-dot yellow" />
         <span className="t-dot green" />
-        <span className="terminal-title">jason@maaboudoumei — zsh</span>
+        <span className="terminal-title">jason.tsao@maaboudoumei — zsh</span>
       </div>
       <div className="terminal-body mono">
         {TERMINAL_LINES.slice(0, visible).map((line, i) => {
@@ -343,7 +348,7 @@ function Terminal() {
           if (line.type === 'cmd') {
             return (
               <div className="t-line" key={i}>
-                <span className="t-user">jason</span>
+                <span className="t-user">jason.tsao</span>
                 <span className="t-at">@</span>
                 <span className="t-host">maaboudoumei</span>
                 <span className="t-arrow"> ❯ </span>
@@ -361,24 +366,23 @@ function Terminal() {
   );
 }
 
+// The shimmer band *replaces* the headline's color as it sweeps, so the palette
+// has to carry its own contrast. The default pastels do that against black; on
+// paper the band has to be saturated and dark or the name washes out mid-sweep.
+export const SHIMMER_LIGHT = [
+  { color: '#1d4ed8', position: 0 },
+  { color: '#6d28d9', position: 0.34 },
+  { color: '#be185d', position: 0.66 },
+  { color: '#b45309', position: 1 },
+];
+
 function Hero({ onOpenTerminal }) {
-  const [resumeStage, setResumeStage] = useState('idle'); // idle | pending | done
   const reduced = useReducedMotion();
+  const isLight = useTheme() === 'light';
   const { scrollY } = useScroll();
   // Figure lags the page as it scrolls — it sinks behind the fold instead of
   // riding along with it. Positive y = moves *down* relative to the scroll.
   const figureY = useTransform(scrollY, [0, 900], [0, 120]);
-
-  const handleResumeClick = () => {
-    if (resumeStage !== 'idle') return;
-    // Let the <a target="_blank"> below navigate natively and immediately.
-    // A window.open() fired from inside setTimeout loses user-activation and
-    // gets silently popup-blocked (Safari especially) — this bar is cosmetic
-    // feedback only, it must never gate the actual navigation.
-    setResumeStage('pending');
-    setTimeout(() => setResumeStage('done'), 700);
-    setTimeout(() => setResumeStage('idle'), 2000);
-  };
 
   return (
     <div className="hero-shell">
@@ -406,34 +410,22 @@ function Hero({ onOpenTerminal }) {
       <div className="hero">
         <div className="hero-left">
           <div className="hero-eyebrow">san jose, ca</div>
-          <h1 className="hero-title">Jason Tsao</h1>
+          <h1 className="hero-title">
+            <GradientShimmer gradient={isLight ? SHIMMER_LIGHT : undefined}>Jason Tsao</GradientShimmer>
+          </h1>
           <div className="hero-btns">
-            <a href="#contact" className="btn-secondary">Contact</a>
             <button className="btn-terminal" onClick={onOpenTerminal}>
               <span className="btn-terminal-prompt">❯_</span> Terminal
             </button>
-            <div className="resume-btn-wrap">
-              <a
-                href="/resume.html"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn-secondary"
-                onClick={handleResumeClick}
-                aria-disabled={resumeStage !== 'idle'}
-              >
-                Resume ↗
-              </a>
-              {resumeStage !== 'idle' && (
-                <div className="resume-progress">
-                  <ProgressBar
-                    value={resumeStage === 'pending' ? null : 100}
-                    label="resume.pdf"
-                    pendingLabel="Opening"
-                    completeLabel="Opened"
-                  />
-                </div>
-              )}
-            </div>
+            <a href="#contact" className="btn-secondary">Contact</a>
+            <a
+              href="/resume.html"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-secondary"
+            >
+              Resume ↗
+            </a>
           </div>
         </div>
         <div className="hero-right">
@@ -584,43 +576,43 @@ function About() {
             <div className="about-card-body mono" style={{ fontSize: '0.78rem', lineHeight: 1.9 }}>
               <div style={{ color: 'var(--dim)' }}>{'{'}</div>
               <div style={{ paddingLeft: '1rem' }}>
-                <span style={{ color: '#a8d8ff' }}>"school"</span>
+                <span style={{ color: 'var(--term-blue)' }}>"school"</span>
                 <span style={{ color: 'var(--muted)' }}>: </span>
-                <span style={{ color: '#c8c8c8' }}>"SJSU — BS CmpE \'28 (3.70)"</span>
+                <span style={{ color: 'var(--term-fg)' }}>"SJSU — BS CmpE \'28 (3.70)"</span>
                 <span style={{ color: 'var(--dim)' }}>,</span>
               </div>
               <div style={{ paddingLeft: '1rem' }}>
-                <span style={{ color: '#a8d8ff' }}>"role"</span>
+                <span style={{ color: 'var(--term-blue)' }}>"role"</span>
                 <span style={{ color: 'var(--muted)' }}>: </span>
-                <span style={{ color: '#c8c8c8' }}>"IT Systems Administrator"</span>
+                <span style={{ color: 'var(--term-fg)' }}>"IT Systems Administrator"</span>
                 <span style={{ color: 'var(--dim)' }}>,</span>
               </div>
               <div style={{ paddingLeft: '1rem' }}>
-                <span style={{ color: '#a8d8ff' }}>"from"</span>
+                <span style={{ color: 'var(--term-blue)' }}>"from"</span>
                 <span style={{ color: 'var(--muted)' }}>: </span>
-                <span style={{ color: '#c8c8c8' }}>"Sacramento, CA"</span>
+                <span style={{ color: 'var(--term-fg)' }}>"Sacramento, CA"</span>
                 <span style={{ color: 'var(--dim)' }}>,</span>
               </div>
               <div style={{ paddingLeft: '1rem' }}>
-                <span style={{ color: '#a8d8ff' }}>"based"</span>
+                <span style={{ color: 'var(--term-blue)' }}>"based"</span>
                 <span style={{ color: 'var(--muted)' }}>: </span>
-                <span style={{ color: '#c8c8c8' }}>"San Jose, CA"</span>
+                <span style={{ color: 'var(--term-fg)' }}>"San Jose, CA"</span>
                 <span style={{ color: 'var(--dim)' }}>,</span>
               </div>
               <div style={{ paddingLeft: '1rem' }}>
-                <span style={{ color: '#a8d8ff' }}>"goal"</span>
+                <span style={{ color: 'var(--term-blue)' }}>"goal"</span>
                 <span style={{ color: 'var(--muted)' }}>: </span>
-                <span style={{ color: '#c8c8c8' }}>"remote/hybrid"</span>
+                <span style={{ color: 'var(--term-fg)' }}>"remote/hybrid"</span>
                 <span style={{ color: 'var(--dim)' }}>,</span>
               </div>
               <div style={{ paddingLeft: '1rem' }}>
-                <span style={{ color: '#a8d8ff' }}>"spoken"</span>
+                <span style={{ color: 'var(--term-blue)' }}>"spoken"</span>
                 <span style={{ color: 'var(--muted)' }}>: </span>
-                <span style={{ color: '#c8c8c8' }}>"EN · JP"</span>
+                <span style={{ color: 'var(--term-fg)' }}>"EN · JP"</span>
                 <span style={{ color: 'var(--dim)' }}>,</span>
               </div>
               <div style={{ paddingLeft: '1rem' }}>
-                <span style={{ color: '#a8d8ff' }}>"open_to"</span>
+                <span style={{ color: 'var(--term-blue)' }}>"open_to"</span>
                 <span style={{ color: 'var(--muted)' }}>: </span>
                 <span style={{ color: 'var(--green)' }}>true</span>
               </div>
@@ -910,13 +902,6 @@ function Contact() {
       label: 'email',
       value: 'jason.tsao@maaboudoumei.org',
       external: false,
-    },
-    {
-      kind: 'github',
-      href: 'https://github.com/maaboudoufu',
-      label: 'github',
-      value: 'github.com/maaboudoufu',
-      external: true,
     },
     {
       kind: 'linkedin',

@@ -3,30 +3,33 @@
   position: fixed;
   inset: 0;
   z-index: 200;
-  background: rgba(0, 0, 0, 0.85);
+  /* Lighter scrim than before — the window is glass now, so the page has to
+     stay visible through it; the window's own blur does the separating. */
+  background: rgba(0, 0, 0, 0.55);
   display: flex;
   align-items: center;
   justify-content: center;
-  backdrop-filter: blur(4px);
+  backdrop-filter: blur(6px);
 }
 
 /* ── window ── */
 .ts-window {
   width: min(900px, 96vw);
   height: min(620px, 90vh);
-  background: #0d0d0d;
-  border: 1px solid #2a2a2a;
+  background: var(--glass-strong);
+  backdrop-filter: blur(30px) saturate(160%);
+  border: 1px solid var(--glass-border);
   border-radius: 10px;
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  box-shadow: 0 40px 100px rgba(0, 0, 0, 0.8);
+  box-shadow: var(--shadow-window);
 }
 
 /* ── title bar ── */
 .ts-bar {
-  background: #1a1a1a;
-  border-bottom: 1px solid #222;
+  background: var(--wash);
+  border-bottom: 1px solid var(--border);
   padding: 0.6rem 1rem;
   display: flex;
   align-items: center;
@@ -50,7 +53,7 @@
 .ts-bar-title {
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.72rem;
-  color: #555;
+  color: var(--term-dim);
   flex: 1;
   text-align: center;
 }
@@ -58,14 +61,14 @@
 .ts-close {
   background: none;
   border: none;
-  color: #444;
+  color: var(--dim);
   font-size: 0.8rem;
   cursor: pointer;
   padding: 0;
   line-height: 1;
   transition: color 0.15s, transform 0.1s ease-out;
 }
-.ts-close:hover { color: #aaa; }
+.ts-close:hover { color: var(--muted); }
 .ts-close:active { transform: scale(0.85); }
 
 /* ── body ── */
@@ -76,24 +79,24 @@
   font-family: 'JetBrains Mono', 'Fira Code', monospace;
   font-size: 0.8rem;
   line-height: 1.65;
-  color: #c8c8c8;
+  color: var(--term-fg);
 }
 
 .ts-body::-webkit-scrollbar { width: 4px; }
 .ts-body::-webkit-scrollbar-track { background: transparent; }
-.ts-body::-webkit-scrollbar-thumb { background: #2a2a2a; border-radius: 2px; }
+.ts-body::-webkit-scrollbar-thumb { background: var(--scroll-thumb); border-radius: 2px; }
 
 /* ── boot ── */
 .ts-boot { display: flex; flex-direction: column; }
 
 .ts-boot-line {
-  color: #606060;
+  color: var(--term-dim);
   white-space: pre-wrap;
   word-break: break-all;
 }
 
-.ts-boot-ok    { color: #4afa7b; }
-.ts-boot-login { color: #c8c8c8; }
+.ts-boot-ok    { color: var(--term-ok); }
+.ts-boot-login { color: var(--term-fg); }
 
 /* ── shell ── */
 .ts-shell {
@@ -113,7 +116,7 @@
 }
 
 .ts-output {
-  color: #a0a0a0;
+  color: var(--term-out);
   font-family: inherit;
   font-size: inherit;
   margin: 0 0 0.5rem;
@@ -121,7 +124,7 @@
   word-break: break-word;
 }
 
-.ts-error  { color: #ff6b6b; margin-bottom: 0.3rem; }
+.ts-error  { color: var(--term-red); margin-bottom: 0.3rem; }
 
 .ts-ls { gap: 0; margin-bottom: 0.3rem; }
 
@@ -144,20 +147,20 @@
   background: transparent;
   border: none;
   outline: none;
-  color: #ededed;
+  color: var(--text);
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.8rem;
   line-height: 1.65;
-  caret-color: #a8ff78;
+  caret-color: var(--term-green);
   min-width: 0;
 }
 
 /* ── color tokens ── */
-.ts-green  { color: #a8ff78; }
-.ts-blue   { color: #89b4fa; }
-.ts-yellow { color: #f9e2af; }
-.ts-white  { color: #ededed; }
-.ts-dim    { color: #555; }
+.ts-green  { color: var(--term-green); }
+.ts-blue   { color: var(--term-blue2); }
+.ts-yellow { color: var(--term-yellow); }
+.ts-white  { color: var(--text); }
+.ts-dim    { color: var(--term-dim); }  /* lifted for legibility over the glass */
 .ts-bold   { font-weight: 700; }
 
 /* ── neofetch ── */
@@ -170,14 +173,14 @@
 }
 
 .ts-fetch-art {
-  color: #a8ff78;
+  color: var(--term-green);
   white-space: pre;
   flex-shrink: 0;
   padding-right: 1.5rem;
 }
 
 .ts-fetch-info {
-  color: #c8c8c8;
+  color: var(--term-fg);
   white-space: nowrap;
 }
 
@@ -187,10 +190,18 @@
     background: #000;
     backdrop-filter: none;
   }
+  .ts-window {
+    background: var(--glass-solid);
+    backdrop-filter: none;
+  }
+  .ts-bar { background: var(--chip); }
 }
 
 @media (prefers-contrast: more) {
   .ts-window {
-    border: 2px solid #fff;
+    background: var(--hc-bg);
+    backdrop-filter: none;
+    border: 2px solid var(--white);
   }
+  .ts-bar { background: var(--hc-bar); }
 }

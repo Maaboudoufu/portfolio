@@ -12,6 +12,24 @@
     <meta name="description" content="Jason Tsao — Computer Engineering student at SJSU and IT professional. Portfolio showcasing projects, experience, and skills." />
     <meta name="theme-color" content="#0d0d0d" />
 
+    <!-- Stamps <html data-theme> before first paint: a stored choice, else the
+         OS preference, else dark. Must stay inline and ahead of the stylesheet
+         or the page paints one theme and swaps to the other. -->
+    <script>
+      (function () {
+        var t = 'dark';
+        try {
+          var saved = localStorage.getItem('theme');
+          t = saved === 'light' || saved === 'dark'
+            ? saved
+            : (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+        } catch (e) { /* storage blocked — fall through to dark */ }
+        document.documentElement.setAttribute('data-theme', t);
+        var meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) meta.setAttribute('content', t === 'light' ? '#f7f7f6' : '#0d0d0d');
+      })();
+    </script>
+
     <!-- Open Graph / LinkedIn -->
     <meta property="og:type" content="website" />
     <meta property="og:title" content="Jason Tsao — Portfolio" />

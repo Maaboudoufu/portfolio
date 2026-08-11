@@ -12,7 +12,7 @@ module.exports = {
         foreground: 'hsl(var(--foreground))',
         border: 'hsl(var(--border-hsl))',
         muted: {
-          DEFAULT: 'hsl(var(--muted))',
+          DEFAULT: 'hsl(var(--muted-hsl))',
           foreground: 'hsl(var(--muted-foreground))',
         },
         primary: {
