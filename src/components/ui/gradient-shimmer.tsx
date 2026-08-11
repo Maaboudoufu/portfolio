@@ -204,15 +204,6 @@ function supportsBackgroundClipText(): boolean {
   );
 }
 
-/** True when the user asked for reduced motion. SSR-safe. */
-function prefersReducedMotion(): boolean {
-  return (
-    typeof window !== "undefined" &&
-    typeof window.matchMedia === "function" &&
-    window.matchMedia("(prefers-reduced-motion: reduce)").matches
-  );
-}
-
 interface GateOptions {
   pauseOnScroll: boolean;
   pauseWhenOffscreen: boolean;
@@ -391,16 +382,16 @@ export function GradientShimmer({
     // Refine the seeded vars with a real measurement.
     measure();
 
-    if (respectReducedMotion && prefersReducedMotion()) return; // static, no sweep
-    if (typeof el.animate !== "function") return; // static, no sweep
+    if (typeof el.animate !== "function") return; // static, no sweep — no WAAPI, nothing to toggle
 
     let anim: Animation | null = null;
     let pauseTimer: ReturnType<typeof setTimeout> | undefined;
     let active = true;
-    let cancelled = false;
+    let unmounted = false;
+    let reducedMotionActive = false;
 
     const runSweep = () => {
-      if (cancelled) return;
+      if (unmounted || reducedMotionActive) return;
       const { start, end, durationMs } = measure();
       const next = el.animate(
         [
@@ -425,20 +416,42 @@ export function GradientShimmer({
       { pauseOnScroll, pauseWhenOffscreen },
       (next) => {
         active = next;
-        if (anim) {
+        if (anim && !reducedMotionActive) {
           if (active) anim.play();
           else anim.pause();
         }
       },
     );
 
-    runSweep();
+    // Live-subscribed, not just checked once at mount — toggling the OS
+    // setting mid-session now starts/stops the sweep like every other
+    // reduced-motion check on the site.
+    const mq =
+      respectReducedMotion && typeof window.matchMedia === "function"
+        ? window.matchMedia("(prefers-reduced-motion: reduce)")
+        : null;
+
+    const applyMotionPreference = () => {
+      reducedMotionActive = !!mq?.matches;
+      if (reducedMotionActive) {
+        anim?.pause();
+        clearTimeout(pauseTimer);
+      } else if (anim) {
+        if (active) anim.play();
+      } else {
+        runSweep();
+      }
+    };
+
+    applyMotionPreference();
+    mq?.addEventListener("change", applyMotionPreference);
 
     return () => {
-      cancelled = true;
+      unmounted = true;
       anim?.cancel();
       clearTimeout(pauseTimer);
       stopVisibility();
+      mq?.removeEventListener("change", applyMotionPreference);
     };
   }, [
     children,
