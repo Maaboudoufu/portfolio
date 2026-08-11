@@ -8,7 +8,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: rgba(8, 8, 8, 0.85);
+  background: var(--nav-bg);
   backdrop-filter: blur(12px);
   border-bottom: 1px solid transparent;
   transition: border-color 0.3s, padding 0.3s;
@@ -71,8 +71,94 @@
 
 .nav-cta:hover {
   border-color: var(--white) !important;
-  background: rgba(255,255,255,0.05);
+  background: var(--wash);
 }
+
+/* ===== THEME TOGGLE ===== */
+/* Sits outside .nav-links so it survives the mobile breakpoint that hides them. */
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.theme-toggle {
+  width: 54px;
+  height: 44px;        /* 44px touch target around a 28px pill */
+  display: grid;
+  place-items: center;
+  padding: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.theme-toggle-track {
+  position: relative;
+  width: 54px;
+  height: 28px;
+  border-radius: 999px;
+  border: 1px solid var(--border2);
+  background: var(--wash);
+  display: block;
+  transition: border-color 0.2s, background 0.2s, transform 0.1s ease-out;
+}
+
+.theme-toggle:hover .theme-toggle-track { border-color: var(--white); }
+.theme-toggle:active .theme-toggle-track { transform: scale(0.94); }
+
+.theme-toggle:focus-visible { outline: none; }
+.theme-toggle:focus-visible .theme-toggle-track {
+  outline: 2px solid var(--white);
+  outline-offset: 3px;
+}
+
+/* The destination icon, at the end of the track the knob is not on. */
+.theme-toggle-ghost {
+  position: absolute;
+  top: 50%;
+  width: 12px;
+  height: 12px;
+  margin-top: -6px;
+  color: var(--muted);
+  opacity: 0.55;
+  line-height: 0;
+  transition: opacity 0.2s;
+}
+
+.theme-toggle-ghost svg { width: 100%; height: 100%; display: block; }
+
+.theme-toggle-ghost-moon { left: 7px; }
+.theme-toggle-ghost-sun  { right: 7px; }
+
+/* Hide whichever ghost the knob has parked on. */
+:root[data-theme="light"] .theme-toggle-ghost-sun { opacity: 0; }
+:root:not([data-theme="light"]) .theme-toggle-ghost-moon { opacity: 0; }
+
+/* Inverted chip: reads as "the current theme", and stays legible in both. */
+.theme-toggle-knob {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--text);
+  color: var(--bg);
+  display: grid;
+  place-items: center;
+}
+
+.theme-toggle-icon {
+  grid-area: 1 / 1;
+  display: block;
+  width: 13px;
+  height: 13px;
+  line-height: 0;
+}
+
+.theme-toggle-icon svg { width: 100%; height: 100%; display: block; }
 
 /* ===== HERO ===== */
 /* Three stacked layers inside .hero-shell: aura (snow light) → figure →
@@ -96,9 +182,9 @@
   border-radius: 50%;
   pointer-events: none;
   background: radial-gradient(circle at 50% 50%,
-    rgba(168, 216, 255, 0.16) 0%,
-    rgba(120, 162, 212, 0.07) 36%,
-    rgba(8, 8, 8, 0) 68%);
+    var(--aura-1) 0%,
+    var(--aura-2) 36%,
+    rgba(var(--veil-rgb), 0) 68%);
 }
 
 .hero-figure-wrap {
@@ -146,14 +232,14 @@
   background:
     linear-gradient(102deg,
       var(--bg) 0%,
-      rgba(8, 8, 8, 0.94) 24%,
-      rgba(8, 8, 8, 0.5) 44%,
-      rgba(8, 8, 8, 0) 62%),
+      rgba(var(--veil-rgb), 0.94) 24%,
+      rgba(var(--veil-rgb), 0.5) 44%,
+      rgba(var(--veil-rgb), 0) 62%),
     /* Must reach solid --bg before the shell's overflow clip, or the figure
        ends on a hard horizontal line once parallax has pushed it down. */
     linear-gradient(to bottom,
-      rgba(8, 8, 8, 0) 64%,
-      rgba(8, 8, 8, 0.5) 83%,
+      rgba(var(--veil-rgb), 0) 64%,
+      rgba(var(--veil-rgb), 0.5) 83%,
       var(--bg) 97%);
 }
 
@@ -232,8 +318,8 @@
 .btn-terminal {
   padding: 0.7rem 1.5rem;
   background: transparent;
-  color: #a8ff78;
-  border: 1px solid rgba(168, 255, 120, 0.3);
+  color: var(--green);
+  border: 1px solid var(--tint-green-b);
   border-radius: 6px;
   font-size: 0.875rem;
   font-weight: 600;
@@ -246,27 +332,14 @@
 }
 
 .btn-terminal:hover {
-  border-color: #a8ff78;
-  background: rgba(168, 255, 120, 0.05);
+  border-color: var(--green);
+  background: var(--tint-green);
 }
 
 .btn-terminal-prompt {
   font-size: 0.8rem;
   opacity: 0.8;
 }
-
-.resume-btn-wrap {
-  position: relative;
-}
-
-.resume-progress {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  width: 200px;
-  margin-top: 0.6rem;
-}
-
 
 /* ===== TERMINAL ===== */
 .hero-right {
@@ -275,28 +348,30 @@
 }
 
 .terminal {
-  background: #0d0d0d;
+  /* Frosted glass: the hero figure blurs through it. Muted text sits on a
+     lighter backdrop now, so --muted is lifted locally (vibrancy) to hold
+     ~4.6:1; solid fallbacks live in the accessibility block at the bottom. */
+  --muted: var(--muted-on-glass);
+  background: var(--glass);
+  backdrop-filter: blur(24px) saturate(160%);
   border: 1px solid var(--border2);
   border-radius: 10px;
   overflow: hidden;
-  box-shadow: 0 25px 60px rgba(0,0,0,0.6);
+  box-shadow: var(--shadow-terminal);
   font-family: 'JetBrains Mono', 'Fira Code', monospace;
   font-size: 0.82rem;
 }
 
 /* Sits over the hero figure — a lit top edge and a deeper cast shadow read as
-   a solid object floating above the image. Kept opaque on purpose: the muted
-   terminal output is already only ~3.6:1, translucency would sink it further. */
+   a pane of glass floating above the image. */
 .hero-right .terminal {
-  box-shadow:
-    0 34px 90px rgba(0, 0, 0, 0.72),
-    0 2px 10px rgba(0, 0, 0, 0.5),
-    inset 0 1px 0 rgba(255, 255, 255, 0.07);
-  border-color: rgba(255, 255, 255, 0.13);
+  box-shadow: var(--shadow-hero-term);
+  border-color: var(--glass-border);
 }
 
+/* Same material, denser — a wash instead of a second opaque layer. */
 .terminal-bar {
-  background: #1a1a1a;
+  background: var(--wash);
   padding: 0.65rem 1rem;
   display: flex;
   align-items: center;
@@ -334,10 +409,10 @@
   flex-wrap: wrap;
 }
 
-.t-user   { color: #a8ff78; }
+.t-user   { color: var(--term-green); }
 .t-at     { color: var(--muted); }
-.t-host   { color: #a8d8ff; }
-.t-path   { color: #a8d8ff; }
+.t-host   { color: var(--term-blue); }
+.t-path   { color: var(--term-blue); }
 .t-arrow  { color: var(--muted); margin: 0 0.4rem; }
 .t-cmd    { color: var(--text); }
 
@@ -348,7 +423,7 @@
 }
 
 .t-output.highlight {
-  color: #c8c8c8;
+  color: var(--term-fg);
 }
 
 .t-cursor {
@@ -803,7 +878,7 @@ section, .section-wrap {
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.75rem;
   color: var(--text);
-  background: rgba(255,255,255,0.04);
+  background: var(--wash);
   border: 1px solid var(--border);
   border-radius: 4px;
   padding: 0.25rem 0.6rem;
@@ -980,7 +1055,7 @@ section, .section-wrap {
 /* ----- github facecard ----- */
 .gh-card {
   display: block;
-  background: linear-gradient(180deg, var(--card) 0%, #101010 100%);
+  background: linear-gradient(180deg, var(--card) 0%, var(--card-foot) 100%);
   border: 1px solid var(--border);
   border-radius: 12px;
   padding: 1.5rem;
@@ -996,8 +1071,8 @@ section, .section-wrap {
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(circle at 0% 0%, rgba(168, 255, 120, 0.06), transparent 40%),
-    radial-gradient(circle at 100% 100%, rgba(168, 216, 255, 0.04), transparent 45%);
+    radial-gradient(circle at 0% 0%, var(--tint-gh-1), transparent 40%),
+    radial-gradient(circle at 100% 100%, var(--tint-gh-2), transparent 45%);
   pointer-events: none;
   opacity: 0.7;
   transition: opacity 0.25s;
@@ -1006,7 +1081,7 @@ section, .section-wrap {
 .gh-card:hover {
   border-color: var(--border2);
   transform: translateY(-2px);
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+  box-shadow: var(--shadow-card);
 }
 
 .gh-card:hover::before { opacity: 1; }
@@ -1042,7 +1117,7 @@ section, .section-wrap {
   background: var(--green);
   border: 2px solid var(--card);
   border-radius: 50%;
-  box-shadow: 0 0 8px rgba(168, 255, 120, 0.6);
+  box-shadow: var(--glow-green);
 }
 
 .gh-id { flex: 1; min-width: 0; }
@@ -1078,7 +1153,7 @@ section, .section-wrap {
   color: var(--text);
   margin-top: 1.25rem;
   padding: 0.65rem 0.85rem;
-  background: rgba(255, 255, 255, 0.02);
+  background: var(--wash-faint);
   border: 1px solid var(--border);
   border-radius: 6px;
   letter-spacing: 0.3px;
@@ -1158,7 +1233,7 @@ section, .section-wrap {
 
 .contact-link-item:hover {
   border-color: var(--border2);
-  background: #161616;
+  background: var(--card-hover);
   transform: translateX(2px);
 }
 
@@ -1249,6 +1324,17 @@ section, .section-wrap {
 .gh-card:active { transform: translateY(-2px) scale(0.97); }
 .contact-link-item:active { transform: translateX(2px) scale(0.97); }
 
+/* ===== LIGHT THEME: SURFACES THAT STAY DARK ===== */
+/* The lightbox and the gallery arrows sit over photographs in both themes, so
+   they keep a dark scrim — but their chrome inherits --white, which is
+   near-black on light. Pin those back to white. */
+:root[data-theme="light"] .lightbox-close,
+:root[data-theme="light"] .lightbox-nav,
+:root[data-theme="light"] .gallery-arrow {
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.22);
+}
+
 /* ===== RESPONSIVE ===== */
 @media (max-width: 900px) {
   .hero { flex-direction: column; padding-top: 7rem; }
@@ -1267,7 +1353,10 @@ section, .section-wrap {
   .hero-aura { top: 0; right: -14%; width: 92vw; }
   .hero-veil {
     background:
-      linear-gradient(to bottom, rgba(8, 8, 8, 0.5) 0%, rgba(8, 8, 8, 0.92) 40%, var(--bg) 62%);
+      linear-gradient(to bottom,
+        rgba(var(--veil-rgb), 0.5) 0%,
+        rgba(var(--veil-rgb), 0.92) 40%,
+        var(--bg) 62%);
   }
   .gallery-item { height: 240px; }
   .gallery-arrow { display: none; }
@@ -1292,10 +1381,15 @@ section, .section-wrap {
 }
 
 @media (prefers-reduced-transparency: reduce) {
+  /* No blur to sit on, so the terminal's vibrancy lift is dropped at the root
+     (resolved here, where --muted is still the palette value — assigning it
+     inside .terminal would be a self-reference). */
+  :root { --muted-on-glass: var(--muted); }
   .navbar {
-    background: #0a0a0a;
+    background: var(--nav-bg-solid);
     backdrop-filter: none;
   }
+  /* Over photographs — stays dark in both themes. */
   .gallery-arrow {
     background: #1a1a1a;
     backdrop-filter: none;
@@ -1308,21 +1402,34 @@ section, .section-wrap {
   .lightbox-nav {
     background: #2a2a2a;
   }
+  .terminal {
+    background: var(--glass-solid);
+    backdrop-filter: none;
+  }
+  .terminal-bar { background: var(--chip); }
 }
 
 @media (prefers-contrast: more) {
   .hero-figure { --figure-opacity: 0.35; }
+  .terminal {
+    background: var(--hc-bg);
+    backdrop-filter: none;
+    border-color: var(--white);
+  }
+  .terminal-bar { background: var(--hc-bar); }
   .hero-aura { display: none; }
   .navbar {
-    background: #000;
+    background: var(--hc-bg);
     border-bottom: 1px solid var(--white);
   }
   .navbar, .navbar.scrolled { border-bottom-color: var(--white); }
   .btn-secondary,
   .btn-terminal,
-  .nav-cta {
+  .nav-cta,
+  .theme-toggle-track {
     border-width: 2px;
   }
+  .theme-toggle-ghost { opacity: 1; }
   .gh-card, .gh-card:hover,
   .cert-card, .cert-card:hover,
   .project-card, .project-card:hover,

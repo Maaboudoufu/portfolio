@@ -8,28 +8,164 @@
   box-sizing: border-box;
 }
 
+/* ===========================================================================
+   THEME TOKENS
+
+   :root is the dark theme (the site's default). [data-theme="light"] restates
+   only the values that must flip — it is a mirror of the block below, so any
+   token added here needs a light counterpart or it will read wrong.
+
+   `data-theme` is stamped on <html> by the boot script in public/index.html
+   before first paint, so there is no flash and no media-query duplicate.
+   =========================================================================== */
 :root {
+  color-scheme: dark;
+
   --bg:      #080808;
   --bg2:     #0f0f0f;
   --card:    #141414;
   --border:  #222222;
   --border2: #2e2e2e;
-  --text:    #ededed;
-  --muted:   #707070;
-  --dim:     #3a3a3a;
+  /* Max-contrast foreground — NOT literally white. It flips to near-black in
+     the light theme. Literal white lives in the `.white-bg` logo chips. */
   --white:   #ffffff;
+  --text:    #ededed;
+  --muted:   #808080;   /* #707070 reads 4.04:1 on --bg, 3.72:1 on --card */
+  --dim:     #3a3a3a;
   --green:   #a8ff78;   /* terminal prompt only */
 
+  /* ── terminal ANSI ── */
+  --term-green:  #a8ff78;
+  --term-blue:   #a8d8ff;
+  --term-blue2:  #89b4fa;
+  --term-yellow: #f9e2af;
+  --term-red:    #ff6b6b;
+  --term-ok:     #4afa7b;
+  --term-fg:     #c8c8c8;
+  --term-out:    #a0a0a0;
+  --term-dim:    #7b7b7b;
+
+  /* ── surfaces & materials ── */
+  --veil-rgb:       8, 8, 8;              /* hero veil fades to --bg */
+  --wash:           rgba(255, 255, 255, 0.05);
+  --wash-faint:     rgba(255, 255, 255, 0.02);
+  --nav-bg:         rgba(8, 8, 8, 0.85);
+  --nav-bg-solid:   #0a0a0a;
+  --glass:          rgba(12, 12, 12, 0.58);
+  --glass-strong:   rgba(14, 14, 14, 0.62);
+  --glass-solid:    #0d0d0d;
+  --glass-border:   rgba(255, 255, 255, 0.13);
+  --glass-edge:     rgba(255, 255, 255, 0.09);  /* lit top edge */
+  --muted-on-glass: #9a9a9a;                    /* vibrancy lift over blur */
+  --card-hover:     #161616;
+  --card-foot:      #101010;
+  --chip:           #ebebe8;
+  --scroll-thumb:   #2a2a2a;
+  --hc-bg:          #000000;   /* prefers-contrast: more */
+  --hc-bar:         #111111;
+
+  /* ── tints, glows, shadows ── */
+  --aura-1:        rgba(168, 216, 255, 0.16);
+  --aura-2:        rgba(120, 162, 212, 0.07);
+  --tint-green:    rgba(168, 255, 120, 0.05);
+  --tint-green-b:  rgba(168, 255, 120, 0.3);
+  --tint-gh-1:     rgba(168, 255, 120, 0.06);
+  --tint-gh-2:     rgba(168, 216, 255, 0.04);
+  --glow-green:    0 0 8px rgba(168, 255, 120, 0.6);
+  --shadow-terminal:  0 25px 60px rgba(0, 0, 0, 0.6);
+  --shadow-hero-term:
+    0 34px 90px rgba(0, 0, 0, 0.72),
+    0 2px 10px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 var(--glass-edge);
+  --shadow-card:      0 12px 30px rgba(0, 0, 0, 0.4);
+  --shadow-window:
+    0 40px 100px rgba(0, 0, 0, 0.8),
+    inset 0 1px 0 var(--glass-edge);
+
   /* shadcn/Tailwind tokens — same palette above, restated as raw HSL
-     triplets (hsl(var(--x)) needs the bare "H S% L%" form). Keep in sync
-     with the hex values above if the palette changes. */
+     triplets (hsl(var(--x)) needs the bare "H S% L%" form). Every name here
+     carries an -hsl suffix: an unsuffixed duplicate of a hex token above
+     silently wins the cascade and blanks it. Keep in sync with the palette. */
   --background: 0 0% 3%;         /* --bg */
   --foreground: 0 0% 93%;        /* --text */
   --border-hsl: 0 0% 13%;        /* --border */
-  --muted: 0 0% 8%;              /* --card */
-  --muted-foreground: 0 0% 44%;  /* --muted */
+  --muted-hsl: 0 0% 8%;          /* --card */
+  --muted-foreground: 0 0% 49%;  /* --muted */
   --primary: 99 100% 74%;        /* --green */
   --primary-foreground: 0 0% 3%; /* --bg */
+}
+
+/* Light theme — a light terminal profile (Apple Terminal "Basic", GitHub
+   Light), not an inverted dark theme. Paper, not pure white; ANSI colors
+   swapped for their light-background equivalents so the prompt stays legible. */
+:root[data-theme="light"] {
+  color-scheme: light;
+
+  --bg:      #f7f7f6;
+  --bg2:     #efefed;
+  --card:    #ffffff;
+  --border:  #e3e3df;
+  --border2: #c2c2bb;
+  --white:   #101010;
+  --text:    #2b2b2b;
+  --muted:   #5c5c5c;
+  --dim:     #8a8a86;
+  --green:   #1a7f37;
+
+  --term-green:  #1a7f37;
+  --term-blue:   #0969da;
+  --term-blue2:  #0550ae;
+  --term-yellow: #8a6100;
+  --term-red:    #cf222e;
+  --term-ok:     #116329;
+  --term-fg:     #363636;
+  --term-out:    #4a4a4a;
+  --term-dim:    #6a6a66;
+
+  --veil-rgb:       247, 247, 246;
+  --wash:           rgba(0, 0, 0, 0.035);
+  --wash-faint:     rgba(0, 0, 0, 0.02);
+  --nav-bg:         rgba(247, 247, 246, 0.82);
+  --nav-bg-solid:   #f2f2f0;
+  --glass:          rgba(255, 255, 255, 0.6);
+  --glass-strong:   rgba(255, 255, 255, 0.68);
+  --glass-solid:    #ffffff;
+  --glass-border:   rgba(0, 0, 0, 0.1);
+  --glass-edge:     rgba(255, 255, 255, 0.85);
+  --muted-on-glass: #4a4a4a;
+  --card-hover:     #f6f6f4;
+  --card-foot:      #f4f4f2;
+  --chip:           #1a1a1a;
+  --scroll-thumb:   #cfcfc9;
+  --hc-bg:          #ffffff;
+  --hc-bar:         #ededea;
+
+  /* The aura exists to keep a black jacket off a black page — on paper the
+     figure separates on its own, so it drops to a faint cold cast. */
+  --aura-1:        rgba(120, 176, 235, 0.13);
+  --aura-2:        rgba(120, 162, 212, 0.05);
+  --tint-green:    rgba(26, 127, 55, 0.07);
+  --tint-green-b:  rgba(26, 127, 55, 0.35);
+  --tint-gh-1:     rgba(26, 127, 55, 0.05);
+  --tint-gh-2:     rgba(9, 105, 218, 0.05);
+  --glow-green:    0 0 8px rgba(26, 127, 55, 0.45);
+  --shadow-terminal:  0 18px 44px rgba(30, 30, 28, 0.14);
+  --shadow-hero-term:
+    0 24px 60px rgba(30, 30, 28, 0.16),
+    0 2px 8px rgba(30, 30, 28, 0.08),
+    inset 0 1px 0 var(--glass-edge);
+  --shadow-card:      0 12px 30px rgba(30, 30, 28, 0.12);
+  --shadow-window:
+    0 40px 100px rgba(20, 20, 18, 0.3),
+    inset 0 1px 0 var(--glass-edge);
+
+  --background: 60 6% 97%;
+  --foreground: 0 0% 17%;
+  --border-hsl: 45 8% 88%;
+  --muted-hsl: 0 0% 100%;
+  --muted-foreground: 0 0% 36%;
+  --primary: 138 66% 30%;
+  --primary-foreground: 0 0% 100%;
 }
 
 html { scroll-behavior: smooth; }
@@ -46,7 +182,7 @@ body {
   font-family: 'JetBrains Mono', 'Fira Code', monospace;
 }
 
-::selection { background: #fff; color: #000; }
+::selection { background: var(--white); color: var(--bg); }
 
 ::-webkit-scrollbar { width: 4px; }
 ::-webkit-scrollbar-track { background: var(--bg); }
