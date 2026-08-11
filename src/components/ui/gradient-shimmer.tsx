@@ -437,7 +437,7 @@ export function GradientShimmer({
         anim?.pause();
         clearTimeout(pauseTimer);
       } else if (anim) {
-        anim.play();
+        if (active) anim.play();
       } else {
         runSweep();
       }
