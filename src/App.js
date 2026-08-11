@@ -378,6 +378,20 @@ export const SHIMMER_LIGHT = [
   { color: '#b45309', position: 1 },
 ];
 
+// Same hue journey as RuixenGradientFooter's dark-theme default (ember →
+// blue → pale → gold → terracotta → magenta), restruck for a paper
+// background — the saturated neon version reads muddy against #f7f7f6.
+export const RUIXEN_STOPS_LIGHT = [
+  { offset: 0, color: '#b0997e' },
+  { offset: 0.1827, color: '#5b8fe0' },
+  { offset: 0.2837, color: '#8fb4de' },
+  { offset: 0.4135, color: '#f3efe4' },
+  { offset: 0.5866, color: '#f0c24b' },
+  { offset: 0.6827, color: '#e8825e' },
+  { offset: 0.8029, color: '#dd7fc9' },
+  { offset: 1, color: '#ffc0fd00' },
+];
+
 function Hero({ onOpenTerminal }) {
   const reduced = useReducedMotion();
   const isLight = useTheme() === 'light';
@@ -914,8 +928,9 @@ function Contact() {
 }
 
 function Footer() {
+  const isLight = useTheme() === 'light';
   return (
-    <RuixenGradientFooter gradientHeight="40vh">
+    <RuixenGradientFooter gradientHeight="40vh" stops={isLight ? RUIXEN_STOPS_LIGHT : undefined}>
       <div className="footer-content">
         <div className="footer-bottom mono">
           © jason tsao · {new Date().getFullYear()}
