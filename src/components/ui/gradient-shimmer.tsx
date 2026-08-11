@@ -391,7 +391,7 @@ export function GradientShimmer({
     let reducedMotionActive = false;
 
     const runSweep = () => {
-      if (unmounted) return;
+      if (unmounted || reducedMotionActive) return;
       const { start, end, durationMs } = measure();
       const next = el.animate(
         [
