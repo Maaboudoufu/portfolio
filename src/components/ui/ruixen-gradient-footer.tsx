@@ -9,8 +9,8 @@
 // Gradient design inspired by Dia Browser — https://www.diabrowser.com
 
 import {
-  useEffect,
   useId,
+  useLayoutEffect,
   useRef,
   useState,
   type CSSProperties,
@@ -98,7 +98,12 @@ export function RuixenGradientFooter({
   // `left`/`t` math used — see the algebra note in the plan.
   const [thresholds, setThresholds] = useState({ start: 0, end: 1 });
 
-  useEffect(() => {
+  // Layout effect (not a plain effect): runs before paint, so a page that
+  // mounts already scrolled (browser scroll restoration, an in-page anchor
+  // link) gets the real thresholds in place before the first frame instead
+  // of briefly evaluating scrollY against the {start:0, end:1} placeholder
+  // above (which would clamp to fully-revealed for a frame).
+  useLayoutEffect(() => {
     const el = bandRef.current;
     if (!el) return;
     // Bind to the element's OWN window so this tracks the right scroll context
@@ -113,7 +118,16 @@ export function RuixenGradientFooter({
     };
     measure();
     win.addEventListener("resize", measure, { passive: true });
-    return () => win.removeEventListener("resize", measure);
+    // Viewport resize isn't the only thing that changes scrollHeight — e.g.
+    // a lazy-loaded image (the about-photo) finishing decode grows page
+    // content height with no resize event at all. Watch the actual content
+    // box so the thresholds don't go stale for the rest of the session.
+    const ro = new ResizeObserver(measure);
+    ro.observe(doc.documentElement);
+    return () => {
+      win.removeEventListener("resize", measure);
+      ro.disconnect();
+    };
   }, []);
 
   // motion's scrollY is already rAF-batched; chaining useTransform keeps the
