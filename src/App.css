@@ -160,6 +160,54 @@
 
 .theme-toggle-icon svg { width: 100%; height: 100%; display: block; }
 
+/* ===== LANGUAGE TOGGLE ===== */
+/* Shares the .nav-cta silhouette, and like the theme toggle it lives in
+   .nav-right so it survives the breakpoint that hides the nav links. */
+.lang-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  /* Wide enough for both labels, so the navbar doesn't shift on switch. */
+  min-width: 6.6rem;
+  height: 34px;
+  padding: 0 0.85rem;
+  border: 1px solid var(--border2);
+  border-radius: 6px;
+  background: none;
+  color: var(--white);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+  line-height: 1;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: border-color 0.2s, background 0.2s, transform 0.1s ease-out;
+}
+
+.lang-toggle:hover {
+  border-color: var(--white);
+  background: var(--wash);
+}
+
+.lang-toggle:active { transform: scale(0.96); }
+
+.lang-toggle:focus-visible {
+  outline: 2px solid var(--white);
+  outline-offset: 3px;
+}
+
+.lang-toggle-icon {
+  width: 14px;
+  height: 14px;
+  line-height: 0;
+  color: var(--muted);
+  flex-shrink: 0;
+}
+
+.lang-toggle-icon svg { width: 100%; height: 100%; display: block; }
+
 /* ===== HERO ===== */
 /* Three stacked layers inside .hero-shell: aura (snow light) → figure →
    veil (protects the text column + dissolves the cut-out into the page),
@@ -1373,6 +1421,19 @@ section, .section-wrap {
    clears the headline — only the raised arm and brush strokes sit behind it. */
 @media (max-width: 560px) {
   .hero-figure { right: -30%; --figure-opacity: 0.85; }
+
+  /* Two controls plus the full prompt-style logo is more than a phone row
+     holds at the desktop metrics — tighten the row rather than drop either. */
+  .navbar,
+  .navbar.scrolled { padding-left: 1.25rem; padding-right: 1.25rem; }
+  .nav-logo { font-size: 0.8rem; letter-spacing: 0.5px; }
+  .nav-right { gap: 0.6rem; }
+  .lang-toggle {
+    min-width: 0;
+    padding: 0 0.6rem;
+    font-size: 0.75rem;
+  }
+  .lang-toggle-icon { display: none; }
 }
 
 /* ===== ACCESSIBILITY: MOTION, TRANSPARENCY & CONTRAST ===== */
@@ -1426,9 +1487,11 @@ section, .section-wrap {
   .btn-secondary,
   .btn-terminal,
   .nav-cta,
+  .lang-toggle,
   .theme-toggle-track {
     border-width: 2px;
   }
+  .lang-toggle-icon { color: var(--white); }
   .theme-toggle-ghost { opacity: 1; }
   .gh-card, .gh-card:hover,
   .cert-card, .cert-card:hover,

@@ -2,6 +2,7 @@ import { useState, useEffect, useRef, useCallback } from 'react';
 import { motion } from 'motion/react';
 import './TerminalSession.css';
 import { useSprings } from './motion-presets';
+import { useT, localize } from './i18n';
 
 // ── boot sequence ────────────────────────────────────────────────────────────
 
@@ -50,7 +51,7 @@ const ART = [
   '                 ',
 ];
 
-const INFO = [
+export const INFO = [
   { label: null, value: null, special: 'user' },
   { label: null, value: null, special: 'sep' },
   { label: 'OS', value: 'Arch Linux x86_64' },
@@ -74,7 +75,7 @@ const FS_DIRS = {
   '~/certs': ['google-it.txt', 'qualys-vmdr.txt', 'tsukuba-ttbj.txt', 'redcross-cpr.txt', 'osha-10.txt'],
 };
 
-const FS_FILES = {
+export const FS_FILES = {
   '~/about.txt':
     `Name    : Jason Tsao
 From    : Sacramento, CA
@@ -271,10 +272,13 @@ function shortPath(p) {
 
 // ── command runner ───────────────────────────────────────────────────────────
 
-function runCommand(raw, cwd) {
+// `t` is the active string table: file contents and diagnostics are localized,
+// command names and paths are not.
+function runCommand(raw, cwd, t) {
   const parts = raw.trim().split(/\s+/);
   const cmd = parts[0];
   const arg = parts.slice(1).join(' ');
+  const files = { ...FS_FILES, ...t.fsFiles };
 
   switch (cmd) {
     case '': return { type: 'empty' };
@@ -282,22 +286,22 @@ function runCommand(raw, cwd) {
     case 'ls': {
       const path = arg ? resolvePath(cwd, arg) : cwd;
       const entries = FS_DIRS[path];
-      if (!entries) return { type: 'error', text: `ls: cannot access '${arg}': No such file or directory` };
+      if (!entries) return { type: 'error', text: t.shell.lsFail(arg) };
       return { type: 'ls', entries };
     }
 
     case 'cd': {
       if (!arg || arg === '~') return { type: 'cd', newCwd: '~' };
       const path = resolvePath(cwd, arg);
-      if (!FS_DIRS[path]) return { type: 'error', text: `cd: ${arg}: No such file or directory` };
+      if (!FS_DIRS[path]) return { type: 'error', text: t.shell.cdFail(arg) };
       return { type: 'cd', newCwd: path };
     }
 
     case 'cat': {
-      if (!arg) return { type: 'error', text: 'cat: missing operand' };
+      if (!arg) return { type: 'error', text: t.shell.catMissing };
       const path = resolvePath(cwd, arg);
-      if (FS_FILES[path]) return { type: 'output', text: FS_FILES[path] };
-      return { type: 'error', text: `cat: ${arg}: No such file or directory` };
+      if (files[path]) return { type: 'output', text: files[path] };
+      return { type: 'error', text: t.shell.catFail(arg) };
     }
 
     case 'pwd':
@@ -317,36 +321,23 @@ function runCommand(raw, cwd) {
       return { type: 'exit' };
 
     case 'help':
-      return {
-        type: 'output',
-        text:
-          `Commands:
-  ls [dir]    list directory contents
-  cd [dir]    change directory  (try: cd projects)
-  cat [file]  show file contents
-  pwd         print working directory
-  whoami      current user
-  neofetch    display system info
-  clear       clear terminal
-  exit        close terminal
-
-Hint: start with  ls  then  cd projects/`,
-      };
+      return { type: 'output', text: t.shell.help };
 
     default:
-      return { type: 'error', text: `${cmd}: command not found  (type 'help' for commands)` };
+      return { type: 'error', text: t.shell.notFound(cmd) };
   }
 }
 
 // ── neofetch component ───────────────────────────────────────────────────────
 
 function Neofetch() {
-  const rows = Math.max(ART.length, INFO.length);
+  const lines = localize(INFO, useT().neofetch);
+  const rows = Math.max(ART.length, lines.length);
   return (
     <div className="ts-fetch">
       {Array.from({ length: rows }, (_, i) => {
         const art = ART[i] ?? '                 ';
-        const info = INFO[i] ?? null;
+        const info = lines[i] ?? null;
         return (
           <div key={i} className="ts-fetch-row">
             <span className="ts-fetch-art">{art}</span>
@@ -409,6 +400,7 @@ function Shell({ onExit }) {
   const [histIdx, setHistIdx] = useState(-1);
   const bottomRef = useRef(null);
   const inputRef = useRef(null);
+  const t = useT();
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -420,7 +412,7 @@ function Shell({ onExit }) {
 
   const submit = useCallback(() => {
     const raw = input.trim();
-    const result = runCommand(raw, cwd);
+    const result = runCommand(raw, cwd, t);
 
     if (raw) setCmdHistory(h => [raw, ...h]);
     setHistIdx(-1);
@@ -456,7 +448,7 @@ function Shell({ onExit }) {
       setEntries(e => [...e, promptEntry, { kind: 'error', text: result.text }]);
       return;
     }
-  }, [input, cwd, onExit]);
+  }, [input, cwd, onExit, t]);
 
   const handleKey = useCallback((e) => {
     if (e.key === 'Enter') { submit(); return; }
@@ -524,7 +516,7 @@ function Shell({ onExit }) {
             onKeyDown={handleKey}
             autoComplete="off"
             spellCheck={false}
-            aria-label="terminal input"
+            aria-label={t.aria.termInput}
           />
         </span>
       </div>
@@ -573,6 +565,7 @@ function Boot({ onDone }) {
 export default function TerminalSession({ onClose }) {
   const [phase, setPhase] = useState('boot');
   const s = useSprings();
+  const close = useT().aria.close;
   const closed = { scale: s.reduced ? 1 : 0.92, y: s.reduced ? 0 : 16 };
 
   useEffect(() => {
@@ -602,11 +595,11 @@ export default function TerminalSession({ onClose }) {
         transition={s.drawer}
       >
         <div className="ts-bar">
-          <span className="ts-dot ts-dot-red" onClick={onClose} title="close" />
+          <span className="ts-dot ts-dot-red" onClick={onClose} title={close} />
           <span className="ts-dot ts-dot-yellow" />
           <span className="ts-dot ts-dot-green" />
           <span className="ts-bar-title">jason.tsao@maaboudoumei — zsh</span>
-          <button className="ts-close" onClick={onClose}>✕</button>
+          <button className="ts-close" onClick={onClose} aria-label={close}>✕</button>
         </div>
 
         <div className="ts-body">

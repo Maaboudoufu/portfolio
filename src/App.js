@@ -7,7 +7,9 @@ import { useSprings } from './motion-presets';
 import { RuixenGradientFooter } from './components/ui/ruixen-gradient-footer';
 import { GradientShimmer } from './components/ui/gradient-shimmer';
 import { ThemeToggle } from './components/ui/theme-toggle';
+import { LangToggle } from './components/ui/lang-toggle';
 import { useTheme } from './theme';
+import { useT, localize } from './i18n';
 import {
   SiCplusplus, SiJavascript, SiTypescript, SiHtml5, SiPython, SiGnubash,
   SiReact, SiVite, SiNodedotjs, SiExpress, SiFastapi, SiPrisma, SiSqlalchemy,
@@ -24,7 +26,7 @@ import { FaMicrophone, FaBrain, FaWindows } from 'react-icons/fa6';
 
 // ── data ────────────────────────────────────────────────────────────────────
 
-const TERMINAL_LINES = [
+export const TERMINAL_LINES = [
   { type: 'cmd', text: 'whoami' },
   { type: 'out', text: 'jason.tsao' },
   { type: 'cmd', text: 'cat /etc/role' },
@@ -36,7 +38,7 @@ const TERMINAL_LINES = [
   { type: 'cmd', text: '' },
 ];
 
-const SKILL_GROUPS = [
+export const SKILL_GROUPS = [
   {
     label: 'Languages',
     items: ['C / C++', 'Assembly', 'JavaScript', 'TypeScript', 'HTML / CSS', 'Python', 'Bash / Zsh', 'PowerShell'],
@@ -104,7 +106,7 @@ const SKILL_ICONS = {
   'Windows Server': FaWindows,
 };
 
-const EXPERIENCE = [
+export const EXPERIENCE = [
   {
     title: 'IT Systems Administrator',
     company: 'Student Union, Inc. of SJSU  ·  San Jose, CA',
@@ -168,7 +170,7 @@ const EXPERIENCE = [
   },
 ];
 
-const ORGANIZATIONS = [
+export const ORGANIZATIONS = [
   {
     title: 'Event Coordinator',
     org: 'SJSU Hong Kong Student Association  ·  San Jose, CA',
@@ -198,7 +200,7 @@ const ORGANIZATIONS = [
   },
 ];
 
-const CERTS = [
+export const CERTS = [
   {
     name: 'Technical Support Fundamentals',
     issuer: 'Google',
@@ -251,7 +253,7 @@ const GALLERY_FALLBACK = [
   { id: '559c0c55-1022-4138-8349-20adf633c64d', type: 'IMAGE' },
 ];
 
-const PROJECTS = [
+export const PROJECTS = [
   {
     num: '01',
     title: 'StudyGuard',
@@ -274,6 +276,7 @@ function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [active, setActive] = useState(null);
   const s = useSprings();
+  const t = useT();
 
   useEffect(() => {
     const fn = () => setScrolled(window.scrollY > 40);
@@ -295,12 +298,9 @@ function Navbar() {
     return () => observer.disconnect();
   }, []);
 
-  const links = [
-    { id: 'about', label: 'about' },
-    { id: 'experience', label: 'experience' },
-    { id: 'skills', label: 'skills' },
-    { id: 'projects', label: 'projects' },
-  ];
+  const links = ['about', 'experience', 'skills', 'projects'].map(
+    id => ({ id, label: t.nav[id] })
+  );
 
   return (
     <nav className={`navbar${scrolled ? ' scrolled' : ''}`}>
@@ -315,9 +315,10 @@ function Navbar() {
               )}
             </li>
           ))}
-          <li><a href="#contact" className="nav-cta">contact</a></li>
+          <li><a href="#contact" className="nav-cta">{t.nav.contact}</a></li>
         </ul>
         <ThemeToggle />
+        <LangToggle />
       </div>
     </nav>
   );
@@ -325,12 +326,13 @@ function Navbar() {
 
 function Terminal() {
   const [visible, setVisible] = useState(0);
+  const lines = localize(TERMINAL_LINES, useT().terminalLines);
 
   useEffect(() => {
     if (visible >= TERMINAL_LINES.length) return;
     const delay = visible === 0 ? 600 : TERMINAL_LINES[visible - 1].type === 'cmd' ? 200 : 500;
-    const t = setTimeout(() => setVisible(v => v + 1), delay);
-    return () => clearTimeout(t);
+    const timer = setTimeout(() => setVisible(v => v + 1), delay);
+    return () => clearTimeout(timer);
   }, [visible]);
 
   return (
@@ -342,7 +344,7 @@ function Terminal() {
         <span className="terminal-title">jason.tsao@maaboudoumei — zsh</span>
       </div>
       <div className="terminal-body mono">
-        {TERMINAL_LINES.slice(0, visible).map((line, i) => {
+        {lines.slice(0, visible).map((line, i) => {
           const isLast = i === visible - 1;
 
           if (line.type === 'cmd') {
@@ -379,6 +381,7 @@ export const SHIMMER_LIGHT = [
 function Hero({ onOpenTerminal }) {
   const reduced = useReducedMotion();
   const isLight = useTheme() === 'light';
+  const t = useT();
   const { scrollY } = useScroll();
   // Figure lags the page as it scrolls — it sinks behind the fold instead of
   // riding along with it. Positive y = moves *down* relative to the scroll.
@@ -409,22 +412,22 @@ function Hero({ onOpenTerminal }) {
 
       <div className="hero">
         <div className="hero-left">
-          <div className="hero-eyebrow">san jose, ca</div>
+          <div className="hero-eyebrow">{t.hero.eyebrow}</div>
           <h1 className="hero-title">
             <GradientShimmer gradient={isLight ? SHIMMER_LIGHT : undefined}>Jason Tsao</GradientShimmer>
           </h1>
           <div className="hero-btns">
             <button className="btn-terminal" onClick={onOpenTerminal}>
-              <span className="btn-terminal-prompt">❯_</span> Terminal
+              <span className="btn-terminal-prompt">❯_</span> {t.hero.terminal}
             </button>
-            <a href="#contact" className="btn-secondary">Contact</a>
+            <a href="#contact" className="btn-secondary">{t.hero.contact}</a>
             <a
               href="/resume.html"
               target="_blank"
               rel="noopener noreferrer"
               className="btn-secondary"
             >
-              Resume ↗
+              {t.hero.resume}
             </a>
           </div>
         </div>
@@ -450,6 +453,7 @@ function Gallery() {
   const [direction, setDirection] = useState(0);
   const stripRef = useRef(null);
   const s = useSprings();
+  const t = useT();
 
   useEffect(() => {
     fetch(`${IMMICH_URL}/api/albums/${IMMICH_ALBUM}?slug=${IMMICH_SLUG}`)
@@ -491,9 +495,9 @@ function Gallery() {
   return (
     <div className="gallery-bg">
       <div className="section-wrap">
-        <div className="section-label">gallery</div>
+        <div className="section-label">{t.labels.gallery}</div>
         <div className="gallery-scroll-wrap">
-          <button className="gallery-arrow gallery-arrow-left" onClick={() => scroll(-1)} aria-label="Scroll left">{'\u2039'}</button>
+          <button className="gallery-arrow gallery-arrow-left" onClick={() => scroll(-1)} aria-label={t.aria.scrollLeft}>{'\u2039'}</button>
           <div className="gallery-strip" ref={stripRef}>
             {photos.map((p, i) => (
               <div className="gallery-item" key={p.id} onClick={() => setSelectedIdx(i)}>
@@ -505,11 +509,11 @@ function Gallery() {
               </div>
             ))}
           </div>
-          <button className="gallery-arrow gallery-arrow-right" onClick={() => scroll(1)} aria-label="Scroll right">{'\u203A'}</button>
+          <button className="gallery-arrow gallery-arrow-right" onClick={() => scroll(1)} aria-label={t.aria.scrollRight}>{'\u203A'}</button>
         </div>
         <div className="gallery-attrib">
           <img src="/logos/immich.svg" alt="Immich" className="immich-logo" />
-          <span>made possible with immich ╾━╤デ╦︻ (•_- )</span>
+          <span>{t.galleryAttrib}</span>
         </div>
       </div>
 
@@ -523,9 +527,9 @@ function Gallery() {
             exit={{ opacity: 0 }}
             transition={s.ui}
           >
-            <button className="lightbox-close" onClick={() => setSelectedIdx(null)} aria-label="Close">{'\u00D7'}</button>
+            <button className="lightbox-close" onClick={() => setSelectedIdx(null)} aria-label={t.aria.close}>{'\u00D7'}</button>
             {selectedIdx > 0 && (
-              <button className="lightbox-nav lightbox-prev" onClick={(e) => { e.stopPropagation(); goTo(selectedIdx - 1); }} aria-label="Previous">{'\u2039'}</button>
+              <button className="lightbox-nav lightbox-prev" onClick={(e) => { e.stopPropagation(); goTo(selectedIdx - 1); }} aria-label={t.aria.prev}>{'\u2039'}</button>
             )}
             <AnimatePresence initial={false}>
               <motion.div
@@ -554,7 +558,7 @@ function Gallery() {
               </motion.div>
             </AnimatePresence>
             {selectedIdx < photos.length - 1 && (
-              <button className="lightbox-nav lightbox-next" onClick={(e) => { e.stopPropagation(); goTo(selectedIdx + 1); }} aria-label="Next">{'\u203A'}</button>
+              <button className="lightbox-nav lightbox-next" onClick={(e) => { e.stopPropagation(); goTo(selectedIdx + 1); }} aria-label={t.aria.next}>{'\u203A'}</button>
             )}
           </motion.div>
         )}
@@ -564,6 +568,7 @@ function Gallery() {
 }
 
 function About() {
+  const t = useT();
   return (
     <section id="about">
       <Reveal className="about-grid">
@@ -575,42 +580,15 @@ function About() {
             </div>
             <div className="about-card-body mono" style={{ fontSize: '0.78rem', lineHeight: 1.9 }}>
               <div style={{ color: 'var(--dim)' }}>{'{'}</div>
-              <div style={{ paddingLeft: '1rem' }}>
-                <span style={{ color: 'var(--term-blue)' }}>"school"</span>
-                <span style={{ color: 'var(--muted)' }}>: </span>
-                <span style={{ color: 'var(--term-fg)' }}>"SJSU — BS CmpE \'28 (3.70)"</span>
-                <span style={{ color: 'var(--dim)' }}>,</span>
-              </div>
-              <div style={{ paddingLeft: '1rem' }}>
-                <span style={{ color: 'var(--term-blue)' }}>"role"</span>
-                <span style={{ color: 'var(--muted)' }}>: </span>
-                <span style={{ color: 'var(--term-fg)' }}>"IT Systems Administrator"</span>
-                <span style={{ color: 'var(--dim)' }}>,</span>
-              </div>
-              <div style={{ paddingLeft: '1rem' }}>
-                <span style={{ color: 'var(--term-blue)' }}>"from"</span>
-                <span style={{ color: 'var(--muted)' }}>: </span>
-                <span style={{ color: 'var(--term-fg)' }}>"Sacramento, CA"</span>
-                <span style={{ color: 'var(--dim)' }}>,</span>
-              </div>
-              <div style={{ paddingLeft: '1rem' }}>
-                <span style={{ color: 'var(--term-blue)' }}>"based"</span>
-                <span style={{ color: 'var(--muted)' }}>: </span>
-                <span style={{ color: 'var(--term-fg)' }}>"San Jose, CA"</span>
-                <span style={{ color: 'var(--dim)' }}>,</span>
-              </div>
-              <div style={{ paddingLeft: '1rem' }}>
-                <span style={{ color: 'var(--term-blue)' }}>"goal"</span>
-                <span style={{ color: 'var(--muted)' }}>: </span>
-                <span style={{ color: 'var(--term-fg)' }}>"remote/hybrid"</span>
-                <span style={{ color: 'var(--dim)' }}>,</span>
-              </div>
-              <div style={{ paddingLeft: '1rem' }}>
-                <span style={{ color: 'var(--term-blue)' }}>"spoken"</span>
-                <span style={{ color: 'var(--muted)' }}>: </span>
-                <span style={{ color: 'var(--term-fg)' }}>"EN · JP"</span>
-                <span style={{ color: 'var(--dim)' }}>,</span>
-              </div>
+              {/* JSON keys stay English — it's a file on disk, not UI copy. */}
+              {['school', 'role', 'from', 'based', 'goal', 'spoken'].map((key) => (
+                <div style={{ paddingLeft: '1rem' }} key={key}>
+                  <span style={{ color: 'var(--term-blue)' }}>"{key}"</span>
+                  <span style={{ color: 'var(--muted)' }}>: </span>
+                  <span style={{ color: 'var(--term-fg)' }}>"{t.about.card[key]}"</span>
+                  <span style={{ color: 'var(--dim)' }}>,</span>
+                </div>
+              ))}
               <div style={{ paddingLeft: '1rem' }}>
                 <span style={{ color: 'var(--term-blue)' }}>"open_to"</span>
                 <span style={{ color: 'var(--muted)' }}>: </span>
@@ -622,27 +600,10 @@ function About() {
         </div>
 
         <div className="about-text">
-          <div className="section-label">about</div>
-          <h2 className="section-title">About me</h2>
+          <div className="section-label">{t.labels.about}</div>
+          <h2 className="section-title">{t.titles.about}</h2>
           <img src="/about-photo.png" alt="Jason Tsao" className="about-photo" loading="lazy" />
-          <p>
-            I was born and raised in Sacramento for most of my life and moved to San Jose
-            for school. I am now a Computer Engineering student at SJSU with a minor in
-            Japanese. I was active in many clubs such as my office role in Japanese Student
-            Association and Hong Kong Student Association during my first year. I started
-            working at 16 and I have always been adamant about applying my skills to the
-            real world instead of focusing solely on school.
-          </p>
-          <p>
-            I work as an IT Systems Administrator managing enterprise infrastructure such as Active Directory,
-            Windows Server, endpoint security, and networking. Outside of work I run a
-            home lab that has a WireGuard VPN, Nginx reverse proxy, containerized services,
-            and a locally-hosted AI on my own hardware.
-          </p>
-          <p>
-            Long-term, I'm aiming for a role that's remote or hybrid,
-            with the flexibility to live and work from abroad.
-          </p>
+          {t.about.body.map((para, i) => <p key={i}>{para}</p>)}
         </div>
       </Reveal>
     </section>
@@ -650,14 +611,15 @@ function About() {
 }
 
 function Experience() {
+  const t = useT();
   return (
     <div className="exp-bg">
       <div className="section-wrap" id="experience">
         <Reveal>
-          <div className="section-label">experience</div>
-          <h2 className="section-title">Where I've worked</h2>
+          <div className="section-label">{t.labels.experience}</div>
+          <h2 className="section-title">{t.titles.experience}</h2>
           <div className="timeline">
-            {EXPERIENCE.map((job, index) => (
+            {localize(EXPERIENCE, t.experience).map((job, index) => (
               <div className="timeline-item" key={`${job.company}-${index}`}>
                 <div className="timeline-period mono">{job.period}</div>
                 <div className="timeline-card">
@@ -682,13 +644,14 @@ function Experience() {
 }
 
 function Organizations() {
+  const t = useT();
   return (
     <section id="organizations">
       <Reveal>
-        <div className="section-label">organizations</div>
-        <h2 className="section-title">Clubs & involvement</h2>
+        <div className="section-label">{t.labels.organizations}</div>
+        <h2 className="section-title">{t.titles.organizations}</h2>
         <div className="timeline">
-          {ORGANIZATIONS.map((role, index) => (
+          {localize(ORGANIZATIONS, t.organizations).map((role, index) => (
             <div className="timeline-item" key={`${role.org}-${index}`}>
               <div className="timeline-period mono">{role.period}</div>
               <div className="timeline-card">
@@ -712,13 +675,14 @@ function Organizations() {
 }
 
 function Skills() {
+  const t = useT();
   return (
     <section id="skills">
       <Reveal>
-        <div className="section-label">skills</div>
-        <h2 className="section-title">Tech stack</h2>
+        <div className="section-label">{t.labels.skills}</div>
+        <h2 className="section-title">{t.titles.skills}</h2>
         <div className="skills-groups">
-          {SKILL_GROUPS.map((g) => (
+          {localize(SKILL_GROUPS, t.skillGroups).map((g) => (
             <div className="skill-group" key={g.label}>
               <div className="skill-group-title">{g.label}</div>
               <div className="skill-list">
@@ -741,14 +705,15 @@ function Skills() {
 }
 
 function Certs() {
+  const t = useT();
   return (
     <div className="exp-bg">
       <div className="section-wrap" id="certs">
         <Reveal>
-          <div className="section-label">certifications</div>
-          <h2 className="section-title">Licenses & Certs</h2>
+          <div className="section-label">{t.labels.certs}</div>
+          <h2 className="section-title">{t.titles.certs}</h2>
           <div className="certs-grid">
-            {CERTS.map((c) => {
+            {localize(CERTS, t.certs).map((c) => {
               const inner = (
                 <>
                   <div className="cert-logo-wrap">
@@ -778,13 +743,14 @@ function Certs() {
 }
 
 function Projects() {
+  const t = useT();
   return (
     <section id="projects">
       <Reveal>
-        <div className="section-label">projects</div>
-        <h2 className="section-title">Things I've built</h2>
+        <div className="section-label">{t.labels.projects}</div>
+        <h2 className="section-title">{t.titles.projects}</h2>
         <div className="projects-grid">
-          {PROJECTS.map((p) => (
+          {localize(PROJECTS, t.projects).map((p) => (
             <div className="project-card" key={p.num}>
               <div className="project-num mono">{p.num}</div>
               <div className="project-title">{p.title}</div>
@@ -794,7 +760,7 @@ function Projects() {
               </div>
               {p.code && (
                 <div className="project-links">
-                  <a href={p.code} target="_blank" rel="noreferrer" className="project-link">github →</a>
+                  <a href={p.code} target="_blank" rel="noreferrer" className="project-link">{t.projectLink}</a>
                 </div>
               )}
             </div>
@@ -842,6 +808,7 @@ const ICONS = {
 
 function GitHubCard() {
   const [user, setUser] = useState(GH_FALLBACK);
+  const t = useT();
 
   useEffect(() => {
     fetch(`https://api.github.com/users/${GH_USER}`)
@@ -850,7 +817,7 @@ function GitHubCard() {
       .catch(() => { });
   }, []);
 
-  const joined = new Date(user.created_at).toLocaleDateString('en-US', { month: 'short', year: 'numeric' }).toLowerCase();
+  const joined = new Date(user.created_at).toLocaleDateString(t.locale, { month: 'short', year: 'numeric' }).toLowerCase();
 
   return (
     <a href={`https://github.com/${user.login}`} target="_blank" rel="noreferrer" className="gh-card">
@@ -868,45 +835,46 @@ function GitHubCard() {
 
       <div className="gh-bio mono">
         <span className="gh-bio-dim">{'> '}</span>
-        computer engineering · IT · devsecops
+        {t.github.bio}
       </div>
 
       <div className="gh-stats">
         <div className="gh-stat">
           <div className="gh-stat-num mono">{user.public_repos}</div>
-          <div className="gh-stat-label">repos</div>
+          <div className="gh-stat-label">{t.github.repos}</div>
         </div>
         <div className="gh-stat">
           <div className="gh-stat-num mono">{user.followers}</div>
-          <div className="gh-stat-label">followers</div>
+          <div className="gh-stat-label">{t.github.followers}</div>
         </div>
         <div className="gh-stat">
           <div className="gh-stat-num mono">{user.following}</div>
-          <div className="gh-stat-label">following</div>
+          <div className="gh-stat-label">{t.github.following}</div>
         </div>
       </div>
 
       <div className="gh-card-foot mono">
         <span className="gh-foot-icon">{ICONS.github}</span>
-        <span>joined {joined}</span>
+        <span>{t.github.joined(joined)}</span>
       </div>
     </a>
   );
 }
 
 function Contact() {
+  const t = useT();
   const links = [
     {
       kind: 'email',
       href: 'mailto:jason.tsao@maaboudoumei.org',
-      label: 'email',
+      label: t.contactLinks.email,
       value: 'jason.tsao@maaboudoumei.org',
       external: false,
     },
     {
       kind: 'linkedin',
       href: 'https://linkedin.com/in/jtsaoo',
-      label: 'linkedin',
+      label: t.contactLinks.linkedin,
       value: 'linkedin.com/in/jtsaoo',
       external: true,
     },
@@ -916,8 +884,8 @@ function Contact() {
     <div className="contact-bg">
       <div className="section-wrap" id="contact">
         <Reveal>
-          <div className="section-label">contact</div>
-          <h2 className="section-title">Get in touch</h2>
+          <div className="section-label">{t.labels.contact}</div>
+          <h2 className="section-title">{t.titles.contact}</h2>
           <div className="contact-grid">
             <GitHubCard />
             <div className="contact-links">
@@ -959,6 +927,10 @@ function Footer() {
 
 export default function App() {
   const [termOpen, setTermOpen] = useState(false);
+  const docTitle = useT().docTitle;
+
+  useEffect(() => { document.title = docTitle; }, [docTitle]);
+
   return (
     <>
       <Navbar />
