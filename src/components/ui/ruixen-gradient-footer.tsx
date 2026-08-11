@@ -16,6 +16,7 @@ import {
   type CSSProperties,
   type ReactNode,
 } from "react";
+import { motion, useScroll, useTransform, useReducedMotion } from "motion/react";
 
 type Stop = { offset: number; color: string };
 
@@ -47,8 +48,6 @@ function bellHeights(n: number, peak: number, valley: number): number[] {
   }
   return out;
 }
-
-const clamp01 = (v: number) => Math.max(0, Math.min(1, v));
 
 export interface RuixenGradientFooterProps {
   /** Footer content — links, wordmark, copyright — shown above the glow. */
@@ -92,8 +91,12 @@ export function RuixenGradientFooter({
 }: RuixenGradientFooterProps) {
   const uid = useId().replace(/:/g, "");
   const bandRef = useRef<HTMLDivElement>(null);
-  // minReveal = a flat strip on the floor, 1 = risen to full height.
-  const [progress, setProgress] = useState(minReveal);
+  const reduced = useReducedMotion();
+  // Pixel scrollY thresholds where the reveal starts/ends, measured from the
+  // band's own height so it still ramps over exactly the last `gradientHeight`
+  // of scroll. start = end - h, so this is the same window the old
+  // `left`/`t` math used — see the algebra note in the plan.
+  const [thresholds, setThresholds] = useState({ start: 0, end: 1 });
 
   useEffect(() => {
     const el = bandRef.current;
@@ -105,21 +108,27 @@ export function RuixenGradientFooter({
     const measure = () => {
       // offsetHeight ignores the transform, so the band can measure itself.
       const h = el.offsetHeight || 1;
-      // How much scroll is left before the end of the page. The glow starts
-      // rising once that's within its own height, and is full at the bottom.
-      const left =
-        doc.documentElement.scrollHeight - win.innerHeight - win.scrollY;
-      const t = clamp01((h - left) / h);
-      setProgress(minReveal + (1 - minReveal) * t);
+      const end = doc.documentElement.scrollHeight - win.innerHeight;
+      setThresholds({ start: end - h, end });
     };
     measure();
-    win.addEventListener("scroll", measure, { passive: true });
     win.addEventListener("resize", measure, { passive: true });
-    return () => {
-      win.removeEventListener("scroll", measure);
-      win.removeEventListener("resize", measure);
-    };
-  }, [minReveal]);
+    return () => win.removeEventListener("resize", measure);
+  }, []);
+
+  // motion's scrollY is already rAF-batched; chaining useTransform keeps the
+  // band updating without a React re-render on every scroll tick. See the
+  // "Note on approach" above for why this reproduces the original formula.
+  const { scrollY } = useScroll();
+  const liveProgress = useTransform(
+    scrollY,
+    [thresholds.start, thresholds.end],
+    [minReveal, 1],
+    { clamp: true },
+  );
+  // Reduced motion: freeze fully revealed instead of continuously
+  // recomputing a scroll-linked transform.
+  const progress = reduced ? 1 : liveProgress;
 
   const colW = VBW / bars;
 
@@ -134,7 +143,7 @@ export function RuixenGradientFooter({
 
       {/* ponytail: fixed to the viewport — a transformed/filtered ancestor
           would capture it. Give the footer a plain containing block. */}
-      <div
+      <motion.div
         ref={bandRef}
         aria-hidden
         style={{
@@ -145,7 +154,7 @@ export function RuixenGradientFooter({
           height: gradientHeight,
           pointerEvents: "none",
           transformOrigin: "bottom",
-          transform: `scaleY(${progress})`,
+          scaleY: progress,
           willChange: "transform",
         }}
       >
@@ -184,7 +193,7 @@ export function RuixenGradientFooter({
             </g>
           ))}
         </svg>
-      </div>
+      </motion.div>
     </footer>
   );
 }
