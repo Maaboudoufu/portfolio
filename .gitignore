@@ -24,3 +24,7 @@ yarn-error.log*
 
 # git worktrees (superpowers subagent-driven-development)
 /.worktrees
+
+# claude code local state / working docs
+/.claude
+/docs/superpowers
