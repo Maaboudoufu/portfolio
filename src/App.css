@@ -1088,9 +1088,72 @@ section, .section-wrap {
 
 /* ===== CONTACT ===== */
 .contact-bg {
+  position: relative;
+  overflow: hidden;
   background: var(--bg2);
   border-top: 1px solid var(--border);
 }
+
+/* Cold light behind the head, same job as .hero-aura: charcoal fur on #0f0f0f
+   dissolves into the page and the cut-out reads as pasted on. A pseudo-element
+   rather than a div — it paints before the figure, so it lands behind it. */
+.contact-bg::before {
+  content: '';
+  position: absolute;
+  z-index: 0;
+  right: -14%;
+  bottom: -80px;
+  width: min(620px, 44vw);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  pointer-events: none;
+  background: radial-gradient(circle at 50% 50%,
+    var(--aura-1) 0%,
+    var(--aura-2) 36%,
+    rgba(var(--veil-rgb), 0) 68%);
+}
+
+/* Extra floor under the grid gives the figure a pocket of its own — without it
+   the dog and the link cards compete for the same rows. z-index lifts the
+   content off the figure, which is absolutely positioned and would otherwise
+   paint over it. */
+.contact-bg .section-wrap {
+  position: relative;
+  z-index: 1;
+  padding-bottom: 11rem;
+}
+
+/* Same idiom as .hero-figure — a cut-out photo anchored to a bottom corner,
+   masked so it dissolves into the page rather than ending on a hard line. The
+   page opens on a figure bottom-right and closes on one. */
+.contact-figure {
+  --figure-opacity: 0.95;
+  position: absolute;
+  /* Flush, not bleeding: unlike the hero figure, the right ear runs to the edge
+     of the cut-out, so any negative offset slices it on a hard vertical line. */
+  right: 0;
+  /* px, not %, so the overhang past the footer seam stays put — a percentage
+     resolves against the section height, which changes with the breakpoint. */
+  bottom: -14px;
+  z-index: 0;
+  /* Sized off the viewport width, not its height: the pocket the dog sits in is
+     the band under the link cards, and that band narrows as the grid does. Kept
+     short enough that the head clears the cards instead of being sliced by one. */
+  height: clamp(190px, 23vw, 320px);
+  width: auto;
+  opacity: var(--figure-opacity);
+  /* Nudges the warm fur and the red collar toward the site's cool neutral
+     palette without draining them to grayscale. */
+  filter: saturate(0.85);
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-drag: none;
+  -webkit-mask-image: linear-gradient(to bottom, #000 58%, rgba(0, 0, 0, 0) 100%);
+  mask-image: linear-gradient(to bottom, #000 58%, rgba(0, 0, 0, 0) 100%);
+}
+
+/* Charcoal fur on paper carries itself; on #0f0f0f it needs full strength. */
+:root[data-theme="light"] .contact-figure { --figure-opacity: 0.8; }
 
 .contact-grid {
   display: grid;
@@ -1411,6 +1474,13 @@ section, .section-wrap {
   .about-grid { grid-template-columns: 1fr; gap: 2rem; }
   .about-photo { float: none; display: block; width: 100%; max-width: 280px; margin: 0 auto 1.5rem; }
   .contact-grid { grid-template-columns: 1fr; gap: 1.2rem; }
+  /* Stacked cards run the full width, so the figure loses its side gutter and
+     drops to a smaller ambient presence in the bottom corner. */
+  .contact-bg .section-wrap { padding-bottom: 7.5rem; }
+  .contact-figure {
+    height: clamp(150px, 34vw, 200px);
+    --figure-opacity: 0.8;
+  }
   .timeline-item { grid-template-columns: 1fr; gap: 0.3rem; }
   .timeline-period { text-align: left; padding-top: 0; }
   .projects-grid { grid-template-columns: 1fr; }
@@ -1472,13 +1542,14 @@ section, .section-wrap {
 
 @media (prefers-contrast: more) {
   .hero-figure { --figure-opacity: 0.35; }
+  .contact-figure { --figure-opacity: 0.3; }
   .terminal {
     background: var(--hc-bg);
     backdrop-filter: none;
     border-color: var(--white);
   }
   .terminal-bar { background: var(--hc-bar); }
-  .hero-aura { display: none; }
+  .hero-aura, .contact-bg::before { display: none; }
   .navbar {
     background: var(--hc-bg);
     border-bottom: 1px solid var(--white);

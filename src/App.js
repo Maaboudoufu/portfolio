@@ -877,6 +877,8 @@ function GitHubCard() {
 
 function Contact() {
   const t = useT();
+  const s = useSprings();
+
   const links = [
     {
       kind: 'email',
@@ -896,6 +898,24 @@ function Contact() {
 
   return (
     <div className="contact-bg">
+      {/* Rises out of the bottom fade as the section arrives. Opacity is left
+          to CSS — the theme and prefers-contrast rules own it, and animating it
+          here would outrank them. */}
+      <motion.img
+        className="contact-figure"
+        src="/contact-dog-760.webp"
+        width={601}
+        height={760}
+        alt=""
+        aria-hidden="true"
+        decoding="async"
+        loading="lazy"
+        draggable="false"
+        initial={{ y: s.reduced ? 0 : 44 }}
+        whileInView={{ y: 0 }}
+        viewport={{ once: true, margin: '-60px' }}
+        transition={s.ui}
+      />
       <div className="section-wrap" id="contact">
         <Reveal>
           <div className="section-label">{t.labels.contact}</div>
