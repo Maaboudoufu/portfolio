@@ -13,9 +13,10 @@ import { useT, localize } from './i18n';
 import {
   SiCplusplus, SiJavascript, SiTypescript, SiHtml5, SiPython, SiGnubash,
   SiReact, SiVite, SiNodedotjs, SiExpress, SiFastapi, SiPrisma, SiSqlalchemy,
-  SiSqlite, SiOpencv, SiDocker, SiProxmox, SiPfsense, SiNginx, SiPrometheus,
-  SiGrafana, SiOllama, SiLinux, SiGit, SiGithubactions, SiQualys,
-  SiModelcontextprotocol, SiApple,
+  SiSqlite, SiOpencv, SiDocker, SiKubernetes, SiProxmox, SiVmware, SiPfsense,
+  SiNginx, SiPrometheus, SiGrafana, SiOllama, SiLinux, SiGit, SiGitlab,
+  SiGithubactions, SiTerraform, SiAnsible, SiQualys, SiModelcontextprotocol,
+  SiApple,
 } from 'react-icons/si';
 import {
   TbBinary, TbTerminal2, TbPlugConnected, TbNetwork, TbRouter, TbServerBolt,
@@ -49,7 +50,7 @@ export const SKILL_GROUPS = [
   },
   {
     label: 'Infrastructure & DevOps',
-    items: ['Docker', 'Proxmox', 'pfSense', 'Nginx', 'Prometheus', 'Grafana', 'Ollama', 'WebSockets', 'TCP/IP', 'NAT', 'DHCP', 'DNS', 'VLAN', 'VPN', 'SSL/TLS', 'Linux', 'Git', 'GitHub Actions', 'CI/CD'],
+    items: ['Docker', 'Kubernetes', 'Proxmox', 'VMware ESX', 'pfSense', 'Nginx', 'Prometheus', 'Grafana', 'Ollama', 'WebSockets', 'TCP/IP', 'NAT', 'DHCP', 'DNS', 'VLAN', 'VPN', 'SSL/TLS', 'Linux', 'Git', 'GitLab', 'GitHub Actions', 'Terraform', 'Ansible', 'CI/CD'],
   },
   {
     label: 'Security & Endpoint Management',
@@ -79,7 +80,9 @@ const SKILL_ICONS = {
   'GPT-4V': FaBrain,
   'MCP': SiModelcontextprotocol,
   'Docker': SiDocker,
+  'Kubernetes': SiKubernetes,
   'Proxmox': SiProxmox,
+  'VMware ESX': SiVmware,
   'pfSense': SiPfsense,
   'Nginx': SiNginx,
   'Prometheus': SiPrometheus,
@@ -95,7 +98,10 @@ const SKILL_ICONS = {
   'SSL/TLS': TbCertificate,
   'Linux': SiLinux,
   'Git': SiGit,
+  'GitLab': SiGitlab,
   'GitHub Actions': SiGithubactions,
+  'Terraform': SiTerraform,
+  'Ansible': SiAnsible,
   'CI/CD': TbInfinity,
   'Qualys': SiQualys,
   'Sophos': TbShieldCheck,
@@ -113,12 +119,11 @@ export const EXPERIENCE = [
     logo: '/logos/student-union.png',
     period: 'May 2026\n– Present',
     bullets: [
-      'Managed Proxmox VE, VMware ESX, Veeam backups, UPS and high availability for hardware service continuity.',
+      'Deployed/administered GitLab and Terraform, configuring RBAC, branching, and automated CI/CD workflows.',
       'Implemented Kubernetes for containerized workloads, enabling continual scalable deployments for 40k students.',
-      'Developed and deployed a server-side AI agent to orchestrate MCP calls and integrate external tools and services.',
-      'Deployed and administered Bitbucket and Plane, configuring RBAC, branching, and CI/CD workflows.',
-      'Diagnosed connectivity issues spanning SSL certificates, TCP/IP, DHCP, DNS, VLANs, NAT rules, and firewalls.',
-      'Configured CUPS/SNMP for real-time printing/tracking, asset management, and automated supplies ordering.',
+      'Managed Proxmox VE, VMware ESX, backups, & high availability, ensuring 99.99% hardware service continuity.',
+      'Made AI cloud agent to mitigate CVEs with MCP calls, reducing MTTR by 40% & saving 30 triage hours weekly.',
+      'Configured Prometheus/Grafana across 50+ services, cutting incident resolution time by 30% via real-time alerts.',
     ],
   },
   {
@@ -127,10 +132,10 @@ export const EXPERIENCE = [
     logo: '/logos/student-union.png',
     period: 'Feb 2026\n– May 2026',
     bullets: [
-      'Managed Windows print server, imaging, software installation, workstation deployment, and patch management.',
-      'Managed and secured Windows and macOS endpoints with Intune and Jamf, enforcing compliance policies.',
-      'Identified, prioritized, and remediated CVEs using Qualys, leveraging CVSS severity to reduce vulnerabilities.',
-      'Assisted with MDF/IDF infrastructure support, including drop ports, switches, patching, and punchdowns.',
+      'Boosted network throughput by 20% through resolving legacy VLAN, proxy, and firewall routing bottlenecks.',
+      'Maintained MDF/IDF network capacity, managing 10+ switches and 300+ ports to ensure site connectivity.',
+      'Engineered zero-touch autounattend.xml workflows for 120+ workstations, reducing deployment time by 60%.',
+      'Standardized configuration management for 150+ devices via Intune and Jamf, achieving 100% compliance.',
     ],
   },
   {
@@ -139,9 +144,9 @@ export const EXPERIENCE = [
     logo: '/logos/sce.png',
     period: 'Jan 2026\n– Present',
     bullets: [
-      'Built a YouTube-to-Raspberry-Pi music streaming app in TypeScript with React, Express, Prisma, and SQLite.',
-      'Designed an egress-only WebSocket bridge so the Pi dials out to the backend, removing inbound firewall rules.',
-      'Containerized services with Docker Compose and ran the Pi daemon as a systemd unit piping yt-dlp into mpv.',
+      'Engineered a robust full-stack music streaming webui in TypeScript with React, Express, Prisma, and SQLite.',
+      'Architected an egress-only WebSocket bridge for secure outbound connections, eliminating inbound firewalls.',
+      'Containerized services via Docker Compose and deployed a systemd daemon piping yt-dlp media into mpv.',
     ],
   },
   {
@@ -264,8 +269,8 @@ export const PROJECTS = [
   {
     num: '02',
     title: 'Home Lab',
-    desc: 'Configured pfSense as the primary router with segmented VLANs, custom firewall rules, and NAT policies. Deployed Proxmox as a bare-metal hypervisor to host, isolate, and snapshot multiple homelab VMs, automating host configuration and SSH key distribution with idempotent, agentless Ansible playbooks. Deployed OpenMediaVault with a virtual-disk RAID 10 storage pool for fault-tolerant network-attached storage, and wired up Prometheus/Grafana for real-time metrics collection, alerting, and custom dashboards. Secured a self-hosted Ollama LLM endpoint behind an Nginx reverse proxy with TLS, gated by WireGuard.',
-    tags: ['Docker', 'Ansible', 'Nginx', 'Prometheus', 'Grafana', 'Ollama', 'Proxmox', 'pfSense', 'OpenMediaVault', 'WireGuard'],
+    desc: 'Configured pfSense as the primary router with segmented VLANs, custom firewall rules, and NAT policies. Deployed Proxmox as a bare-metal hypervisor to host, isolate, and snapshot multiple homelab VMs, automating host configuration and SSH key distribution with idempotent, agentless Ansible playbooks. Deployed OpenMediaVault with a virtual-disk RAID 10 storage pool for fault-tolerant network-attached storage. Secured a self-hosted Ollama LLM endpoint behind an Nginx reverse proxy with TLS, gated by WireGuard.',
+    tags: ['Docker', 'Ansible', 'Nginx', 'Ollama', 'Proxmox', 'pfSense', 'OpenMediaVault', 'WireGuard'],
     code: null,
   },
 ];
@@ -436,7 +441,7 @@ function Hero({ onOpenTerminal }) {
             </button>
             <a href="#contact" className="btn-secondary">{t.hero.contact}</a>
             <a
-              href="/resume.html"
+              href="/resume.pdf"
               target="_blank"
               rel="noopener noreferrer"
               className="btn-secondary"

@@ -222,12 +222,11 @@ Hint: start with  ls  then  cd projects/`,
         company: 'サンノゼ州立大学 Student Union, Inc.  ・  カリフォルニア州サンノゼ',
         period: '2026年5月\n– 現在',
         bullets: [
-          'Proxmox VE・VMware ESX・Veeam バックアップ・UPS・冗長構成を運用し、ハードウェア障害時もサービスを止めない体制を維持。',
+          'GitLab と Terraform を構築・運用し、RBAC やブランチ戦略、CI/CD の自動化ワークフローを整備。',
           'Kubernetes を導入してワークロードをコンテナ化し、4万人規模の学生に向けた継続的でスケーラブルなデプロイを実現。',
-          'MCP 経由で外部ツールや各種サービスを呼び出すサーバーサイド AI エージェントを開発し、本番環境へ導入。',
-          'Bitbucket と Plane を構築・運用し、RBAC やブランチ戦略、CI/CD パイプラインを整備。',
-          'SSL 証明書・TCP/IP・DHCP・DNS・VLAN・NAT・ファイアウォールにまたがる接続障害を切り分け、原因を特定。',
-          'CUPS と SNMP を設定し、印刷状況のリアルタイム把握と資産管理、消耗品の自動発注を実現。',
+          'Proxmox VE・VMware ESX・バックアップ・高可用性構成を運用し、ハードウェアの稼働率 99.99% を確保。',
+          'MCP 呼び出しで CVE に対処するクラウド AI エージェントを開発し、MTTR を 40% 短縮、トリアージ工数を週30時間削減。',
+          'Prometheus／Grafana を50サービス以上に導入し、リアルタイムアラートでインシデント解決時間を 30% 短縮。',
         ],
       },
       {
@@ -235,10 +234,10 @@ Hint: start with  ls  then  cd projects/`,
         company: 'サンノゼ州立大学 Student Union, Inc.  ・  カリフォルニア州サンノゼ',
         period: '2026年2月\n– 2026年5月',
         bullets: [
-          'Windows プリントサーバーの運用、端末のイメージング、ソフトウェア導入、キッティング、パッチ管理を担当。',
-          'Intune と Jamf で Windows・macOS 端末を管理し、コンプライアンスポリシーを適用。',
-          'Qualys で CVE を洗い出し、CVSS の深刻度に応じて優先順位をつけて対処し、脆弱性を削減。',
-          'MDF／IDF まわりの設備対応として、情報コンセントの敷設、スイッチ、パッチ配線、圧接作業を担当。',
+          '旧来の VLAN・プロキシ・ファイアウォールのルーティングボトルネックを解消し、ネットワークスループットを 20% 向上。',
+          'MDF／IDF のネットワーク容量を維持し、10台以上のスイッチと300ポート以上を管理して拠点全体の接続性を確保。',
+          'autounattend.xml によるゼロタッチ構築のワークフローを整備し、120台以上のワークステーションの展開時間を 60% 短縮。',
+          'Intune と Jamf で150台以上の端末の構成管理を標準化し、コンプライアンス準拠率 100% を達成。',
         ],
       },
       {
@@ -246,9 +245,9 @@ Hint: start with  ls  then  cd projects/`,
         company: 'Software and Computer Engineering Society  ・  カリフォルニア州サンノゼ',
         period: '2026年1月\n– 現在',
         bullets: [
-          'YouTube の音源を Raspberry Pi で流す音楽ストリーミングアプリを TypeScript（React・Express・Prisma・SQLite）で開発。',
-          'Pi 側からバックエンドへ接続する送信専用の WebSocket ブリッジを設計し、インバウンドのファイアウォール開放を不要に。',
-          '各サービスを Docker Compose でコンテナ化し、Pi 側は yt-dlp の出力を mpv へ渡す systemd デーモンとして常駐化。',
+          '堅牢なフルスタックの音楽ストリーミング Web UI を TypeScript（React・Express・Prisma・SQLite）で開発。',
+          '送信専用の WebSocket ブリッジを設計して安全なアウトバウンド接続を確立し、インバウンドのファイアウォール開放を不要に。',
+          '各サービスを Docker Compose でコンテナ化し、yt-dlp の出力を mpv へ渡す systemd デーモンを常駐化。',
         ],
       },
       {
@@ -317,7 +316,7 @@ Hint: start with  ls  then  cd projects/`,
         desc: 'Seeed 主催の Embodied AI ハッカソンで2位を獲得した、AI による集中度モニタリングシステム。OpenCV と GPT-4V を組み合わせたパイプラインで学生の集中状態を10秒ごとに判定し、カメラ映像を FastAPI のダッシュボードへリアルタイム配信します。さらに Whisper ベースの音声エージェントから Reachy Mini の動作制御と dnsmasq の許可リスト更新を行えるようにしました。',
       },
       {
-        desc: 'pfSense をメインルーターに据え、VLAN でネットワークを分割したうえでファイアウォールルールと NAT ポリシーを設計。Proxmox をベアメタルで動かして複数の VM をホスト・隔離・スナップショット管理し、ホスト設定と SSH 鍵の配布は冪等な Ansible Playbook で自動化しています。ストレージは OpenMediaVault の仮想ディスク RAID 10 で冗長化し、Prometheus と Grafana でメトリクス収集・アラート・ダッシュボードを構築。自前の Ollama LLM エンドポイントは Nginx のリバースプロキシと TLS で保護し、WireGuard 経由でのみ到達できるようにしています。',
+        desc: 'pfSense をメインルーターに据え、VLAN でネットワークを分割したうえでファイアウォールルールと NAT ポリシーを設計。Proxmox をベアメタルで動かして複数の VM をホスト・隔離・スナップショット管理し、ホスト設定と SSH 鍵の配布は冪等かつエージェントレスな Ansible Playbook で自動化しています。ストレージは OpenMediaVault の仮想ディスク RAID 10 で冗長化し、耐障害性のあるネットワークストレージを構築。自前の Ollama LLM エンドポイントは Nginx のリバースプロキシと TLS で保護し、WireGuard 経由でのみ到達できるようにしています。',
       },
     ],
 
@@ -358,8 +357,9 @@ LinkedIn: linkedin.com/in/jtsaoo`,
   OpenCV  OpenAI Whisper  GPT-4V  MCP
 
 ── インフラ・DevOps ───────────────────────────
-  Docker  Proxmox  pfSense  Nginx  Prometheus  Grafana  Ollama  WebSockets
-  TCP/IP  NAT  DHCP  DNS  VLAN  VPN  SSL/TLS  Linux  Git  GitHub Actions  CI/CD
+  Docker  Kubernetes  Proxmox  VMware ESX  pfSense  Nginx  Prometheus  Grafana
+  Ollama  WebSockets  TCP/IP  NAT  DHCP  DNS  VLAN  VPN  SSL/TLS  Linux
+  Git  GitLab  GitHub Actions  Terraform  Ansible  CI/CD
 
 ── セキュリティ・端末管理 ─────────────────────
   Qualys  Sophos  Jamf  Intune  Active Directory  RBAC  Windows Server`,
@@ -384,58 +384,57 @@ OpenCV と GPT-4V のパイプラインで10秒ごとに集中状態を判定し
 pfSense をメインルーターに据え、VLAN でネットワークを分割したうえで
 ファイアウォールルールと NAT ポリシーを設計。Proxmox をベアメタルで
 動かして複数の VM をホスト・隔離・スナップショット管理し、ホスト設定と
-SSH 鍵の配布は冪等な Ansible Playbook で自動化しています。
+SSH 鍵の配布は冪等かつエージェントレスな Ansible Playbook で
+自動化しています。
 
-ストレージは OpenMediaVault の仮想ディスク RAID 10 で冗長化。
-Prometheus と Grafana でメトリクス収集・アラート・ダッシュボードを
-構築し、自前の Ollama LLM エンドポイントは Nginx のリバースプロキシと
-TLS で保護、WireGuard 経由でのみ到達できるようにしています。
+ストレージは OpenMediaVault の仮想ディスク RAID 10 で冗長化し、
+耐障害性のあるネットワークストレージを構築。自前の Ollama LLM
+エンドポイントは Nginx のリバースプロキシと TLS で保護し、
+WireGuard 経由でのみ到達できるようにしています。
 
-技術: Docker · Ansible · Nginx · Prometheus · Grafana · Ollama · Proxmox · pfSense · OpenMediaVault · WireGuard`,
+技術: Docker · Ansible · Nginx · Ollama · Proxmox · pfSense · OpenMediaVault · WireGuard`,
 
       '~/experience/it-systems-administrator.txt':
         `ITシステム管理者
 サンノゼ州立大学 Student Union, Inc. · カリフォルニア州サンノゼ
 2026年5月 – 現在
 
-• Proxmox VE・VMware ESX・Veeam バックアップ・UPS・冗長構成を運用し、
-  ハードウェア障害時もサービスを止めない体制を維持。
+• GitLab と Terraform を構築・運用し、RBAC やブランチ戦略、
+  CI/CD の自動化ワークフローを整備。
 • Kubernetes を導入してワークロードをコンテナ化し、4万人規模の学生に
   向けた継続的でスケーラブルなデプロイを実現。
-• MCP 経由で外部ツールや各種サービスを呼び出すサーバーサイド AI
-  エージェントを開発し、本番環境へ導入。
-• Bitbucket と Plane を構築・運用し、RBAC やブランチ戦略、CI/CD
-  パイプラインを整備。
-• SSL 証明書・TCP/IP・DHCP・DNS・VLAN・NAT・ファイアウォールにまたがる
-  接続障害を切り分け、原因を特定。
-• CUPS と SNMP を設定し、印刷状況のリアルタイム把握と資産管理、
-  消耗品の自動発注を実現。`,
+• Proxmox VE・VMware ESX・バックアップ・高可用性構成を運用し、
+  ハードウェアの稼働率 99.99% を確保。
+• MCP 呼び出しで CVE に対処するクラウド AI エージェントを開発し、
+  MTTR を 40% 短縮、トリアージ工数を週30時間削減。
+• Prometheus／Grafana を50サービス以上に導入し、リアルタイム
+  アラートでインシデント解決時間を 30% 短縮。`,
 
       '~/experience/it-technician.txt':
         `ITテクニシャン
 サンノゼ州立大学 Student Union, Inc. · カリフォルニア州サンノゼ
 2026年2月 – 2026年5月
 
-• Windows プリントサーバーの運用、端末のイメージング、ソフトウェア導入、
-  キッティング、パッチ管理を担当。
-• Intune と Jamf で Windows・macOS 端末を管理し、コンプライアンス
-  ポリシーを適用。
-• Qualys で CVE を洗い出し、CVSS の深刻度に応じて優先順位をつけて対処し、
-  脆弱性を削減。
-• MDF／IDF まわりの設備対応として、情報コンセントの敷設、スイッチ、
-  パッチ配線、圧接作業を担当。`,
+• 旧来の VLAN・プロキシ・ファイアウォールのルーティングボトルネックを
+  解消し、ネットワークスループットを 20% 向上。
+• MDF／IDF のネットワーク容量を維持し、10台以上のスイッチと
+  300ポート以上を管理して拠点全体の接続性を確保。
+• autounattend.xml によるゼロタッチ構築のワークフローを整備し、
+  120台以上のワークステーションの展開時間を 60% 短縮。
+• Intune と Jamf で150台以上の端末の構成管理を標準化し、
+  コンプライアンス準拠率 100% を達成。`,
 
       '~/experience/sce-developer.txt':
         `ソフトウェアエンジニア（開発チーム）
 Software and Computer Engineering Society · カリフォルニア州サンノゼ
 2026年1月 – 現在
 
-• YouTube の音源を Raspberry Pi で流す音楽ストリーミングアプリを
+• 堅牢なフルスタックの音楽ストリーミング Web UI を
   TypeScript（React・Express・Prisma・SQLite）で開発。
-• Pi 側からバックエンドへ接続する送信専用の WebSocket ブリッジを設計し、
-  インバウンドのファイアウォール開放を不要に。
-• 各サービスを Docker Compose でコンテナ化し、Pi 側は yt-dlp の出力を
-  mpv へ渡す systemd デーモンとして常駐化。`,
+• 送信専用の WebSocket ブリッジを設計して安全なアウトバウンド接続を
+  確立し、インバウンドのファイアウォール開放を不要に。
+• 各サービスを Docker Compose でコンテナ化し、yt-dlp の出力を mpv へ
+  渡す systemd デーモンを常駐化。`,
 
       '~/experience/building-supervisor.txt':
         `運営スーパーバイザー
