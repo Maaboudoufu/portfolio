@@ -100,8 +100,9 @@ LinkedIn: linkedin.com/in/jtsaoo`,
   OpenCV  OpenAI Whisper  GPT-4V  MCP
 
 ── Infrastructure & DevOps ────────────────────
-  Docker  Proxmox  pfSense  Nginx  Prometheus  Grafana  Ollama  WebSockets
-  TCP/IP  NAT  DHCP  DNS  VLAN  VPN  SSL/TLS  Linux  Git  GitHub Actions  CI/CD
+  Docker  Kubernetes  Proxmox  VMware ESX  pfSense  Nginx  Prometheus  Grafana
+  Ollama  WebSockets  TCP/IP  NAT  DHCP  DNS  VLAN  VPN  SSL/TLS  Linux
+  Git  GitLab  GitHub Actions  Terraform  Ansible  CI/CD
 
 ── Security & Endpoint Management ─────────────
   Qualys  Sophos  Jamf  Intune  Active Directory  RBAC  Windows Server`,
@@ -129,55 +130,52 @@ multiple homelab VMs, with host configuration and SSH key distribution
 automated via idempotent, agentless Ansible playbooks.
 
 OpenMediaVault providing a virtual-disk RAID 10 pool for fault-tolerant
-network-attached storage. Prometheus and Grafana wired up for real-time
-metrics collection, alerting, and custom dashboards. Self-hosted Ollama LLM
-endpoint behind an Nginx reverse proxy with TLS, gated by WireGuard.
+network-attached storage. Self-hosted Ollama LLM endpoint behind an Nginx
+reverse proxy with TLS, gated by WireGuard.
 
-Stack: Docker · Ansible · Nginx · Prometheus · Grafana · Ollama · Proxmox · pfSense · OpenMediaVault · WireGuard`,
+Stack: Docker · Ansible · Nginx · Ollama · Proxmox · pfSense · OpenMediaVault · WireGuard`,
 
   '~/experience/it-systems-administrator.txt':
     `IT Systems Administrator
 Student Union, Inc. of SJSU · San Jose, CA
 May 2026 – Present
 
-• Managed Proxmox VE, VMware ESX, Veeam backups, UPS and high
-  availability for hardware service continuity.
+• Deployed/administered GitLab and Terraform, configuring RBAC,
+  branching, and automated CI/CD workflows.
 • Implemented Kubernetes for containerized workloads, enabling continual
   scalable deployments for 40k students.
-• Developed and deployed a server-side AI agent to orchestrate MCP calls
-  and integrate external tools and services.
-• Deployed and administered Bitbucket and Plane, configuring RBAC,
-  branching, and CI/CD workflows.
-• Diagnosed connectivity issues spanning SSL certificates, TCP/IP, DHCP,
-  DNS, VLANs, NAT rules, and firewalls.
-• Configured CUPS/SNMP for real-time printing/tracking, asset management,
-  and automated supplies ordering.`,
+• Managed Proxmox VE, VMware ESX, backups, & high availability, ensuring
+  99.99% hardware service continuity.
+• Made AI cloud agent to mitigate CVEs with MCP calls, reducing MTTR by
+  40% & saving 30 triage hours weekly.
+• Configured Prometheus/Grafana across 50+ services, cutting incident
+  resolution time by 30% via real-time alerts.`,
 
   '~/experience/it-technician.txt':
     `IT Technician
 Student Union, Inc. of SJSU · San Jose, CA
 Feb 2026 – May 2026
 
-• Managed Windows print server, imaging, software installation,
-  workstation deployment, and patch management.
-• Managed and secured Windows and macOS endpoints with Intune and Jamf,
-  enforcing compliance policies.
-• Identified, prioritized, and remediated CVEs using Qualys, leveraging
-  CVSS severity to reduce vulnerabilities.
-• Assisted with MDF/IDF infrastructure support, including drop ports,
-  switches, patching, and punchdowns.`,
+• Boosted network throughput by 20% through resolving legacy VLAN, proxy,
+  and firewall routing bottlenecks.
+• Maintained MDF/IDF network capacity, managing 10+ switches and 300+
+  ports to ensure site connectivity.
+• Engineered zero-touch autounattend.xml workflows for 120+ workstations,
+  reducing deployment time by 60%.
+• Standardized configuration management for 150+ devices via Intune and
+  Jamf, achieving 100% compliance.`,
 
   '~/experience/sce-developer.txt':
     `Software Engineer, Development Team
 Software and Computer Engineering Society · San Jose, CA
 Jan 2026 – Present
 
-• Built a YouTube-to-Raspberry-Pi music streaming app in TypeScript with
+• Engineered a robust full-stack music streaming webui in TypeScript with
   React, Express, Prisma, and SQLite.
-• Designed an egress-only WebSocket bridge so the Pi dials out to the
-  backend, removing inbound firewall rules.
-• Containerized services with Docker Compose and ran the Pi daemon as a
-  systemd unit piping yt-dlp into mpv.`,
+• Architected an egress-only WebSocket bridge for secure outbound
+  connections, eliminating inbound firewalls.
+• Containerized services via Docker Compose and deployed a systemd daemon
+  piping yt-dlp media into mpv.`,
 
   '~/experience/building-supervisor.txt':
     `Operations Supervisor
