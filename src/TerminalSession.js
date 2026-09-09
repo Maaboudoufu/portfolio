@@ -80,7 +80,7 @@ export const FS_FILES = {
     `Name    : Jason Tsao
 From    : Sacramento, CA
 Based   : San Jose, CA
-School  : SJSU — BS Computer Engineering, Minor in Japanese (GPA 3.70)
+School  : SJSU — BS Computer Engineering (GPA 3.70)
 Grad    : Dec 2027
 Goal    : Remote/hybrid, open to living abroad
 Spoken  : English (Native) · Japanese (Limited Working)
@@ -93,14 +93,14 @@ LinkedIn: linkedin.com/in/jtsaoo`,
 
   '~/skills.txt':
     `── Languages ──────────────────────────────────
-  C/C++  Assembly  JavaScript  TypeScript  HTML/CSS  Python  Bash/Zsh  PowerShell
+  C/C++  Assembly  Go  JavaScript  TypeScript  HTML/CSS  Python  SQL  Bash/Zsh  PowerShell
 
 ── Frameworks & Libraries ─────────────────────
   React.js  Vite  Node.js  Express  FastAPI  Prisma  SQLAlchemy  SQLite
   OpenCV  OpenAI Whisper  GPT-4V  MCP
 
 ── Infrastructure & DevOps ────────────────────
-  Docker  Kubernetes  Proxmox  VMware ESX  pfSense  Nginx  Prometheus  Grafana
+  Docker  Kubernetes  Proxmox  VMware ESX  PostgreSQL  pfSense  Nginx  Prometheus  Grafana
   Ollama  WebSockets  TCP/IP  NAT  DHCP  DNS  VLAN  VPN  SSL/TLS  Linux
   Git  GitLab  GitHub Actions  Terraform  Ansible  CI/CD
 
@@ -109,7 +109,7 @@ LinkedIn: linkedin.com/in/jtsaoo`,
 
   '~/projects/studyguard/README.md':
     `# StudyGuard
-Awarded 2nd Place at the Seeed Embodied AI Hackathon
+Won at the Seeed Embodied AI Hackathon
 
 Focus-monitoring system with a dynamically changing DNS server
 and Reachy Mini robot for supervision.
@@ -125,15 +125,15 @@ Stack: Python · FastAPI · OpenCV · OpenAI Whisper · SQLAlchemy · NVIDIA Jet
     `# Home Lab
 
 pfSense as the primary router with segmented VLANs, custom firewall rules,
-and NAT policies. Proxmox running bare-metal to host, isolate, and snapshot
-multiple homelab VMs, with host configuration and SSH key distribution
-automated via idempotent, agentless Ansible playbooks.
+and NAT policies. Cloud-init handles initial bootstrapping, with Ansible
+driving idempotent, agentless configuration management from there.
 
-OpenMediaVault providing a virtual-disk RAID 10 pool for fault-tolerant
-network-attached storage. Self-hosted Ollama LLM endpoint behind an Nginx
-reverse proxy with TLS, gated by WireGuard.
+A Hermes agent integrated via an Ollama API endpoint automates complex
+internal infrastructure workflows. Nginx reverse-proxies with TLS
+termination for secure, encrypted traffic, gated by a WireGuard VPN
+tunnel enforcing strict, zero-trust remote access.
 
-Stack: Docker · Ansible · Nginx · Ollama · Proxmox · pfSense · OpenMediaVault · WireGuard`,
+Stack: Docker · Ansible · Cloud-init · Nginx · Proxmox · WireGuard · pfSense · Ollama · Hermes`,
 
   '~/experience/it-systems-administrator.txt':
     `IT Systems Administrator
@@ -158,11 +158,11 @@ Feb 2026 – May 2026
 
 • Boosted network throughput by 20% through resolving legacy VLAN, proxy,
   and firewall routing bottlenecks.
-• Maintained MDF/IDF network capacity, managing 10+ switches and 300+
+• Maintained MDF/IDF network capacity, managing 5+ switches and 240+
   ports to ensure site connectivity.
 • Engineered zero-touch autounattend.xml workflows for 120+ workstations,
   reducing deployment time by 60%.
-• Standardized configuration management for 150+ devices via Intune and
+• Standardized configuration management for 120+ devices via Intune and
   Jamf, achieving 100% compliance.`,
 
   '~/experience/sce-developer.txt':

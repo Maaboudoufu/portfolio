@@ -235,9 +235,9 @@ Hint: start with  ls  then  cd projects/`,
         period: '2026年2月\n– 2026年5月',
         bullets: [
           '旧来の VLAN・プロキシ・ファイアウォールのルーティングボトルネックを解消し、ネットワークスループットを 20% 向上。',
-          'MDF／IDF のネットワーク容量を維持し、10台以上のスイッチと300ポート以上を管理して拠点全体の接続性を確保。',
+          'MDF／IDF のネットワーク容量を維持し、5台以上のスイッチと240ポート以上を管理して拠点全体の接続性を確保。',
           'autounattend.xml によるゼロタッチ構築のワークフローを整備し、120台以上のワークステーションの展開時間を 60% 短縮。',
-          'Intune と Jamf で150台以上の端末の構成管理を標準化し、コンプライアンス準拠率 100% を達成。',
+          'Intune と Jamf で120台以上の端末の構成管理を標準化し、コンプライアンス準拠率 100% を達成。',
         ],
       },
       {
@@ -313,10 +313,10 @@ Hint: start with  ls  then  cd projects/`,
 
     projects: [
       {
-        desc: 'Seeed 主催の Embodied AI ハッカソンで2位を獲得した、AI による集中度モニタリングシステム。OpenCV と GPT-4V を組み合わせたパイプラインで学生の集中状態を10秒ごとに判定し、カメラ映像を FastAPI のダッシュボードへリアルタイム配信します。さらに Whisper ベースの音声エージェントから Reachy Mini の動作制御と dnsmasq の許可リスト更新を行えるようにしました。',
+        desc: 'Seeed 主催の Embodied AI ハッカソンで受賞した、革新的な AI 集中度モニタリングシステム。OpenCV と GPT-4V を組み合わせたパイプラインで学生の集中状態を10秒ごとに正確に判定し、カメラ映像を FastAPI のダッシュボードへ直接リアルタイム配信します。さらに Whisper ベースの音声エージェントから Reachy Mini の動作をリモートで制御し、dnsmasq の許可リスト更新も行えるようにしました。',
       },
       {
-        desc: 'pfSense をメインルーターに据え、VLAN でネットワークを分割したうえでファイアウォールルールと NAT ポリシーを設計。Proxmox をベアメタルで動かして複数の VM をホスト・隔離・スナップショット管理し、ホスト設定と SSH 鍵の配布は冪等かつエージェントレスな Ansible Playbook で自動化しています。ストレージは OpenMediaVault の仮想ディスク RAID 10 で冗長化し、耐障害性のあるネットワークストレージを構築。自前の Ollama LLM エンドポイントは Nginx のリバースプロキシと TLS で保護し、WireGuard 経由でのみ到達できるようにしています。',
+        desc: 'pfSense をメインルーターに据え、VLAN でネットワークを分割したうえでファイアウォールルールと NAT ポリシーを設計。初期構築には cloud-init を活用し、以降の構成管理は冪等かつエージェントレスな Ansible で自動化しています。Ollama API 経由で Hermes エージェントを統合し、複雑な内部インフラ運用ワークフローを自動化。Nginx のリバースプロキシで TLS 終端を実装して安全な暗号化通信を実現したうえで、WireGuard VPN トンネルを確立し、内部エンドポイントへのアクセスをゼロトラストで厳格に制限しています。',
       },
     ],
 
@@ -337,7 +337,7 @@ Hint: start with  ls  then  cd projects/`,
         `名前    : Jason Tsao
 出身    : カリフォルニア州サクラメント
 拠点    : カリフォルニア州サンノゼ
-大学    : サンノゼ州立大学 コンピュータ工学専攻／日本語副専攻（GPA 3.70）
+大学    : サンノゼ州立大学 コンピュータ工学専攻（GPA 3.70）
 卒業    : 2027年12月
 希望    : リモート・ハイブリッド勤務、海外在住も視野
 言語    : 英語（母語）・日本語（日常会話レベル）
@@ -350,14 +350,14 @@ LinkedIn: linkedin.com/in/jtsaoo`,
 
       '~/skills.txt':
         `── 言語 ───────────────────────────────────────
-  C/C++  Assembly  JavaScript  TypeScript  HTML/CSS  Python  Bash/Zsh  PowerShell
+  C/C++  Assembly  Go  JavaScript  TypeScript  HTML/CSS  Python  SQL  Bash/Zsh  PowerShell
 
 ── フレームワーク・ライブラリ ─────────────────
   React.js  Vite  Node.js  Express  FastAPI  Prisma  SQLAlchemy  SQLite
   OpenCV  OpenAI Whisper  GPT-4V  MCP
 
 ── インフラ・DevOps ───────────────────────────
-  Docker  Kubernetes  Proxmox  VMware ESX  pfSense  Nginx  Prometheus  Grafana
+  Docker  Kubernetes  Proxmox  VMware ESX  PostgreSQL  pfSense  Nginx  Prometheus  Grafana
   Ollama  WebSockets  TCP/IP  NAT  DHCP  DNS  VLAN  VPN  SSL/TLS  Linux
   Git  GitLab  GitHub Actions  Terraform  Ansible  CI/CD
 
@@ -366,7 +366,7 @@ LinkedIn: linkedin.com/in/jtsaoo`,
 
       '~/projects/studyguard/README.md':
         `# StudyGuard
-Seeed 主催 Embodied AI ハッカソン 2位
+Seeed 主催 Embodied AI ハッカソン 受賞
 
 DNS サーバーを動的に書き換えながら、Reachy Mini ロボットが
 見守る集中度モニタリングシステム。
@@ -382,17 +382,16 @@ OpenCV と GPT-4V のパイプラインで10秒ごとに集中状態を判定し
         `# ホームラボ
 
 pfSense をメインルーターに据え、VLAN でネットワークを分割したうえで
-ファイアウォールルールと NAT ポリシーを設計。Proxmox をベアメタルで
-動かして複数の VM をホスト・隔離・スナップショット管理し、ホスト設定と
-SSH 鍵の配布は冪等かつエージェントレスな Ansible Playbook で
+ファイアウォールルールと NAT ポリシーを設計。初期構築は cloud-init が
+担い、以降の構成管理は冪等かつエージェントレスな Ansible で
 自動化しています。
 
-ストレージは OpenMediaVault の仮想ディスク RAID 10 で冗長化し、
-耐障害性のあるネットワークストレージを構築。自前の Ollama LLM
-エンドポイントは Nginx のリバースプロキシと TLS で保護し、
-WireGuard 経由でのみ到達できるようにしています。
+Ollama API 経由で統合した Hermes エージェントが、複雑な内部インフラ
+運用ワークフローを自動化。Nginx のリバースプロキシで TLS 終端を実装し
+安全な暗号化通信を実現したうえで、WireGuard VPN トンネルにより
+内部エンドポイントへのアクセスをゼロトラストで厳格に制限しています。
 
-技術: Docker · Ansible · Nginx · Ollama · Proxmox · pfSense · OpenMediaVault · WireGuard`,
+技術: Docker · Ansible · Cloud-init · Nginx · Proxmox · WireGuard · pfSense · Ollama · Hermes`,
 
       '~/experience/it-systems-administrator.txt':
         `ITシステム管理者
@@ -417,11 +416,11 @@ WireGuard 経由でのみ到達できるようにしています。
 
 • 旧来の VLAN・プロキシ・ファイアウォールのルーティングボトルネックを
   解消し、ネットワークスループットを 20% 向上。
-• MDF／IDF のネットワーク容量を維持し、10台以上のスイッチと
-  300ポート以上を管理して拠点全体の接続性を確保。
+• MDF／IDF のネットワーク容量を維持し、5台以上のスイッチと
+  240ポート以上を管理して拠点全体の接続性を確保。
 • autounattend.xml によるゼロタッチ構築のワークフローを整備し、
   120台以上のワークステーションの展開時間を 60% 短縮。
-• Intune と Jamf で150台以上の端末の構成管理を標準化し、
+• Intune と Jamf で120台以上の端末の構成管理を標準化し、
   コンプライアンス準拠率 100% を達成。`,
 
       '~/experience/sce-developer.txt':
