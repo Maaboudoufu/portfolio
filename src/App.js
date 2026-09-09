@@ -11,9 +11,9 @@ import { LangToggle } from './components/ui/lang-toggle';
 import { useTheme } from './theme';
 import { useT, localize } from './i18n';
 import {
-  SiCplusplus, SiJavascript, SiTypescript, SiHtml5, SiPython, SiGnubash,
+  SiCplusplus, SiJavascript, SiTypescript, SiHtml5, SiPython, SiGnubash, SiGo,
   SiReact, SiVite, SiNodedotjs, SiExpress, SiFastapi, SiPrisma, SiSqlalchemy,
-  SiSqlite, SiOpencv, SiDocker, SiKubernetes, SiProxmox, SiVmware, SiPfsense,
+  SiSqlite, SiPostgresql, SiOpencv, SiDocker, SiKubernetes, SiProxmox, SiVmware, SiPfsense,
   SiNginx, SiPrometheus, SiGrafana, SiOllama, SiLinux, SiGit, SiGitlab,
   SiGithubactions, SiTerraform, SiAnsible, SiQualys, SiModelcontextprotocol,
   SiApple,
@@ -21,7 +21,7 @@ import {
 import {
   TbBinary, TbTerminal2, TbPlugConnected, TbNetwork, TbRouter, TbServerBolt,
   TbWorldWww, TbSwitch, TbShieldLock, TbShieldCheck, TbCertificate, TbInfinity,
-  TbUsersGroup, TbUserShield, TbDeviceMobile,
+  TbUsersGroup, TbUserShield, TbDeviceMobile, TbDatabase,
 } from 'react-icons/tb';
 import { FaMicrophone, FaBrain, FaWindows } from 'react-icons/fa6';
 
@@ -42,7 +42,7 @@ export const TERMINAL_LINES = [
 export const SKILL_GROUPS = [
   {
     label: 'Languages',
-    items: ['C / C++', 'Assembly', 'JavaScript', 'TypeScript', 'HTML / CSS', 'Python', 'Bash / Zsh', 'PowerShell'],
+    items: ['C / C++', 'Assembly', 'Go', 'JavaScript', 'TypeScript', 'HTML / CSS', 'Python', 'SQL', 'Bash / Zsh', 'PowerShell'],
   },
   {
     label: 'Frameworks & Libraries',
@@ -50,7 +50,7 @@ export const SKILL_GROUPS = [
   },
   {
     label: 'Infrastructure & DevOps',
-    items: ['Docker', 'Kubernetes', 'Proxmox', 'VMware ESX', 'pfSense', 'Nginx', 'Prometheus', 'Grafana', 'Ollama', 'WebSockets', 'TCP/IP', 'NAT', 'DHCP', 'DNS', 'VLAN', 'VPN', 'SSL/TLS', 'Linux', 'Git', 'GitLab', 'GitHub Actions', 'Terraform', 'Ansible', 'CI/CD'],
+    items: ['Docker', 'Kubernetes', 'Proxmox', 'VMware ESX', 'PostgreSQL', 'pfSense', 'Nginx', 'Prometheus', 'Grafana', 'Ollama', 'WebSockets', 'TCP/IP', 'NAT', 'DHCP', 'DNS', 'VLAN', 'VPN', 'SSL/TLS', 'Linux', 'Git', 'GitLab', 'GitHub Actions', 'Terraform', 'Ansible', 'CI/CD'],
   },
   {
     label: 'Security & Endpoint Management',
@@ -61,10 +61,12 @@ export const SKILL_GROUPS = [
 const SKILL_ICONS = {
   'C / C++': SiCplusplus,
   'Assembly': TbBinary,
+  'Go': SiGo,
   'JavaScript': SiJavascript,
   'TypeScript': SiTypescript,
   'HTML / CSS': SiHtml5,
   'Python': SiPython,
+  'SQL': TbDatabase,
   'Bash / Zsh': SiGnubash,
   'PowerShell': TbTerminal2,
   'React.js': SiReact,
@@ -83,6 +85,7 @@ const SKILL_ICONS = {
   'Kubernetes': SiKubernetes,
   'Proxmox': SiProxmox,
   'VMware ESX': SiVmware,
+  'PostgreSQL': SiPostgresql,
   'pfSense': SiPfsense,
   'Nginx': SiNginx,
   'Prometheus': SiPrometheus,
@@ -133,9 +136,9 @@ export const EXPERIENCE = [
     period: 'Feb 2026\n– May 2026',
     bullets: [
       'Boosted network throughput by 20% through resolving legacy VLAN, proxy, and firewall routing bottlenecks.',
-      'Maintained MDF/IDF network capacity, managing 10+ switches and 300+ ports to ensure site connectivity.',
+      'Maintained MDF/IDF network capacity, managing 5+ switches and 240+ ports to ensure site connectivity.',
       'Engineered zero-touch autounattend.xml workflows for 120+ workstations, reducing deployment time by 60%.',
-      'Standardized configuration management for 150+ devices via Intune and Jamf, achieving 100% compliance.',
+      'Standardized configuration management for 120+ devices via Intune and Jamf, achieving 100% compliance.',
     ],
   },
   {
@@ -262,15 +265,15 @@ export const PROJECTS = [
   {
     num: '01',
     title: 'StudyGuard',
-    desc: 'Won 2nd Place at the Seeed Embodied AI Hackathon for an AI-powered focus-monitoring system. Built an OpenCV and GPT-4V pipeline that classifies student focus states at 10-second intervals, streamed live camera feed to a FastAPI dashboard for real-time proctoring, and used a Whisper voice agent to control Reachy Mini robot gestures and update the dnsmasq allowlist.',
+    desc: 'Won at the Seeed Embodied AI Hackathon for building an innovative AI-powered focus-monitoring system. Built an OpenCV and GPT-4V pipeline that accurately classifies student focus states at 10-second intervals, streamed a live camera feed directly to a FastAPI dashboard for real-time proctoring, and used a Whisper voice agent to remotely control Reachy Mini robot gestures and update the dnsmasq allowlist.',
     tags: ['Python', 'FastAPI', 'OpenCV', 'OpenAI Whisper', 'SQLAlchemy'],
     code: 'https://github.com/Nayab-23/SeedHackathon',
   },
   {
     num: '02',
     title: 'Home Lab',
-    desc: 'Configured pfSense as the primary router with segmented VLANs, custom firewall rules, and NAT policies. Deployed Proxmox as a bare-metal hypervisor to host, isolate, and snapshot multiple homelab VMs, automating host configuration and SSH key distribution with idempotent, agentless Ansible playbooks. Deployed OpenMediaVault with a virtual-disk RAID 10 storage pool for fault-tolerant network-attached storage. Secured a self-hosted Ollama LLM endpoint behind an Nginx reverse proxy with TLS, gated by WireGuard.',
-    tags: ['Docker', 'Ansible', 'Nginx', 'Ollama', 'Proxmox', 'pfSense', 'OpenMediaVault', 'WireGuard'],
+    desc: 'Configured pfSense as the primary router with segmented VLANs, custom firewall rules, and NAT policies. Leveraged cloud-init for initial bootstrapping and Ansible for idempotent, agentless configuration management. Integrated a Hermes agent via an Ollama API endpoint to automate complex internal infrastructure workflows. Implemented an Nginx reverse proxy with TLS termination for secure, encrypted traffic routing, then established a WireGuard VPN tunnel to strictly enforce zero-trust remote access to internal endpoints.',
+    tags: ['Docker', 'Ansible', 'Cloud-init', 'Nginx', 'Proxmox', 'WireGuard', 'pfSense', 'Ollama', 'Hermes'],
     code: null,
   },
 ];
