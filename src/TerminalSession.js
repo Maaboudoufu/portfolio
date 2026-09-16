@@ -82,7 +82,6 @@ From    : Sacramento, CA
 Based   : San Jose, CA
 School  : SJSU — BS Computer Engineering (GPA 3.70)
 Grad    : Dec 2027
-Goal    : Remote/hybrid, open to living abroad
 Spoken  : English (Native) · Japanese (Limited Working)
 Orgs    : Software and Computer Engineering Society · JSA · HKSA @ SJSU`,
 

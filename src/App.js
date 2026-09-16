@@ -413,6 +413,9 @@ const SPLASH_TEXTS = [
   'kubectl approved!',
   'I use Vim btw!',
   "alias clear='clear && neofetch'",
+  "KDE Plasma or Hyprland??",
+  "play.maaboudoumei.org",
+  "Running through Cloudflare!",
 ];
 
 const LAST_SPLASH_KEY = 'lastSplash';
@@ -647,7 +650,7 @@ function About() {
             <div className="about-card-body mono" style={{ fontSize: '0.78rem', lineHeight: 1.9 }}>
               <div style={{ color: 'var(--dim)' }}>{'{'}</div>
               {/* JSON keys stay English — it's a file on disk, not UI copy. */}
-              {['school', 'role', 'from', 'based', 'goal', 'spoken'].map((key) => (
+              {['school', 'role', 'from', 'based', 'spoken'].map((key) => (
                 <div style={{ paddingLeft: '1rem' }} key={key}>
                   <span style={{ color: 'var(--term-blue)' }}>"{key}"</span>
                   <span style={{ color: 'var(--muted)' }}>: </span>

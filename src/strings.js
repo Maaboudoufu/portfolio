@@ -59,7 +59,6 @@ export const STRINGS = {
         role: 'IT Systems Administrator',
         from: 'Sacramento, CA',
         based: 'San Jose, CA',
-        goal: 'remote/hybrid',
         spoken: 'EN · JP',
       },
       body: [
@@ -148,7 +147,6 @@ Hint: start with  ls  then  cd projects/`,
         role: 'ITシステム管理者',
         from: 'カリフォルニア州サクラメント',
         based: 'カリフォルニア州サンノゼ',
-        goal: 'リモート／ハイブリッド',
         spoken: '英語 ・ 日本語',
       },
       body: [
@@ -196,8 +194,6 @@ Hint: start with  ls  then  cd projects/`,
       {},
       {},
       { text: 'ITシステム管理者  ・  SJSU コンピュータ工学 2028年卒業見込み' },
-      {},
-      { text: 'リモート／ハイブリッド勤務 ・ 海外で暮らす' },
       {},
       {},
       {},
@@ -334,7 +330,6 @@ Hint: start with  ls  then  cd projects/`,
 拠点    : カリフォルニア州サンノゼ
 大学    : サンノゼ州立大学 コンピュータ工学専攻（GPA 3.70）
 卒業    : 2027年12月
-希望    : リモート・ハイブリッド勤務、海外在住も視野
 言語    : 英語（母語）・日本語（日常会話レベル）
 所属    : Software and Computer Engineering Society ・ JSA ・ HKSA @ SJSU`,
 
