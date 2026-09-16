@@ -8,6 +8,17 @@
   box-sizing: border-box;
 }
 
+/* Monocraft — OFL-licensed, self-hosted (public/fonts/Monocraft-LICENSE.txt).
+   Built to match Minecraft's own bitmap typeface; used only for the hero
+   splash tag, so a single italic weight is all that ships. */
+@font-face {
+  font-family: 'Monocraft';
+  src: url('./fonts/Monocraft-Italic.woff2') format('woff2');
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+}
+
 /* ===========================================================================
    THEME TOKENS
 

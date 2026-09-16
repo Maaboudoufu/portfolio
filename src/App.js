@@ -169,11 +169,8 @@ export const EXPERIENCE = [
     logo: '/logos/raleys.png',
     period: 'Jun 2022\n– Aug 2024',
     bullets: [
-      'Showcased intercultural communication skills communicating in Chinese and English with colleagues and customers.',
-      'Demonstrated excellent customer service by assisting with grocery carry-out services and efficiently bagging groceries.',
-      'Maintained cleanliness and orderliness through general cleanup tasks, including sweeping, mopping, and trash removal.',
-      'Ensured product availability and organization by restocking goods and managing inventory levels.',
-      'Facilitated team growth by training new employees on store procedures, customer service standards, and operational tasks.',
+      'Carried out groceries helping out my local gramps and grams.',
+      'Communicated verbally in Chinese with most of my co-workers.'
     ],
   },
 ];
@@ -186,7 +183,6 @@ export const ORGANIZATIONS = [
     whiteBg: true,
     period: 'Dec 2024\n– May 2025',
     bullets: [
-      'Showcased intercultural communication skills communicating in Chinese and English with officers and club members.',
       'Managed marketing and social media initiatives to boost visibility and attract new members.',
       'Coordinated cultural workshops and social events that strengthened community engagement.',
       'Built partnerships with local businesses to secure funding and support larger events.',
@@ -198,7 +194,6 @@ export const ORGANIZATIONS = [
     logo: '/logos/jsa.png',
     period: 'Sep 2024\n– May 2025',
     bullets: [
-      'Showcased intercultural communication skills communicating in Japanese and English with officers and club members.',
       'Led weekly meetings and delegated roles to improve coordination.',
       'Partnered with local businesses to secure funding and grow events.',
       'Organized cultural workshops and social events that boosted engagement.',
@@ -245,6 +240,12 @@ export const CERTS = [
     logo: '/logos/careersafe.jpg',
     href: null,
     whiteBg: true,
+  },
+  {
+    name: 'Class C Driver License',
+    issuer: 'California DMV',
+    logo: '/logos/dmv.svg',
+    href: '/license',
   },
 ];
 
@@ -400,10 +401,48 @@ export const RUIXEN_STOPS_LIGHT = [
   { offset: 1, color: '#ffc0fd00' },
 ];
 
+// Minecraft-style splash: a rotated tag riding the title, one line picked at
+// random per page load. Lazy useState init so it's chosen once, not re-rolled
+// on every re-render.
+const SPLASH_TEXTS = [
+  'https://sce.sjsu.edu/s/s',
+  'Almost 99.9% uptime!',
+  'https://andrewdover.com/',
+  'Spent too long on this hero!',
+  'Using JetBrains Mono Nerd!',
+  'https://gerardconsuelo.com/',
+  'Cup of Catppuccin Mocha?',
+  'kubectl approved!',
+];
+
+const LAST_SPLASH_KEY = 'lastSplash';
+
+// Same trick the real game uses: never show the one that was up last time.
+// Persisted in localStorage (not module state) so it holds across reloads,
+// not just re-renders of a session that never unmounted Hero.
+function pickSplash() {
+  let last;
+  try {
+    last = localStorage.getItem(LAST_SPLASH_KEY);
+  } catch {
+    /* private mode / storage disabled — just pick freely below */
+  }
+  const pool = SPLASH_TEXTS.length > 1 ? SPLASH_TEXTS.filter((s) => s !== last) : SPLASH_TEXTS;
+  const next = pool[Math.floor(Math.random() * pool.length)];
+  try {
+    localStorage.setItem(LAST_SPLASH_KEY, next);
+  } catch {
+    /* storage disabled — the repeat-guard just won't carry to next time */
+  }
+  return next;
+}
+
 function Hero({ onOpenTerminal }) {
   const reduced = useReducedMotion();
   const isLight = useTheme() === 'light';
   const t = useT();
+  const [splash] = useState(pickSplash);
+  const splashIsLink = /^https?:\/\//.test(splash);
   const { scrollY } = useScroll();
   // Figure lags the page as it scrolls — it sinks behind the fold instead of
   // riding along with it. Positive y = moves *down* relative to the scroll.
@@ -454,6 +493,11 @@ function Hero({ onOpenTerminal }) {
           </div>
         </div>
         <div className="hero-right">
+          {splashIsLink ? (
+            <a href={splash} target="_blank" rel="noreferrer" className="hero-splash">{splash}</a>
+          ) : (
+            <span className="hero-splash" aria-hidden="true">{splash}</span>
+          )}
           <Terminal />
         </div>
       </div>
@@ -624,7 +668,6 @@ function About() {
         <div className="about-text">
           <div className="section-label">{t.labels.about}</div>
           <h2 className="section-title">{t.titles.about}</h2>
-          <img src="/about-photo.png" alt="Jason Tsao" className="about-photo" loading="lazy" />
           {t.about.body.map((para, i) => <p key={i}>{para}</p>)}
         </div>
       </Reveal>
@@ -744,7 +787,7 @@ function Certs() {
                   <div className="cert-info">
                     <div className="cert-name">{c.name}</div>
                     <div className="cert-issuer">{c.issuer}</div>
-                    <div className="cert-date mono">{c.date}</div>
+                    {c.date && <div className="cert-date mono">{c.date}</div>}
                   </div>
                   {c.href && <span className="cert-arrow">↗</span>}
                 </>
@@ -885,7 +928,6 @@ function GitHubCard() {
 
 function Contact() {
   const t = useT();
-  const s = useSprings();
 
   const links = [
     {
@@ -906,28 +948,9 @@ function Contact() {
 
   return (
     <div className="contact-bg">
-      {/* Rises out of the bottom fade as the section arrives. Opacity is left
-          to CSS — the theme and prefers-contrast rules own it, and animating it
-          here would outrank them. */}
-      <motion.img
-        className="contact-figure"
-        src="/contact-dog-760.webp"
-        width={601}
-        height={760}
-        alt=""
-        aria-hidden="true"
-        decoding="async"
-        loading="lazy"
-        draggable="false"
-        initial={{ y: s.reduced ? 0 : 44 }}
-        whileInView={{ y: 0 }}
-        viewport={{ once: true, margin: '-60px' }}
-        transition={s.ui}
-      />
       <div className="section-wrap" id="contact">
         <Reveal>
           <div className="section-label">{t.labels.contact}</div>
-          <h2 className="section-title">{t.titles.contact}</h2>
           <div className="contact-grid">
             <GitHubCard />
             <div className="contact-links">
