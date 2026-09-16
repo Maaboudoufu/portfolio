@@ -416,6 +416,7 @@ const SPLASH_TEXTS = [
   "KDE Plasma or Hyprland??",
   "play.maaboudoumei.org",
   "Running through Cloudflare!",
+  "https://tristachen.vercel.app/",
 ];
 
 const LAST_SPLASH_KEY = 'lastSplash';
