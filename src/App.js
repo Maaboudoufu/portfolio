@@ -413,6 +413,7 @@ const SPLASH_TEXTS = [
   'https://gerardconsuelo.com/',
   'Cup of Catppuccin Mocha?',
   'kubectl approved!',
+  'I use Vim btw!',
 ];
 
 const LAST_SPLASH_KEY = 'lastSplash';
