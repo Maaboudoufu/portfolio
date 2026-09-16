@@ -72,7 +72,7 @@ const FS_DIRS = {
   '~/projects/home-lab': ['README.md'],
   '~/experience': ['it-systems-administrator.txt', 'it-technician.txt', 'sce-developer.txt', 'building-supervisor.txt', 'courtesy-clerk.txt'],
   '~/organizations': ['hksa.txt', 'jsa.txt'],
-  '~/certs': ['google-it.txt', 'qualys-vmdr.txt', 'tsukuba-ttbj.txt', 'redcross-cpr.txt', 'osha-10.txt'],
+  '~/certs': ['google-it.txt', 'qualys-vmdr.txt', 'tsukuba-ttbj.txt', 'redcross-cpr.txt', 'osha-10.txt', 'ca-class-c.txt'],
 };
 
 export const FS_FILES = {
@@ -224,6 +224,12 @@ ID     : 01UFEE1`,
   '~/certs/osha-10.txt':
     `CareerSafe — OSHA 10-Hour
 Issued : Dec 2023`,
+
+  '~/certs/ca-class-c.txt':
+    `California DMV — Noncommercial Class C Driver License
+Covers : Any 2-axle vehicle under 26,000 lbs GVWR
+Perks  : Legally operate a Honda Civic at freeway speed
+Verify : /license`,
 
   '~/organizations/hksa.txt':
     `Event Coordinator

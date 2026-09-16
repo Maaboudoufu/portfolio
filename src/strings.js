@@ -40,7 +40,6 @@ export const STRINGS = {
       skills: 'Tech stack',
       certs: 'Licenses & Certs',
       projects: "Things I've built",
-      contact: 'Get in touch',
     },
 
     galleryAttrib: 'made possible with immich ╾━╤デ╦︻ (•_- )',
@@ -64,9 +63,7 @@ export const STRINGS = {
         spoken: 'EN · JP',
       },
       body: [
-        'I was born and raised in Sacramento for most of my life and moved to San Jose for school. I am now a Computer Engineering student at SJSU with a minor in Japanese. I was active in many clubs such as my office role in Japanese Student Association and Hong Kong Student Association during my first year. I started working at 16 and I have always been adamant about applying my skills to the real world instead of focusing solely on school.',
-        'I work as an IT Systems Administrator managing enterprise infrastructure such as Active Directory, Windows Server, endpoint security, and networking. Outside of work I run a home lab that has a WireGuard VPN, Nginx reverse proxy, containerized services, and a locally-hosted AI on my own hardware.',
-        "Long-term, I'm aiming for a role that's remote or hybrid, with the flexibility to live and work from abroad.",
+        'i work in distributed systems, cloud, big data, networking, storage, and operating systems. yeah idk thats abt it. i should probably add more in this section.',
       ],
     },
 
@@ -132,7 +129,6 @@ Hint: start with  ls  then  cd projects/`,
       skills: '技術スタック',
       certs: '資格・認定',
       projects: 'つくったもの',
-      contact: 'お気軽にご連絡ください',
     },
 
     galleryAttrib: 'immich で配信中 ╾━╤デ╦︻ (•_- )',
@@ -156,9 +152,7 @@ Hint: start with  ls  then  cd projects/`,
         spoken: '英語 ・ 日本語',
       },
       body: [
-        '生まれも育ちもカリフォルニア州サクラメントで、大学進学を機にサンノゼへ移りました。現在はサンノゼ州立大学でコンピュータ工学を専攻し、副専攻で日本語を学んでいます。入学した年から日本学生協会（JSA）と香港学生会（HKSA）で役員を務めるなど、課外活動にも力を入れてきました。16歳から働きはじめたこともあり、学業だけで完結させず、身につけた技術を実際の現場で使うことにこだわっています。',
-        '現在はITシステム管理者として、Active Directory や Windows Server、エンドポイントセキュリティ、ネットワークまわりの社内インフラを担当しています。仕事以外では自宅にホームラボを構築し、WireGuard の VPN、Nginx のリバースプロキシ、コンテナ化した各種サービス、そして自前のハードウェアで動かすローカル AI を運用しています。',
-        '将来的にはリモートまたはハイブリッドで働ける環境に身を置き、海外を拠点にしながら仕事を続けていきたいと考えています。',
+        '分散システム、クラウド、ビッグデータ、ネットワーク、ストレージ、オペレーティングシステムあたりをやっています。まあ、だいたいそんな感じです。このセクション、もう少し書き足した方がいいかもしれません。',
       ],
     },
 
@@ -309,6 +303,7 @@ Hint: start with  ls  then  cd projects/`,
       // not the audience, so the tail is what gets cut.
       { name: '応急手当／CPR／AED（成人・小児）', issuer: 'アメリカ赤十字社', date: '2025年5月 · 2027年5月まで有効' },
       { name: 'OSHA 10時間 安全衛生講習', issuer: 'CareerSafe', date: '2023年12月' },
+      { name: '普通自動車運転免許（クラスC）', issuer: 'カリフォルニア州DMV' },
     ],
 
     projects: [
@@ -481,6 +476,12 @@ ID      : 01UFEE1`,
       '~/certs/osha-10.txt':
         `CareerSafe — OSHA 10時間 安全衛生講習
 取得日  : 2023年12月`,
+
+      '~/certs/ca-class-c.txt':
+        `カリフォルニア州 DMV — 普通自動車運転免許（非営業用クラスC）
+対象車両: 総重量 26,000 ポンド未満の2軸車
+特典    : ホンダ・シビックを高速道路で合法的に運転できる
+確認先  : /license`,
 
       '~/organizations/hksa.txt':
         `イベントコーディネーター

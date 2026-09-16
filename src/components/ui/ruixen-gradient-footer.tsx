@@ -119,9 +119,9 @@ export function RuixenGradientFooter({
     measure();
     win.addEventListener("resize", measure, { passive: true });
     // Viewport resize isn't the only thing that changes scrollHeight — e.g.
-    // a lazy-loaded image (the about-photo) finishing decode grows page
-    // content height with no resize event at all. Watch the actual content
-    // box so the thresholds don't go stale for the rest of the session.
+    // a lazy-loaded image finishing decode grows page content height with no
+    // resize event at all. Watch the actual content box so the thresholds
+    // don't go stale for the rest of the session.
     const ro = new ResizeObserver(measure);
     ro.observe(doc.documentElement);
     return () => {

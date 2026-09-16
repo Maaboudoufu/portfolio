@@ -336,6 +336,59 @@
   margin-bottom: 1.2rem;
 }
 
+/* Minecraft splash: a sticker layered directly onto the terminal window's
+   top-left corner, bouncing in place — one of a few one-liners picked at
+   random per load in App.js, some of them real links (see splashIsLink).
+   `top`/`left` place the anchor point a little past the terminal's corner,
+   inward, so the badge's center lands just inside the glass instead of
+   sitting right on the corner pixel; `translate(-50%, -50%)` then re-centers
+   the box on that point regardless of how long the picked splash string is
+   (a fixed em offset on its own can't do that — it pins one edge of the box,
+   not its middle, so the center would drift with text length). Rotating
+   around the default center origin afterward spins the tag in place without
+   moving that center off the anchor. Lives in
+   `.hero-right`, not inside `.terminal` itself: the terminal clips its own
+   overflow for the rounded corners, which would slice off a badge that has
+   to render above its surface. `z-index` is required, not decorative:
+   `.terminal`'s `backdrop-filter` makes it establish its own stacking
+   context, so being later in the DOM is enough for it to paint over a plain
+   `position: absolute` sibling regardless of paint order otherwise. */
+.hero-splash {
+  position: absolute;
+  top: 0.5em;
+  left: 0.5em;
+  z-index: 2;
+  transform: translate(-50%, -50%) rotate(-20deg);
+  font-family: 'Monocraft', 'JetBrains Mono', monospace;
+  font-style: italic;
+  font-weight: 400;
+  font-size: 0.95rem;
+  /* The actual in-game splash color, not the site's softer --term-yellow —
+     paired with its real shadow, which Minecraft derives as color >> 2 per
+     channel (FF,FF,55 -> 3F,3F,15), not an arbitrary dark tint. */
+  color: #ff5;
+  text-shadow: 2px 2px 0 #3f3f15;
+  white-space: nowrap;
+  text-decoration: none;
+  animation: hero-splash-bounce 1.6s ease-in-out infinite;
+}
+
+/* The joke one-liners are decorative only (aria-hidden, see App.js); the URL
+   splashes render as a real <a> instead and need to stay clickable. */
+.hero-splash[aria-hidden] { pointer-events: none; }
+
+a.hero-splash:hover,
+a.hero-splash:focus-visible { text-decoration: underline; }
+
+/* Real Minecraft splash text scales on a continuous sine wave — smooth up,
+   smooth back down, no reset. A from/to pair (0% -> 100%) can't do that: with
+   no `alternate` it snaps back to 1 the instant the cycle repeats. A single
+   symmetric loop (1 -> 1.15 -> 1) is the fix, and needs no `alternate`. */
+@keyframes hero-splash-bounce {
+  0%, 100% { transform: translate(-50%, -50%) rotate(-20deg) scale(1); }
+  50%      { transform: translate(-50%, -50%) rotate(-20deg) scale(1.15); }
+}
+
 .hero-btns {
   display: flex;
   gap: 0.75rem;
@@ -391,6 +444,7 @@
 
 /* ===== TERMINAL ===== */
 .hero-right {
+  position: relative;
   flex: 1;
   min-width: 0;
 }
@@ -781,13 +835,6 @@ section, .section-wrap {
   margin-bottom: 1rem;
 }
 
-.about-photo {
-  float: right;
-  width: 50%;
-  max-width: 270px;
-  margin: 0 -1rem 1.25rem 1.5rem;
-}
-
 /* ===== EXPERIENCE ===== */
 .exp-bg {
   background: var(--bg2);
@@ -1093,67 +1140,6 @@ section, .section-wrap {
   background: var(--bg2);
   border-top: 1px solid var(--border);
 }
-
-/* Cold light behind the head, same job as .hero-aura: charcoal fur on #0f0f0f
-   dissolves into the page and the cut-out reads as pasted on. A pseudo-element
-   rather than a div — it paints before the figure, so it lands behind it. */
-.contact-bg::before {
-  content: '';
-  position: absolute;
-  z-index: 0;
-  right: -14%;
-  bottom: -80px;
-  width: min(620px, 44vw);
-  aspect-ratio: 1;
-  border-radius: 50%;
-  pointer-events: none;
-  background: radial-gradient(circle at 50% 50%,
-    var(--aura-1) 0%,
-    var(--aura-2) 36%,
-    rgba(var(--veil-rgb), 0) 68%);
-}
-
-/* Extra floor under the grid gives the figure a pocket of its own — without it
-   the dog and the link cards compete for the same rows. z-index lifts the
-   content off the figure, which is absolutely positioned and would otherwise
-   paint over it. */
-.contact-bg .section-wrap {
-  position: relative;
-  z-index: 1;
-  padding-bottom: 11rem;
-}
-
-/* Same idiom as .hero-figure — a cut-out photo anchored to a bottom corner,
-   masked so it dissolves into the page rather than ending on a hard line. The
-   page opens on a figure bottom-right and closes on one. */
-.contact-figure {
-  --figure-opacity: 0.95;
-  position: absolute;
-  /* Flush, not bleeding: unlike the hero figure, the right ear runs to the edge
-     of the cut-out, so any negative offset slices it on a hard vertical line. */
-  right: 0;
-  /* px, not %, so the overhang past the footer seam stays put — a percentage
-     resolves against the section height, which changes with the breakpoint. */
-  bottom: -14px;
-  z-index: 0;
-  /* Sized off the viewport width, not its height: the pocket the dog sits in is
-     the band under the link cards, and that band narrows as the grid does. Kept
-     short enough that the head clears the cards instead of being sliced by one. */
-  height: clamp(190px, 23vw, 320px);
-  width: auto;
-  opacity: var(--figure-opacity);
-  /* Nudges the warm fur and the red collar toward the site's cool neutral
-     palette without draining them to grayscale. */
-  filter: saturate(0.85);
-  pointer-events: none;
-  user-select: none;
-  -webkit-user-drag: none;
-  -webkit-mask-image: linear-gradient(to bottom, #000 58%, rgba(0, 0, 0, 0) 100%);
-  mask-image: linear-gradient(to bottom, #000 58%, rgba(0, 0, 0, 0) 100%);
-}
-
-/* Charcoal fur on paper carries itself; on #0f0f0f it needs full strength. */
-:root[data-theme="light"] .contact-figure { --figure-opacity: 0.8; }
 
 .contact-grid {
   display: grid;
@@ -1472,15 +1458,7 @@ section, .section-wrap {
   .gallery-item { height: 240px; }
   .gallery-arrow { display: none; }
   .about-grid { grid-template-columns: 1fr; gap: 2rem; }
-  .about-photo { float: none; display: block; width: 100%; max-width: 280px; margin: 0 auto 1.5rem; }
   .contact-grid { grid-template-columns: 1fr; gap: 1.2rem; }
-  /* Stacked cards run the full width, so the figure loses its side gutter and
-     drops to a smaller ambient presence in the bottom corner. */
-  .contact-bg .section-wrap { padding-bottom: 7.5rem; }
-  .contact-figure {
-    height: clamp(150px, 34vw, 200px);
-    --figure-opacity: 0.8;
-  }
   .timeline-item { grid-template-columns: 1fr; gap: 0.3rem; }
   .timeline-period { text-align: left; padding-top: 0; }
   .projects-grid { grid-template-columns: 1fr; }
@@ -1491,6 +1469,9 @@ section, .section-wrap {
    clears the headline — only the raised arm and brush strokes sit behind it. */
 @media (max-width: 560px) {
   .hero-figure { right: -30%; --figure-opacity: 0.85; }
+  /* top is em-relative, so shrinking the font also pulls it back down —
+     otherwise a long URL splash would run past the left edge of the screen. */
+  .hero-splash { font-size: 0.7rem; }
 
   /* Two controls plus the full prompt-style logo is more than a phone row
      holds at the desktop metrics — tighten the row rather than drop either. */
@@ -1509,6 +1490,7 @@ section, .section-wrap {
 /* ===== ACCESSIBILITY: MOTION, TRANSPARENCY & CONTRAST ===== */
 @media (prefers-reduced-motion: reduce) {
   .hero-figure { animation: none; }
+  .hero-splash { animation: none; }
 }
 
 @media (prefers-reduced-transparency: reduce) {
@@ -1542,14 +1524,13 @@ section, .section-wrap {
 
 @media (prefers-contrast: more) {
   .hero-figure { --figure-opacity: 0.35; }
-  .contact-figure { --figure-opacity: 0.3; }
   .terminal {
     background: var(--hc-bg);
     backdrop-filter: none;
     border-color: var(--white);
   }
   .terminal-bar { background: var(--hc-bar); }
-  .hero-aura, .contact-bg::before { display: none; }
+  .hero-aura { display: none; }
   .navbar {
     background: var(--hc-bg);
     border-bottom: 1px solid var(--white);
