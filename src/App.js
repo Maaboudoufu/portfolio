@@ -32,8 +32,6 @@ export const TERMINAL_LINES = [
   { type: 'out', text: 'jason.tsao' },
   { type: 'cmd', text: 'cat /etc/role' },
   { type: 'out', text: 'IT Systems Administrator  ·  CE Student @ SJSU \'28' },
-  { type: 'cmd', text: 'cat goals.txt' },
-  { type: 'out', text: 'remote/hybrid · live abroad' },
   { type: 'cmd', text: 'ls ~/projects/' },
   { type: 'out', text: 'studyguard/   home-lab/' },
   { type: 'cmd', text: '' },
@@ -414,6 +412,7 @@ const SPLASH_TEXTS = [
   'Cup of Catppuccin Mocha?',
   'kubectl approved!',
   'I use Vim btw!',
+  "alias clear='clear && neofetch'",
 ];
 
 const LAST_SPLASH_KEY = 'lastSplash';
