@@ -212,11 +212,11 @@ Hint: start with  ls  then  cd projects/`,
         company: 'サンノゼ州立大学 Student Union, Inc.  ・  カリフォルニア州サンノゼ',
         period: '2026年5月\n– 現在',
         bullets: [
-          'GitLab と Terraform を構築・運用し、RBAC やブランチ戦略、CI/CD の自動化ワークフローを整備。',
           'Kubernetes を導入してワークロードをコンテナ化し、4万人規模の学生に向けた継続的でスケーラブルなデプロイを実現。',
+          'GitLab と Terraform を導入し、RBAC やリモートステート管理、CI/CD ワークフローを整備してデプロイを効率化。',
+          'Prometheus／Grafana を50サービス以上に導入し、リアルタイムアラートでインシデント解決時間を 30% 短縮。',
           'Proxmox VE・VMware ESX・バックアップ・高可用性構成を運用し、ハードウェアの稼働率 99.99% を確保。',
           'MCP 呼び出しで CVE に対処するクラウド AI エージェントを開発し、MTTR を 40% 短縮、トリアージ工数を週30時間削減。',
-          'Prometheus／Grafana を50サービス以上に導入し、リアルタイムアラートでインシデント解決時間を 30% 短縮。',
         ],
       },
       {
@@ -388,16 +388,16 @@ Ollama API 経由で統合した Hermes エージェントが、複雑な内部�
 サンノゼ州立大学 Student Union, Inc. · カリフォルニア州サンノゼ
 2026年5月 – 現在
 
-• GitLab と Terraform を構築・運用し、RBAC やブランチ戦略、
-  CI/CD の自動化ワークフローを整備。
 • Kubernetes を導入してワークロードをコンテナ化し、4万人規模の学生に
   向けた継続的でスケーラブルなデプロイを実現。
+• GitLab と Terraform を導入し、RBAC やリモートステート管理、
+  CI/CD ワークフローを整備してデプロイを効率化。
+• Prometheus／Grafana を50サービス以上に導入し、リアルタイム
+  アラートでインシデント解決時間を 30% 短縮。
 • Proxmox VE・VMware ESX・バックアップ・高可用性構成を運用し、
   ハードウェアの稼働率 99.99% を確保。
 • MCP 呼び出しで CVE に対処するクラウド AI エージェントを開発し、
-  MTTR を 40% 短縮、トリアージ工数を週30時間削減。
-• Prometheus／Grafana を50サービス以上に導入し、リアルタイム
-  アラートでインシデント解決時間を 30% 短縮。`,
+  MTTR を 40% 短縮、トリアージ工数を週30時間削減。`,
 
       '~/experience/it-technician.txt':
         `ITテクニシャン

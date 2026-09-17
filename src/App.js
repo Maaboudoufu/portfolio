@@ -120,11 +120,11 @@ export const EXPERIENCE = [
     logo: '/logos/student-union.png',
     period: 'May 2026\n– Present',
     bullets: [
-      'Deployed/administered GitLab and Terraform, configuring RBAC, branching, and automated CI/CD workflows.',
       'Implemented Kubernetes for containerized workloads, enabling continual scalable deployments for 40k students.',
-      'Managed Proxmox VE, VMware ESX, backups, & high availability, ensuring 99.99% hardware service continuity.',
-      'Made AI cloud agent to mitigate CVEs with MCP calls, reducing MTTR by 40% & saving 30 triage hours weekly.',
+      'Provisioned GitLab/Terraform, configuring RBAC, remote state, and CI/CD workflows to streamline deployment.',
       'Configured Prometheus/Grafana across 50+ services, cutting incident resolution time by 30% via real-time alerts.',
+      'Managed Proxmox VE, VMware ESX, backups, & high availability, ensuring 99.99% hardware service continuity.',
+      'Built AI cloud agent to mitigate CVEs with MCP calls, reducing MTTR by 40% & saving 30 triage hours weekly.',
     ],
   },
   {
@@ -417,7 +417,7 @@ const SPLASH_TEXTS = [
   "play.maaboudoumei.org",
   "Running through Cloudflare!",
   "https://tristachen.vercel.app/",
-  "RTWC",
+  "RTWC in da house!",
 ];
 
 const LAST_SPLASH_KEY = 'lastSplash';
