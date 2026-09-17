@@ -417,6 +417,7 @@ const SPLASH_TEXTS = [
   "play.maaboudoumei.org",
   "Running through Cloudflare!",
   "https://tristachen.vercel.app/",
+  "RTWC",
 ];
 
 const LAST_SPLASH_KEY = 'lastSplash';
