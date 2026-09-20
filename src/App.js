@@ -275,6 +275,13 @@ export const PROJECTS = [
     tags: ['Docker', 'Ansible', 'Cloud-init', 'Nginx', 'Proxmox', 'WireGuard', 'pfSense', 'Ollama', 'Hermes'],
     code: null,
   },
+  {
+    num: '03',
+    title: 'OngaKyu',
+    desc: "Built a self-hosted music player for a Raspberry Pi speaker setup, with a React frontend for searching and queuing YouTube tracks and an Express/Prisma backend that forwards each request over WebSocket to a Pi-side daemon. The Pi grabs audio with yt-dlp and streams it straight to the speakers through mpv and ALSA, because nothing needs to be saved on its limited storage. It opens the WebSocket connection outbound only, so there's no firewall port to open on the Pi's end, and the whole thing runs from one Docker Compose file.",
+    tags: ['React', 'Vite', 'Express', 'Prisma', 'SQLite', 'WebSocket', 'yt-dlp', 'Raspberry Pi', 'Docker'],
+    code: 'https://github.com/SCE-Development/ongakyu',
+  },
 ];
 
 // ── components ───────────────────────────────────────────────────────────────
