@@ -350,7 +350,8 @@ LinkedIn: linkedin.com/in/jtsaoo`,
   OpenCV  OpenAI Whisper  GPT-4V  MCP
 
 ── インフラ・DevOps ───────────────────────────
-  Docker  Kubernetes  Proxmox  VMware ESX  PostgreSQL  pfSense  Nginx  Prometheus  Grafana
+  Docker  Kubernetes  Helm  Calico  Cilium  MetalLB  Proxmox  VMware ESX  PostgreSQL
+  pfSense  Nginx  Traefik  Prometheus  Grafana
   Ollama  WebSockets  TCP/IP  NAT  DHCP  DNS  VLAN  VPN  SSL/TLS  Linux
   Git  GitLab  GitHub Actions  Terraform  Ansible  CI/CD
 
