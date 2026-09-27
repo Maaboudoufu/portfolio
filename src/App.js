@@ -16,12 +16,12 @@ import {
   SiSqlite, SiPostgresql, SiOpencv, SiDocker, SiKubernetes, SiProxmox, SiVmware, SiPfsense,
   SiNginx, SiPrometheus, SiGrafana, SiOllama, SiLinux, SiGit, SiGitlab,
   SiGithubactions, SiTerraform, SiAnsible, SiQualys, SiModelcontextprotocol,
-  SiApple,
+  SiApple, SiHelm, SiCilium, SiTraefikproxy,
 } from 'react-icons/si';
 import {
   TbBinary, TbTerminal2, TbPlugConnected, TbNetwork, TbRouter, TbServerBolt,
   TbWorldWww, TbSwitch, TbShieldLock, TbShieldCheck, TbCertificate, TbInfinity,
-  TbUsersGroup, TbUserShield, TbDeviceMobile, TbDatabase,
+  TbUsersGroup, TbUserShield, TbDeviceMobile, TbDatabase, TbTopologyStar3, TbScale,
 } from 'react-icons/tb';
 import { FaMicrophone, FaBrain, FaWindows } from 'react-icons/fa6';
 
@@ -48,7 +48,7 @@ export const SKILL_GROUPS = [
   },
   {
     label: 'Infrastructure & DevOps',
-    items: ['Docker', 'Kubernetes', 'Proxmox', 'VMware ESX', 'PostgreSQL', 'pfSense', 'Nginx', 'Prometheus', 'Grafana', 'Ollama', 'WebSockets', 'TCP/IP', 'NAT', 'DHCP', 'DNS', 'VLAN', 'VPN', 'SSL/TLS', 'Linux', 'Git', 'GitLab', 'GitHub Actions', 'Terraform', 'Ansible', 'CI/CD'],
+    items: ['Docker', 'Kubernetes', 'Helm', 'Calico', 'Cilium', 'MetalLB', 'Proxmox', 'VMware ESX', 'PostgreSQL', 'pfSense', 'Nginx', 'Traefik', 'Prometheus', 'Grafana', 'Ollama', 'WebSockets', 'TCP/IP', 'NAT', 'DHCP', 'DNS', 'VLAN', 'VPN', 'SSL/TLS', 'Linux', 'Git', 'GitLab', 'GitHub Actions', 'Terraform', 'Ansible', 'CI/CD'],
   },
   {
     label: 'Security & Endpoint Management',
@@ -81,11 +81,16 @@ const SKILL_ICONS = {
   'MCP': SiModelcontextprotocol,
   'Docker': SiDocker,
   'Kubernetes': SiKubernetes,
+  'Helm': SiHelm,
+  'Calico': TbTopologyStar3,
+  'Cilium': SiCilium,
+  'MetalLB': TbScale,
   'Proxmox': SiProxmox,
   'VMware ESX': SiVmware,
   'PostgreSQL': SiPostgresql,
   'pfSense': SiPfsense,
   'Nginx': SiNginx,
+  'Traefik': SiTraefikproxy,
   'Prometheus': SiPrometheus,
   'Grafana': SiGrafana,
   'Ollama': SiOllama,
